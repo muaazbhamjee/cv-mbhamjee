@@ -125,7 +125,7 @@ publish: all
 # Usage:  make publish-site
 #         make publish-site msg="Update CV and statement $(TODAY)"
 publish-site: all
-	@if [ ! -d "site/.git" ]; then \
+	@if [ ! -e "site/.git" ]; then \
 	    echo "ERROR: site/ submodule not initialised."; \
 	    echo "       Run: git submodule add https://github.com/muaazbhamjee/muaazbhamjee.github.io.git site"; \
 	    exit 1; \
