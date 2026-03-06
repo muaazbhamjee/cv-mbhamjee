@@ -1,0 +1,28 @@
+# ── LaTeX build artefacts ──────────────────────────────────
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.blg
+*.bbl
+
+# ── Auto-generated files (built by build.py) ───────────────
+# These are outputs, not sources — regenerate with: make
+cv_bhamjee.tex
+cv_bhamjee.pdf
+
+# ── OS clutter ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Editor files ───────────────────────────────────────────
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
