@@ -1,0 +1,222 @@
+% ============================================================
+% NITheCS Candidate's Statement — Dr. Muaaz Bhamjee
+% Candidate's Research Vision and Prospective Contributions
+% ============================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper, top=2.2cm, bottom=2.2cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+
+% ── Colour palette ────────────────────────────────────────
+\definecolor{nithecs}{RGB}{0, 70, 127}       % NITheCS-aligned deep blue
+\definecolor{rulecolour}{RGB}{0, 70, 127}
+
+% ── Section formatting ────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{nithecs}}
+  {}{0em}{}[\color{rulecolour}\titlerule]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{nithecs}}
+  {}{0em}{}
+
+\titlespacing{\section}{0pt}{14pt}{6pt}
+\titlespacing{\subsection}{0pt}{10pt}{4pt}
+
+% ── Hyperlinks ────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  urlcolor=nithecs,
+  linkcolor=nithecs,
+  pdfauthor={Muaaz Bhamjee},
+  pdftitle={NITheCS Candidate Statement — Dr. Muaaz Bhamjee},
+}
+
+% ── List spacing ─────────────────────────────────────────
+\setlist[itemize]{noitemsep, topsep=4pt, leftmargin=1.5em}
+\setlist[enumerate]{noitemsep, topsep=4pt, leftmargin=1.5em}
+
+% ── No paragraph indent ──────────────────────────────────
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% =============================================================
+\begin{document}
+
+% ── Header ───────────────────────────────────────────────────
+{\Large\bfseries Dr.\ Muaaz Bhamjee}\\[4pt]
+{\normalsize
+  Staff Research Scientist, IBM Research -- Africa \quad|\quad
+  Visiting Senior Research Associate, University of Johannesburg\\[2pt]
+  \href{mailto:muaazb@gmail.com}{muaazb@gmail.com} \quad
+  +27 76 476 4434 \quad
+  \href{https://research.ibm.com/people/muaaz-bhamjee}{IBM Research Profile} \quad
+  \href{https://scholar.google.co.za/citations?user=jlOJkoAAAAJ}{Google Scholar (h\,=\,53)}
+}
+
+\vspace{4pt}
+\noindent\color{rulecolour}\rule{\linewidth}{1.5pt}\color{black}
+
+\vspace{6pt}
+\begin{center}
+  {\large\bfseries Candidate's Statement}\\[3pt]
+  {\normalsize\itshape Research Vision and Prospective Contributions to the National Institute\\
+  for Theoretical and Computational Sciences (NITheCS)}
+\end{center}
+\vspace{2pt}
+\noindent\color{rulecolour}\rule{\linewidth}{0.5pt}\color{black}
+\vspace{6pt}
+
+% ── 1. INTRODUCTION ──────────────────────────────────────────
+\section{Introduction}
+
+I am Dr.\ Muaaz Bhamjee, a Staff Research Scientist at IBM Research -- Africa and Visiting Senior Research Associate at the University of Johannesburg. My research sits at the intersection of computational mechanics, machine learning, high-performance computing (HPC), geospatial intelligence, and experimental high-energy physics---a portfolio that maps directly onto several of NITheCS's flagship research themes. I hold a BEng (Mechanical Engineering), a BSc Honours (Applied Mathematics), an MEng (Mechanical Engineering), and a DIng (Computational Fluid and Granular Dynamics), all from the University of Johannesburg.
+
+I apply to become a NITheCS Affiliated Scientist/Fellow with the conviction that the institute's pan-disciplinary model---uniting theoretical, computational, and applied sciences across all 26 South African public universities---is precisely the environment in which the next phase of my research can have the broadest societal impact. My work connects Africa's most urgent challenges in climate, health, and infrastructure to global frontier science at CERN and at IBM Research; the NITheCS network provides the ideal structure to translate these connections into a nationally coordinated research programme.
+
+% ── 2. CURRENT RESEARCH PORTFOLIO ────────────────────────────
+\section{Current Research Portfolio and Alignment with NITheCS Themes}
+
+\subsection{2.1\quad Machine Learning, AI, and Earth Systems / Climate Modelling}
+
+At IBM Research -- Africa I lead the Urban Heat Island (UHI) research programme, developing foundation-model-based AI to detect, characterise, and forecast surface urban heat islands at high spatial and temporal resolution. Key outputs include:
+
+\begin{itemize}
+  \item Development and open-source release of \textit{Granite Geospatial Land Surface Temperature}, a fine-tuned Earth Observation Foundation Model (EOFM) built on IBM's \textit{Prithvi} geospatial backbone, hosted on HuggingFace as \href{https://huggingface.co/ibm-granite/granite-geospatial-land-surface-temperature}{\texttt{ibm-granite/granite-geospatial-land-surface-temperature}}.
+  \item The development of \textit{Auxiliary Feature Injection} for fine-tuning Vision Transformers (ViT) on high-resolution geospatial data, presented at IEEE IGARSS 2025.
+  \item Machine-learning characterisation of UHIs presented at IEEE IGARSS 2024 and the Deep Learning Indaba 2024.
+  \item A patent (ZA2023/09448, granted 2024; USA pending) for dynamically forecasting high-resolution air temperature in real time using multi-source data.
+  \item A droplet infectiousness model coupling CFD with UV germicidal irradiation, published in \textit{Computers \& Fluids} (2024), with direct relevance to climate-health interactions in the built environment.
+\end{itemize}
+
+These contributions align with NITheCS's \textbf{Earth Systems and Climate Change Modelling} and \textbf{Machine Learning and AI} flagship areas, and directly address the DSTI 2022--32 Decadal Plan's priority on climate adaptation in the African context.
+
+\subsection{2.2\quad High-Energy Physics: ATLAS at CERN}
+
+I am an author and contributing member of the \textbf{ATLAS Collaboration} at CERN, with authorship spanning more than 200 publications (Google Scholar h-index: 53; Scopus h-index: 25). Highlights include:
+
+\begin{itemize}
+  \item Co-authorship of the landmark \textit{Nature} (2024) paper reporting the \textbf{observation of quantum entanglement with top quarks}, one of the most cited experimental physics results of 2024.
+  \item Co-authorship of four comprehensive \textit{Physics Reports} (2025) reviews synthesising the full ATLAS Run~2 programme: Higgs boson characterisation, top quark physics, supersymmetry, and exotic searches.
+  \item Active involvement in detector commissioning, environmental monitoring for the Inner Tracker (ITk) detector upgrade (Run~3/HL-LHC), and supervision of two candidates through their ATLAS Authorship Qualification Tasks (AQTs).
+\end{itemize}
+
+This work connects to NITheCS's \textbf{Theoretical Physics}, \textbf{Quantum Technologies}, and \textbf{Gravity, Astrophysics and Cosmology} themes, and positions South Africa within the global frontier of fundamental physics research.
+
+\subsection{2.3\quad Computational Fluid Dynamics and Multiphase Flow}
+
+My doctoral research and subsequent academic programme established a nationally recognised CFD group focused on multiphase and granular flows in process equipment, including hydrocyclones, fluidised beds, and biomedical devices (e.g.\ ventriculoperitoneal shunts, respiratory droplet dynamics). This work exploits HPC infrastructure---I have presented at the CHPC National Conference every year since 2015, including a keynote in 2017 and an invited talk in 2025---and is published in \textit{Computers \& Fluids}, \textit{Solar Energy}, \textit{Energy and Buildings}, the \textit{R\&D Journal of the SA Institution of Mechanical Engineering}, and \textit{Mathematical and Computational Applications}.
+
+\subsection{2.4\quad Engineering Education and Decolonisation}
+
+Beyond technical research, I have sustained a parallel programme in engineering education scholarship in collaboration with Dr.\ Zach Simpson (UJ), publishing on design literacy, academic voice, and decolonisation in peer-reviewed venues including \textit{Scholarship of Teaching and Learning in the South} and multiple SASEE/REES/ProComm proceedings. This intersects with NITheCS's educational outreach mandate and with the work of NITheCS's language and Afrocentric knowledge partners.
+
+% ── 3. RESEARCH VISION ───────────────────────────────────────
+\section{Research Vision as a NITheCS Fellow}
+
+My vision as a NITheCS Affiliated Scientist is to build a \textbf{Pan-African Computational Climate Intelligence Laboratory} (PACCIL) --- a distributed, HPC-enabled research programme that:
+
+\begin{enumerate}
+  \item \textbf{Develops physics-informed foundation models for African climate systems.} Current geospatial AI models are trained predominantly on data from the Global North. A NITheCS-anchored programme would curate South African and African geospatial datasets, develop physics-informed model architectures that embed CFD and thermodynamic constraints, and fine-tune foundation models for African cities, biomes, and land surfaces.
+
+  \item \textbf{Bridges experimental particle physics and data science.} The ATLAS ITk upgrade for the High-Luminosity LHC (HL-LHC) will generate unprecedented data volumes. The machine-learning and data-management techniques developed for detector monitoring and event reconstruction are directly transferable to geospatial and climate data pipelines. A NITheCS-supported programme would formalise this transfer of expertise, training South African students in ML pipelines that are simultaneously relevant to fundamental physics and to African development challenges.
+
+  \item \textbf{Scales HPC-enabled research across the NITheCS network.} Working with the CHPC, I intend to develop shared HPC workflows and training modules for computational fluid dynamics, ML training, and geospatial analytics accessible to students at all 26 SA universities via the NITheCS internship and school programmes. My experience co-hosting CHPC/NITheCS hybrid programming schools (800+ students, 50+ institutions) provides the foundation for this.
+
+  \item \textbf{Advances quantitative climate-health research.} The intersection of climate extremes, air quality, and respiratory health is an urgent African public health challenge. My CFD-based droplet infectiousness model and UHI programme form the basis of a joint climate-health research thread that engages NITheCS's \textbf{Afrocentric Health Options} flagship area and collaborators including the Perinatal HIV Research Unit (PHRU) at the University of the Witwatersrand.
+
+  \item \textbf{Embeds African languages and knowledge systems in scientific computing.} In collaboration with NITheCS's partners at the South African Centre for Digital Language Resources (SADiLaR), I plan to explore multilingual AI interfaces for scientific computing tools, ensuring that South Africa's multilingual student population can engage with computational science in their home languages.
+\end{enumerate}
+
+% ── 4. NATIONAL AND INTERNATIONAL COLLABORATIONS ─────────────
+\section{Existing Collaborations Supporting the NITheCS Programme}
+
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{Partner} & \textbf{Nature of Collaboration} \\
+\midrule
+IBM Research (Global) & Lead researcher on UHI and geospatial AI; patent co-inventor; co-developer of open-source EOFM \\
+CERN / ATLAS & Co-author on 200+ papers; AQT supervisor; ITk environmental monitoring \\
+CHPC (SA) & Annual presenter; HPC school co-organiser; HPC enabler for CFD and ML workflows \\
+European Synchrotron Radiation Facility (ESRF) & Collaboration on BEATS beamline detector mechanics \\
+Multotec Pty.\ Ltd. & Industry research collaboration in mineral processing and hydrocyclone design \\
+PHRU / Wits & COVID-19 droplet modelling; respiratory health CFD \\
+University of Johannesburg & Visiting SRA; postgraduate supervision; SA-CERN node \\
+\bottomrule
+\end{tabularx}
+
+% ── 5. SUPERVISION AND TRAINING ──────────────────────────────
+\section{Supervision, Training and Capacity Development}
+
+Capacity development is central to my research identity. To date I have:
+
+\begin{itemize}
+  \item Supervised 7 MEng students to completion (3 graduated Cum Laude); currently co-supervising 2 MEng and 1 PhD candidate.
+  \item Supervised 2 ATLAS Authorship Qualification Tasks (one completed March 2022), connecting South African students to CERN's global research environment.
+  \item Mentored Honours students and interns within the IBM Research -- Africa environment.
+  \item Co-organised hybrid CHPC/NITheCS programming schools reaching 800+ students from 50 institutions across Africa.
+\end{itemize}
+
+As a NITheCS Fellow, I will open my research group to NITheCS-funded interns and bursary holders, embed NITheCS schools into the PACCIL training pipeline, and supervise students at partner institutions across the NITheCS node network.
+
+% ── 6. COMMUNITY SERVICE AND GOVERNANCE ──────────────────────
+\section{Community Engagement and Scientific Leadership}
+
+\begin{itemize}
+  \item \textbf{SAAM Secretary}: Elected Secretary of the South African Association for Theoretical and Applied Mechanics and of the South African National IUTAM (International Union of Theoretical and Applied Mechanics) Committee.
+  \item \textbf{Faculty Decolonisation Committee}: Served at the University of Johannesburg FEBE.
+  \item \textbf{ECSA accreditation}: Co-ordinated the Department of Mechanical Engineering Science's ECSA accreditation process in 2015--2016.
+  \item \textbf{Deep Learning Indaba}: Presented at the 2024 edition, contributing to the pan-African ML community that NITheCS actively supports.
+  \item \textbf{NRF Rating}: I intend to apply for an NRF Rating in 2025/2026, consolidating my research record within the national funding framework to which NITheCS is aligned.
+\end{itemize}
+
+% ── 7. RESEARCH METRICS ──────────────────────────────────────
+\section{Research Metrics and Profiles}
+
+\begin{tabularx}{\linewidth}{llXl}
+\toprule
+\textbf{Profile} & \textbf{ID / Handle} & \textbf{Link} & \textbf{h-index} \\
+\midrule
+Google Scholar & Dr.\ Muaaz Bhamjee &
+  \href{https://scholar.google.co.za/citations?user=jlOJkoAAAAJ}{scholar.google.co.za} & 53 \\
+Scopus         & 55247084100 &
+  \href{https://www.scopus.com/authid/detail.uri?authorId=55247084100}{scopus.com} & 25 \\
+ORCID          & 0000-0002-2697-4589 &
+  \href{https://orcid.org/0000-0002-2697-4589}{orcid.org} & --- \\
+Web of Science & ABE-4708-2020 &
+  \href{https://www.webofscience.com/wos/author/record/ABE-4708-2020}{webofscience.com} & 10 \\
+ResearchGate   & Muaaz Bhamjee &
+  \href{https://www.researchgate.net/profile/Muaaz-Bhamjee}{researchgate.net} & 12 \\
+IBM Research   & Muaaz Bhamjee &
+  \href{https://research.ibm.com/people/muaaz-bhamjee}{research.ibm.com} & --- \\
+\bottomrule
+\end{tabularx}
+
+% ── 8. CONCLUSION ────────────────────────────────────────────
+\section{Conclusion}
+
+NITheCS represents South Africa's boldest investment in pan-disciplinary theoretical and computational science since the establishment of the National Research Foundation itself. Its mandate --- to take disparate disciplines and make them more than the sum of their parts --- resonates deeply with my own research trajectory: from multiphase fluid dynamics to quantum chromodynamics at CERN, from CFD-based respiratory modelling to AI-powered climate intelligence, from Johannesburg classrooms to IBM's global research network.
+
+I bring to NITheCS a \textbf{productive, internationally connected, and impact-oriented research programme} that is simultaneously rooted in Africa's development agenda and competitive at the global frontier. As a Fellow, I am committed to contributing to the NITheCS colloquium and school programme, co-supervising students across the network, contributing to the institute's HPC enablement strategy, and building the interdisciplinary bridges --- between physics, engineering, data science, and health --- that NITheCS was created to make possible.
+
+I welcome the opportunity to discuss this vision further with the NITheCS Director and scientific leadership.
+
+\vspace{20pt}
+\noindent\textit{Submitted by:}
+
+\vspace{8pt}
+\noindent\textbf{Dr.\ Muaaz Bhamjee}\\
+Staff Research Scientist, IBM Research -- Africa\\
+Visiting Senior Research Associate, University of Johannesburg\\
+\href{mailto:muaazb@gmail.com}{muaazb@gmail.com} $\cdot$ +27 76 476 4434\\
+\href{https://research.ibm.com/people/muaaz-bhamjee}{research.ibm.com/people/muaaz-bhamjee}
+
+\end{document}

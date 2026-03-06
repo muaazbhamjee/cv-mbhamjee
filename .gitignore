@@ -11,10 +11,16 @@
 *.blg
 *.bbl
 
-# ── Auto-generated files (built by build.py) ───────────────
-# These are outputs, not sources — regenerate with: make
+# ── Auto-generated root-level files (built by build.py) ────
+# Regenerate any time with: make
+# These are working copies — the publishable copies live in docs/
 cv_bhamjee.tex
-cv_bhamjee.pdf
+*.pdf
+
+# ── docs/ PDFs are explicitly UN-ignored ───────────────────
+# Committed intentionally for GitHub Pages publishing.
+# Push docs/ to github.io with: git add docs/ && git commit && git push
+!docs/*.pdf
 
 # ── OS clutter ─────────────────────────────────────────────
 .DS_Store
