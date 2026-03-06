@@ -80,7 +80,7 @@
       letter-spacing: .02em;
       color: var(--text);
     }
-    .nav-logo em { font-style: italic; color: var(--grain); }
+    .nav-logo em { font-style: italic; color: var(--fluid); }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
@@ -88,10 +88,10 @@
       font-size: .72rem;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      transition: color .2s;
+      color: var(--fluid);
+      transition: color .2s, text-shadow .2s;
     }
-    .nav-links a:hover { color: var(--grain); opacity: 1; }
+    .nav-links a:hover { color: var(--fluid-bright); text-shadow: 0 0 10px rgba(65,200,255,0.6); opacity: 1; }
 
     /* ── Hero ── */
     #hero {
@@ -112,10 +112,10 @@
       content: '';
       position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px),
-        linear-gradient(rgba(0,212,255,.012) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,212,255,.012) 1px, transparent 1px);
+        linear-gradient(rgba(65,200,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(65,200,255,.045) 1px, transparent 1px),
+        linear-gradient(rgba(65,200,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(65,200,255,.018) 1px, transparent 1px);
       background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
       pointer-events: none;
     }
@@ -139,7 +139,7 @@
       font-size: .72rem;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--grain);
+      color: var(--fluid);
       margin-bottom: 1.2rem;
       opacity: 0;
       animation: fadeUp .9s .15s forwards;
@@ -150,7 +150,7 @@
       content: '';
       display: inline-block;
       width: 28px; height: 1px;
-      background: var(--grain);
+      background: var(--fluid);
     }
 
     .hero-name {
@@ -168,7 +168,7 @@
     .hero-name em {
       font-style: italic;
       font-weight: 600;
-      color: var(--grain);
+      color: var(--fluid);
     }
 
     .hero-dept {
@@ -200,7 +200,7 @@
     }
 
     .disc-fluid  { border: 1px solid rgba(0,212,255,.35); color: var(--fluid); background: var(--fluid-dim); }
-    .disc-grain  { border: 1px solid rgba(122,158,176,.30); color: var(--grain); background: var(--grain-dim); }
+    .disc-grain  { border: 1px solid rgba(65,200,255,.28); color: var(--fluid); background: var(--fluid-dim); }
     .disc-phys   { border: 1px solid rgba(255,61,139,.3); color: var(--track-a); background: rgba(255,61,139,.08); }
     .disc-ai     { border: 1px solid rgba(255,224,130,.3); color: var(--track-b); background: rgba(255,224,130,.07); }
     .disc-q      { border: 1px solid rgba(160,210,150,.3); color: #a0d296; background: rgba(160,210,150,.07); }
@@ -219,7 +219,7 @@
       font-family: var(--font-display);
       font-size: 2.6rem;
       font-weight: 700;
-      color: var(--grain);
+      color: var(--fluid);
       line-height: 1;
       letter-spacing: -.03em;
     }
@@ -252,19 +252,32 @@
     }
 
     .btn-primary {
-      background: var(--grain);
+      background: var(--fluid);
       color: var(--bg);
-      border: 1px solid var(--grain);
+      border: 1px solid var(--fluid);
       font-weight: 500;
+      box-shadow: 0 0 18px rgba(65,200,255,0.35);
     }
-    .btn-primary:hover { background: transparent; color: var(--grain); opacity: 1; }
+    .btn-primary:hover {
+      background: var(--fluid-bright);
+      border-color: var(--fluid-bright);
+      box-shadow: 0 0 28px rgba(65,200,255,0.55);
+      opacity: 1;
+    }
 
     .btn-outline {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border2);
+      background: rgba(65,200,255,0.07);
+      color: var(--fluid);
+      border: 1px solid rgba(65,200,255,0.45);
+      text-shadow: 0 0 8px rgba(65,200,255,0.4);
     }
-    .btn-outline:hover { border-color: var(--grain); color: var(--grain); opacity: 1; }
+    .btn-outline:hover {
+      background: rgba(65,200,255,0.15);
+      border-color: var(--fluid);
+      color: var(--fluid-bright);
+      box-shadow: 0 0 16px rgba(65,200,255,0.25);
+      opacity: 1;
+    }
 
     .scroll-hint {
       position: absolute; bottom: 2rem; left: 50%;
@@ -280,7 +293,7 @@
     }
     .scroll-line {
       width: 1px; height: 36px;
-      background: linear-gradient(var(--grain), transparent);
+      background: linear-gradient(var(--fluid), transparent);
       animation: scrollPulse 2s 1.8s infinite;
     }
 
@@ -293,11 +306,11 @@
       font-size: .68rem;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--grain);
+      color: var(--fluid);
       margin-bottom: .9rem;
       display: flex; align-items: center; gap: .8rem;
     }
-    .section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--grain); }
+    .section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--fluid); }
 
     .section-title {
       font-family: var(--font-display);
@@ -307,7 +320,7 @@
       margin-bottom: .9rem;
       letter-spacing: -.01em;
     }
-    .section-title em { font-style: italic; color: var(--grain); }
+    .section-title em { font-style: italic; color: var(--fluid); }
 
     .section-sub {
       font-size: .95rem;
@@ -340,7 +353,7 @@
     .aside-card {
       padding: 1.3rem 1.5rem;
       border: 1px solid var(--border);
-      border-left: 2px solid var(--grain);
+      border-left: 2px solid var(--fluid);
       background: var(--bg3);
     }
 
@@ -349,7 +362,7 @@
       font-size: .62rem;
       letter-spacing: .16em;
       text-transform: uppercase;
-      color: var(--grain);
+      color: var(--fluid);
       margin-bottom: .55rem;
     }
 
@@ -366,22 +379,22 @@
     .profile-link {
       display: flex; align-items: center; justify-content: space-between;
       padding: .55rem .9rem;
-      border: 1px solid var(--border);
-      background: var(--bg);
+      border: 1px solid rgba(65,200,255,0.25);
+      background: rgba(65,200,255,0.04);
       font-family: var(--font-mono);
       font-size: .7rem;
       letter-spacing: .07em;
-      color: var(--text-muted);
+      color: var(--fluid);
       transition: all .2s;
     }
-    .profile-link:hover { border-color: var(--grain); color: var(--grain); background: var(--grain-dim); opacity: 1; }
+    .profile-link:hover { border-color: var(--fluid); color: var(--fluid-bright); background: var(--fluid-dim); box-shadow: 0 0 12px rgba(65,200,255,0.2); opacity: 1; }
 
     .profile-badge {
       font-size: .62rem;
       padding: .12rem .5rem;
-      border: 1px solid var(--border2);
-      color: var(--grain);
-      background: var(--grain-dim);
+      border: 1px solid rgba(65,200,255,0.35);
+      color: var(--fluid);
+      background: var(--fluid-dim);
     }
 
     /* ── Research ── */
@@ -416,7 +429,7 @@
       background: transparent;
       transition: background .25s;
     }
-    .research-card:hover::after { background: var(--grain); }
+    .research-card:hover::after { background: var(--fluid); box-shadow: 0 0 8px rgba(65,200,255,0.5); }
 
     /* Faint watermark number */
     .research-card::before {
@@ -486,7 +499,7 @@
       font-family: var(--font-mono);
       font-size: .68rem;
       letter-spacing: .1em;
-      color: var(--grain);
+      color: var(--fluid);
       padding-top: .18rem;
     }
 
@@ -519,7 +532,7 @@
     .badge-atlas  { background: rgba(255,61,139,.1); color: var(--track-a); border: 1px solid rgba(255,61,139,.25); }
     .badge-cfd    { background: var(--fluid-dim); color: var(--fluid); border: 1px solid rgba(0,200,232,.25); }
     .badge-ai     { background: rgba(160,210,150,.08); color: #a0d296; border: 1px solid rgba(160,210,150,.25); }
-    .badge-grain  { background: var(--grain-dim); color: var(--grain); border: 1px solid var(--border2); }
+    .badge-grain  { background: var(--fluid-dim); color: var(--fluid); border: 1px solid var(--border2); }
 
     .pub-more { text-align: center; padding: 1.5rem; }
 
@@ -531,7 +544,7 @@
       content: '';
       position: absolute; left: 0; top: .6rem; bottom: 0;
       width: 1px;
-      background: linear-gradient(var(--grain), transparent);
+      background: linear-gradient(var(--fluid), transparent);
     }
 
     .tl-item {
@@ -544,15 +557,15 @@
       position: absolute; left: -1.8rem; top: .55rem;
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--grain);
-      box-shadow: 0 0 8px var(--grain);
+      background: var(--fluid);
+      box-shadow: 0 0 10px rgba(65,200,255,0.7);
     }
 
     .tl-period {
       font-family: var(--font-mono);
       font-size: .66rem;
       letter-spacing: .14em;
-      color: var(--grain);
+      color: var(--fluid);
       margin-bottom: .35rem;
     }
 
@@ -591,16 +604,16 @@
     .contact-card {
       display: flex; flex-direction: column; align-items: center; gap: .45rem;
       padding: 1.3rem 1.8rem;
-      border: 1px solid var(--border);
-      background: var(--bg3);
+      border: 1px solid rgba(65,200,255,0.25);
+      background: rgba(65,200,255,0.04);
       font-family: var(--font-mono);
       font-size: .7rem;
       letter-spacing: .08em;
-      color: var(--text-muted);
+      color: var(--fluid);
       min-width: 150px;
       transition: all .22s;
     }
-    .contact-card:hover { border-color: var(--grain); color: var(--grain); background: var(--grain-dim); opacity: 1; }
+    .contact-card:hover { border-color: var(--fluid); color: var(--fluid-bright); background: var(--fluid-dim); box-shadow: 0 0 16px rgba(65,200,255,0.2); opacity: 1; }
     .contact-card-icon { font-size: 1.3rem; }
 
     /* ── Footer ── */
@@ -617,7 +630,7 @@
       letter-spacing: .09em;
       color: var(--text-dim);
     }
-    .footer-right a { color: var(--grain); }
+    .footer-right a { color: var(--fluid); }
 
     /* ── Animations ── */
     @keyframes fadeUp {
@@ -749,8 +762,8 @@
                 <a class="profile-link" href="https://www.webofscience.com/wos/author/record/ABE-4708-2020" target="_blank">
                   Web of Science <span class="profile-badge">h = 10</span>
                 </a>
-                <a class="profile-link" href="" target="_blank">
-                  University of Pretoria Profile <span class="profile-badge">Profile</span>
+                <a class="profile-link" href="https://www.up.ac.za/mechanical-and-aeronautical-engineering/staff-profiles/muaaz-bhamjee" target="_blank">
+                  University of Pretoria <span class="profile-badge">Profile</span>
                 </a>
               </div>
             </div>
@@ -1003,7 +1016,7 @@
 
     /* ── Palette ── */
     const C = {
-      fluid:   [  0, 212, 255],
+      fluid:   [ 65, 200, 255],
       grain:   [122, 158, 176],
       trackA:  [255,  61, 139],
       trackB:  [255, 224, 130],
