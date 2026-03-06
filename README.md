@@ -73,7 +73,10 @@ cv-bhamjee/
 | `make open` | Build all and open both PDFs |
 | `make open-cv` | Build and open CV only |
 | `make open-stmt` | Build and open NITheCS statement only |
-| `make publish msg="..."` | Build, stage `docs/`, commit, and push |
+| `make publish msg="..."` | Stage `docs/` in the CV repo, commit, and push |
+| `make publish-site msg="..."` | Build + push PDFs to `muaazbhamjee.github.io` |
+| `make publish-html msg="..."` | Push `index.html` to `muaazbhamjee.github.io` |
+| `make submodule-init` | Link the `muaazbhamjee.github.io` repo as `site/` |
 | `make watch` | Rebuild automatically on any source change |
 
 ---
@@ -164,34 +167,68 @@ ATLAS output is prolific. Recommended cadence: **once or twice a year**.
 
 ## Publishing to GitHub Pages
 
-Every successful `make` build copies all PDFs into `docs/`. That folder is tracked
-by Git, so you control exactly when a new version goes public.
+This repo uses a **Git submodule** to push PDFs and the homepage directly to
+`muaazbhamjee.github.io` from a single `make` command.
 
-**To publish:**
+### One-time submodule setup
+
 ```bash
-# One-liner with make:
-make publish msg="Update CV and NITheCS statement March 2026"
-
-# Or manually:
-make
-git add docs/
-git commit -m "Publish March 2026"
+cd cv-mbhamjee
+make submodule-init          # links muaazbhamjee.github.io as site/
+git commit -m "Add github.io submodule"
 git push
 ```
 
-**GitHub Pages setup (one-time):**
-1. Go to your repo on GitHub → **Settings → Pages**
+On a new machine after cloning:
+```bash
+git clone --recurse-submodules <cv-repo-url>
+# or if already cloned:
+git submodule update --init
+```
+
+### Publish PDFs to github.io
+
+Rebuilds all documents, moves PDFs into `site/`, and pushes to `muaazbhamjee.github.io`:
+
+```bash
+make publish-site msg="Update CV March 2026"
+```
+
+PDFs are then live at:
+```
+https://muaazbhamjee.github.io/cv_bhamjee.pdf
+https://muaazbhamjee.github.io/nithecs_statement.pdf
+```
+
+### Publish the homepage to github.io
+
+Copies `index.html` into `site/` and pushes:
+
+```bash
+make publish-html msg="Update homepage"
+```
+
+### Publish both in one go
+
+```bash
+make publish-site msg="Update CV and homepage March 2026"
+make publish-html msg="Update CV and homepage March 2026"
+```
+
+### Publish PDFs to the CV repo only (no github.io)
+
+If you only want to update `docs/` in this repo without touching the github.io site:
+
+```bash
+make publish msg="Add JHEP paper March 2026"
+```
+
+### GitHub Pages setup (one-time, on github.io repo)
+
+1. Go to `github.com/muaazbhamjee/muaazbhamjee.github.io` → **Settings → Pages**
 2. Source: **Deploy from a branch**
-3. Branch: `main`, Folder: `/docs`
-4. Save
-
-Your documents will then be available at stable public URLs:
-```
-https://<your-username>.github.io/cv-bhamjee/cv_bhamjee.pdf
-https://<your-username>.github.io/cv-bhamjee/nithecs_statement.pdf
-```
-
-These URLs are safe to share in email signatures, Google Scholar, LinkedIn, etc.
+3. Branch: `main`, Folder: `/ (root)`
+4. **Save** — site is live at `https://muaazbhamjee.github.io` within minutes
 
 ---
 

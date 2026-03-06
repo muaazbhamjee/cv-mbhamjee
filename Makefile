@@ -12,6 +12,7 @@
 #   make open-stmt          — build and open NITheCS statement only
 #   make publish            — push docs/ to cv-bhamjee repo
 #   make publish-site       — build + push PDFs to muaazbhamjee.github.io
+#   make publish-html       — push index.html to muaazbhamjee.github.io
 #   make watch              — rebuild on any source change
 #
 # ── One-time submodule setup ─────────────────────────────────
@@ -56,7 +57,7 @@ STMT_SOURCES := nithecs_statement.tex
 ALL_SOURCES  := $(CV_SOURCES) $(STMT_SOURCES)
 
 .PHONY: all cv statement clean clean-all open open-cv open-stmt \
-        publish publish-site submodule-init watch
+        publish publish-site publish-html submodule-init watch
 
 # ── Default: build everything ────────────────────────────────
 all: $(ALL_SOURCES)
@@ -135,6 +136,30 @@ publish-site: all
 	    git add *.pdf && \
 	    git diff --cached --quiet && echo "   No PDF changes to publish." || \
 	    ( git commit -m "$(if $(msg),$(msg),Update PDFs $(TODAY))" && \
+	      git push && \
+	      echo "   ✓  Live at https://muaazbhamjee.github.io" )
+	@git add site
+	@git diff --cached --quiet || \
+	    git commit -m "Update site submodule ref $(TODAY)"
+	@git push
+
+
+# ── Publish-html: push index.html to muaazbhamjee.github.io ──
+# Copies index.html into site/, commits, and pushes.
+# Usage:  make publish-html
+#         make publish-html msg="Update homepage"
+publish-html:
+	@if [ ! -e "site/.git" ]; then \
+	    echo "ERROR: site/ submodule not initialised."; \
+	    echo "       Run: make submodule-init"; \
+	    exit 1; \
+	fi
+	@echo "→ Publishing index.html to muaazbhamjee.github.io..."
+	@cp index.html site/index.html
+	@cd site && \
+	    git add index.html && \
+	    git diff --cached --quiet && echo "   No changes to index.html." || \
+	    ( git commit -m "$(if $(msg),$(msg),Update homepage $(TODAY))" && \
 	      git push && \
 	      echo "   ✓  Live at https://muaazbhamjee.github.io" )
 	@git add site
