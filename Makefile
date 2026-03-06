@@ -49,10 +49,9 @@ CV_SOURCES := cv_bhamjee_main.tex \
               conferences.bib \
               patents.bib \
               bookchapters.bib \
-              other_scholarly.bib \
-              build.py
+              other_scholarly.bib
 
-STMT_SOURCES := nithecs_statement.tex build.py
+STMT_SOURCES := nithecs_statement.tex
 
 ALL_SOURCES  := $(CV_SOURCES) $(STMT_SOURCES)
 
