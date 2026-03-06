@@ -4,45 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prof. Muaaz Bhamjee — Associate Professor, University of Pretoria</title>
-  <meta name="description" content="Personal academic website of Prof. Muaaz Bhamjee — Associate Professor in Mechanical & Aeronautical Engineering at the University of Pretoria. Research in computational fluid dynamics, AI, climate science, high-energy physics, and quantum computing." />
-  <meta name="keywords" content="Muaaz Bhamjee, CFD, computational fluid dynamics, ATLAS CERN, machine learning, climate science, quantum computing, University of Pretoria" />
-
-  <!-- Open Graph -->
+  <meta name="description" content="Personal academic website of Prof. Muaaz Bhamjee — Associate Professor in Mechanical & Aeronautical Engineering at the University of Pretoria." />
+  <meta name="keywords" content="Muaaz Bhamjee, CFD, LBM, granular dynamics, ATLAS CERN, machine learning, climate science, quantum computing, University of Pretoria" />
   <meta property="og:title" content="Prof. Muaaz Bhamjee" />
   <meta property="og:description" content="Associate Professor, Mechanical & Aeronautical Engineering, University of Pretoria" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://muaazbhamjee.github.io" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Reset & Base ───────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #04080f;
-      --bg2:        #080f1d;
-      --bg3:        #0c1526;
-      --surface:    #0f1e35;
-      --cyan:       #00d4ff;
-      --cyan-dim:   rgba(0, 212, 255, 0.12);
-      --cyan-mid:   rgba(0, 212, 255, 0.35);
-      --gold:       #e8a020;
-      --gold-dim:   rgba(232, 160, 32, 0.15);
-      --violet:     #8b5cf6;
-      --text:       #dce8f5;
-      --text-muted: #7a9ab8;
-      --text-dim:   #3d5a78;
-      --border:     rgba(0, 212, 255, 0.1);
-      --border2:    rgba(0, 212, 255, 0.2);
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-sans:  'Outfit', sans-serif;
-      --font-mono:  'DM Mono', monospace;
-      --max:        1140px;
-      --pad:        clamp(1.5rem, 5vw, 4rem);
+      --bg:          #07080a;
+      --bg2:         #0c0e12;
+      --bg3:         #111418;
+      --surface:     #161b22;
+      --fluid:       #00c8e8;
+      --fluid-dim:   rgba(0,200,232,0.10);
+      --fluid-mid:   rgba(0,200,232,0.30);
+      --grain:       #7a9eb0;
+      --grain-dim:   rgba(122,158,176,0.12);
+      --grain-mid:   rgba(122,158,176,0.30);
+      --track-a:     #ff3d8b;
+      --track-b:     #ffe082;
+      --text:        #e8e4d8;
+      --text-muted:  #7a8090;
+      --text-dim:    #363d48;
+      --border:      rgba(122,158,176,0.10);
+      --border2:     rgba(122,158,176,0.22);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+      --font-body:    'Source Serif 4', Georgia, serif;
+      --max:          1160px;
+      --pad:          clamp(1.5rem, 5vw, 4rem);
     }
 
     html { scroll-behavior: smooth; }
@@ -50,59 +48,52 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-sans);
+      font-family: var(--font-body);
       font-weight: 300;
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.75;
       overflow-x: hidden;
     }
 
-    ::selection { background: var(--cyan-mid); color: #fff; }
+    ::selection { background: var(--grain-mid); color: #fff; }
+    a { color: var(--fluid); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .7; }
 
-    a { color: var(--cyan); text-decoration: none; transition: opacity .2s; }
-    a:hover { opacity: .75; }
-
-    /* ── Scrollbar ──────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--cyan-mid); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,212,255,.35); border-radius: 2px; }
 
-    /* ── Nav ────────────────────────────────────────────────── */
+    /* ── Nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem var(--pad);
-      background: rgba(4, 8, 15, 0.85);
-      backdrop-filter: blur(16px);
+      padding: 1rem var(--pad);
+      background: rgba(7,8,10,0.88);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
 
     .nav-logo {
-      font-family: var(--font-serif);
-      font-size: 1.15rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
       font-weight: 600;
-      letter-spacing: .04em;
+      letter-spacing: .02em;
       color: var(--text);
     }
+    .nav-logo em { font-style: italic; color: var(--grain); }
 
-    .nav-logo span { color: var(--cyan); }
-
-    .nav-links {
-      display: flex; gap: 2rem; list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      font-size: .8rem;
-      font-weight: 400;
+      font-family: var(--font-mono);
+      font-size: .72rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--text-muted);
       transition: color .2s;
     }
+    .nav-links a:hover { color: var(--grain); opacity: 1; }
 
-    .nav-links a:hover { color: var(--cyan); opacity: 1; }
-
-    /* ── Hero ───────────────────────────────────────────────── */
+    /* ── Hero ── */
     #hero {
       position: relative;
       min-height: 100vh;
@@ -111,241 +102,227 @@
       overflow: hidden;
     }
 
-    #particle-canvas {
+    #physics-canvas {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      opacity: .6;
     }
 
-    /* Subtle grid overlay */
+    /* Fine measurement grid */
     #hero::before {
       content: '';
       position: absolute; inset: 0;
       background-image:
         linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px),
+        linear-gradient(rgba(0,212,255,.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,.012) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
       pointer-events: none;
     }
 
-    /* Radial glow */
+    /* Vignette */
     #hero::after {
       content: '';
-      position: absolute;
-      top: 30%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 800px; height: 600px;
-      background: radial-gradient(ellipse, rgba(0,212,255,.06) 0%, transparent 70%);
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, transparent 40%, rgba(4,8,15,.7) 100%);
       pointer-events: none;
     }
 
     .hero-content {
       position: relative; z-index: 2;
       max-width: var(--max); margin: 0 auto; width: 100%;
-      padding-top: 5rem;
+      padding-top: 6rem;
     }
 
     .hero-eyebrow {
       font-family: var(--font-mono);
-      font-size: .75rem;
-      letter-spacing: .2em;
+      font-size: .72rem;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1.5rem;
+      color: var(--grain);
+      margin-bottom: 1.2rem;
       opacity: 0;
-      animation: fadeUp .8s .2s forwards;
+      animation: fadeUp .9s .15s forwards;
+      display: flex; align-items: center; gap: .8rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--grain);
     }
 
     .hero-name {
-      font-family: var(--font-serif);
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      font-weight: 300;
-      line-height: 1.05;
-      letter-spacing: -.01em;
-      color: #fff;
-      margin-bottom: .5rem;
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 9vw, 7rem);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -.02em;
+      color: var(--text);
+      margin-bottom: .4rem;
       opacity: 0;
-      animation: fadeUp .8s .35s forwards;
+      animation: fadeUp .9s .3s forwards;
     }
 
     .hero-name em {
       font-style: italic;
-      color: var(--cyan);
+      font-weight: 600;
+      color: var(--grain);
     }
 
-    .hero-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      font-weight: 300;
+    .hero-dept {
+      font-family: var(--font-display);
+      font-size: clamp(.95rem, 2vw, 1.25rem);
       font-style: italic;
+      font-weight: 300;
       color: var(--text-muted);
       margin-bottom: 2.5rem;
       opacity: 0;
-      animation: fadeUp .8s .5s forwards;
+      animation: fadeUp .9s .45s forwards;
     }
 
-    .hero-tags {
-      display: flex; flex-wrap: wrap; gap: .6rem;
-      margin-bottom: 3rem;
+    /* Discipline tags — styled as detector readout labels */
+    .hero-disciplines {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      margin-bottom: 2.8rem;
       opacity: 0;
-      animation: fadeUp .8s .65s forwards;
+      animation: fadeUp .9s .6s forwards;
     }
 
-    .tag {
+    .disc {
       font-family: var(--font-mono);
-      font-size: .7rem;
+      font-size: .68rem;
       letter-spacing: .1em;
-      padding: .35rem .8rem;
-      border: 1px solid var(--border2);
-      border-radius: 2px;
-      color: var(--text-muted);
-      background: var(--cyan-dim);
-      transition: all .2s;
+      padding: .3rem .75rem;
+      border-radius: 1px;
+      text-transform: uppercase;
     }
 
-    .tag:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: rgba(0,212,255,.18);
-    }
+    .disc-fluid  { border: 1px solid rgba(0,212,255,.35); color: var(--fluid); background: var(--fluid-dim); }
+    .disc-grain  { border: 1px solid rgba(122,158,176,.30); color: var(--grain); background: var(--grain-dim); }
+    .disc-phys   { border: 1px solid rgba(255,61,139,.3); color: var(--track-a); background: rgba(255,61,139,.08); }
+    .disc-ai     { border: 1px solid rgba(255,224,130,.3); color: var(--track-b); background: rgba(255,224,130,.07); }
+    .disc-q      { border: 1px solid rgba(160,210,150,.3); color: #a0d296; background: rgba(160,210,150,.07); }
 
+    /* Metrics row */
     .hero-metrics {
-      display: flex; gap: 3rem; flex-wrap: wrap;
+      display: flex; gap: clamp(1.5rem, 4vw, 3.5rem); flex-wrap: wrap;
       margin-bottom: 3rem;
       opacity: 0;
-      animation: fadeUp .8s .8s forwards;
+      animation: fadeUp .9s .75s forwards;
     }
 
     .metric { display: flex; flex-direction: column; }
 
     .metric-value {
-      font-family: var(--font-serif);
-      font-size: 2.4rem;
-      font-weight: 600;
-      color: var(--cyan);
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--grain);
       line-height: 1;
+      letter-spacing: -.03em;
     }
 
     .metric-label {
       font-family: var(--font-mono);
-      font-size: .65rem;
-      letter-spacing: .15em;
+      font-size: .62rem;
+      letter-spacing: .16em;
       text-transform: uppercase;
       color: var(--text-dim);
       margin-top: .3rem;
     }
 
     .hero-cta {
-      display: flex; gap: 1rem; flex-wrap: wrap;
+      display: flex; gap: .85rem; flex-wrap: wrap;
       opacity: 0;
-      animation: fadeUp .8s .95s forwards;
+      animation: fadeUp .9s .9s forwards;
     }
 
     .btn {
-      display: inline-flex; align-items: center; gap: .5rem;
+      display: inline-flex; align-items: center; gap: .45rem;
       font-family: var(--font-mono);
-      font-size: .75rem;
+      font-size: .72rem;
       letter-spacing: .1em;
       text-transform: uppercase;
-      padding: .75rem 1.6rem;
-      border-radius: 2px;
-      transition: all .2s;
+      padding: .7rem 1.5rem;
+      border-radius: 1px;
+      transition: all .22s;
       cursor: pointer;
     }
 
     .btn-primary {
-      background: var(--cyan);
+      background: var(--grain);
       color: var(--bg);
-      font-weight: 400;
-      border: 1px solid var(--cyan);
+      border: 1px solid var(--grain);
+      font-weight: 500;
     }
-
-    .btn-primary:hover {
-      background: transparent;
-      color: var(--cyan);
-      opacity: 1;
-    }
+    .btn-primary:hover { background: transparent; color: var(--grain); opacity: 1; }
 
     .btn-outline {
       background: transparent;
       color: var(--text-muted);
       border: 1px solid var(--border2);
     }
+    .btn-outline:hover { border-color: var(--grain); color: var(--grain); opacity: 1; }
 
-    .btn-outline:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      opacity: 1;
-    }
-
-    /* Scroll indicator */
     .scroll-hint {
       position: absolute; bottom: 2rem; left: 50%;
       transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
       font-family: var(--font-mono);
-      font-size: .65rem;
-      letter-spacing: .15em;
+      font-size: .6rem;
+      letter-spacing: .18em;
       color: var(--text-dim);
+      text-transform: uppercase;
       opacity: 0;
-      animation: fadeIn 1s 1.5s forwards;
+      animation: fadeIn 1s 1.8s forwards;
     }
-
     .scroll-line {
-      width: 1px; height: 40px;
-      background: linear-gradient(var(--cyan), transparent);
-      animation: scrollPulse 2s 1.5s infinite;
+      width: 1px; height: 36px;
+      background: linear-gradient(var(--grain), transparent);
+      animation: scrollPulse 2s 1.8s infinite;
     }
 
-    /* ── Sections ───────────────────────────────────────────── */
-    section {
-      padding: clamp(4rem, 10vw, 8rem) var(--pad);
-    }
-
-    .section-inner {
-      max-width: var(--max); margin: 0 auto;
-    }
+    /* ── Sections ── */
+    section { padding: clamp(4rem, 10vw, 8rem) var(--pad); }
+    .section-inner { max-width: var(--max); margin: 0 auto; }
 
     .section-label {
       font-family: var(--font-mono);
-      font-size: .7rem;
-      letter-spacing: .2em;
+      font-size: .68rem;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1rem;
+      color: var(--grain);
+      margin-bottom: .9rem;
       display: flex; align-items: center; gap: .8rem;
     }
-
-    .section-label::after {
-      content: '';
-      flex: 1; max-width: 80px;
-      height: 1px;
-      background: var(--border2);
-    }
+    .section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--grain); }
 
     .section-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 300;
-      line-height: 1.15;
-      margin-bottom: 1rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: .9rem;
+      letter-spacing: -.01em;
     }
-
-    .section-title em { color: var(--cyan); font-style: italic; }
+    .section-title em { font-style: italic; color: var(--grain); }
 
     .section-sub {
       font-size: .95rem;
       color: var(--text-muted);
-      max-width: 600px;
+      max-width: 580px;
       margin-bottom: 3.5rem;
+      line-height: 1.8;
     }
 
-    /* ── About ──────────────────────────────────────────────── */
+    /* ── About ── */
     #about { background: var(--bg2); }
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.1fr .9fr;
       gap: 4rem;
       align-items: start;
     }
@@ -353,365 +330,328 @@
     .about-text p {
       color: var(--text-muted);
       margin-bottom: 1.2rem;
-      font-size: .97rem;
-      line-height: 1.85;
+      font-size: .96rem;
+      line-height: 1.9;
     }
+    .about-text p strong { color: var(--text); font-weight: 400; }
 
-    .about-text p strong { color: var(--text); font-weight: 500; }
-
-    .about-aside {
-      display: flex; flex-direction: column; gap: 1.5rem;
-    }
+    .aside-stack { display: flex; flex-direction: column; gap: 1.2rem; }
 
     .aside-card {
-      padding: 1.4rem;
+      padding: 1.3rem 1.5rem;
       border: 1px solid var(--border);
-      border-left: 3px solid var(--cyan);
-      background: var(--surface);
-      border-radius: 0 2px 2px 0;
+      border-left: 2px solid var(--grain);
+      background: var(--bg3);
     }
 
-    .aside-card-label {
+    .aside-label {
       font-family: var(--font-mono);
-      font-size: .65rem;
-      letter-spacing: .15em;
+      font-size: .62rem;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: .6rem;
+      color: var(--grain);
+      margin-bottom: .55rem;
     }
 
-    .aside-card-value {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
+    .aside-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
-    .profile-links {
-      display: flex; flex-direction: column; gap: .5rem;
-    }
+    .profile-links { display: flex; flex-direction: column; gap: .4rem; }
 
     .profile-link {
       display: flex; align-items: center; justify-content: space-between;
-      padding: .6rem .9rem;
+      padding: .55rem .9rem;
       border: 1px solid var(--border);
-      background: var(--bg3);
+      background: var(--bg);
       font-family: var(--font-mono);
-      font-size: .72rem;
-      letter-spacing: .08em;
+      font-size: .7rem;
+      letter-spacing: .07em;
       color: var(--text-muted);
       transition: all .2s;
-      border-radius: 2px;
     }
+    .profile-link:hover { border-color: var(--grain); color: var(--grain); background: var(--grain-dim); opacity: 1; }
 
-    .profile-link:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: var(--cyan-dim);
-      opacity: 1;
-    }
-
-    .profile-link-badge {
-      background: var(--cyan-dim);
+    .profile-badge {
+      font-size: .62rem;
+      padding: .12rem .5rem;
       border: 1px solid var(--border2);
-      padding: .15rem .5rem;
-      border-radius: 2px;
-      font-size: .65rem;
-      color: var(--cyan);
+      color: var(--grain);
+      background: var(--grain-dim);
     }
 
-    /* ── Research ───────────────────────────────────────────── */
+    /* ── Research ── */
     #research { background: var(--bg); }
 
+    /* Grid with a deliberate asymmetric layout */
     .research-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5px;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
     }
 
+    /* Make first card span 2 rows */
+    .research-card:first-child { grid-row: span 2; }
+
     .research-card {
       background: var(--bg);
-      padding: 2rem;
+      padding: 2rem 1.8rem;
       position: relative;
       overflow: hidden;
-      transition: background .3s;
-      cursor: default;
+      transition: background .25s;
     }
-
     .research-card:hover { background: var(--surface); }
 
-    .research-card::before {
+    .research-card::after {
       content: '';
       position: absolute; top: 0; left: 0; right: 0;
       height: 2px;
       background: transparent;
-      transition: background .3s;
+      transition: background .25s;
+    }
+    .research-card:hover::after { background: var(--grain); }
+
+    /* Faint watermark number */
+    .research-card::before {
+      content: attr(data-n);
+      position: absolute; bottom: .8rem; right: 1.2rem;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(122,158,176,.05);
+      line-height: 1;
+      pointer-events: none;
     }
 
-    .research-card:hover::before { background: var(--cyan); }
+    .rc-icon { font-size: 1.6rem; margin-bottom: .9rem; display: block; }
 
-    .research-icon {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .research-card-title {
-      font-family: var(--font-serif);
-      font-size: 1.25rem;
-      font-weight: 400;
+    .rc-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
       color: var(--text);
-      margin-bottom: .6rem;
+      margin-bottom: .5rem;
+      line-height: 1.3;
     }
 
-    .research-card-body {
+    .rc-body {
       font-size: .87rem;
       color: var(--text-muted);
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
-    .research-card-tags {
-      display: flex; flex-wrap: wrap; gap: .4rem;
-      margin-top: 1.2rem;
+    .rc-tags {
+      display: flex; flex-wrap: wrap; gap: .35rem;
+      margin-top: 1.1rem;
     }
 
-    .research-tag {
+    .rc-tag {
       font-family: var(--font-mono);
-      font-size: .62rem;
-      letter-spacing: .08em;
-      padding: .2rem .55rem;
+      font-size: .6rem;
+      letter-spacing: .07em;
+      padding: .18rem .5rem;
       border: 1px solid var(--border);
       color: var(--text-dim);
-      border-radius: 2px;
     }
 
-    /* ── Publications ───────────────────────────────────────── */
+    /* ── Publications ── */
     #publications { background: var(--bg2); }
 
-    .pub-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 2rem; }
+    .pub-list {
+      display: flex; flex-direction: column;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
 
     .pub-item {
       background: var(--bg2);
-      padding: 1.6rem 2rem;
+      padding: 1.5rem 1.8rem;
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 1.5rem;
+      grid-template-columns: 2.8rem 1fr auto;
+      gap: 1.4rem;
       align-items: start;
       transition: background .2s;
     }
-
     .pub-item:hover { background: var(--surface); }
 
     .pub-year {
       font-family: var(--font-mono);
-      font-size: .7rem;
+      font-size: .68rem;
       letter-spacing: .1em;
-      color: var(--cyan);
-      padding-top: .2rem;
-      min-width: 2.5rem;
+      color: var(--grain);
+      padding-top: .18rem;
     }
 
-    .pub-content {}
-
     .pub-title {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
       font-weight: 400;
       color: var(--text);
-      margin-bottom: .35rem;
-      line-height: 1.4;
+      margin-bottom: .3rem;
+      line-height: 1.45;
     }
 
     .pub-venue {
       font-size: .8rem;
-      color: var(--text-muted);
       font-style: italic;
+      color: var(--text-muted);
     }
 
     .pub-badge {
       font-family: var(--font-mono);
-      font-size: .62rem;
+      font-size: .6rem;
       letter-spacing: .08em;
-      padding: .25rem .7rem;
-      border-radius: 2px;
+      padding: .22rem .65rem;
       white-space: nowrap;
+      margin-top: .12rem;
       align-self: start;
-      margin-top: .15rem;
     }
 
-    .badge-nature { background: rgba(232,160,32,.15); color: var(--gold); border: 1px solid rgba(232,160,32,.3); }
-    .badge-atlas  { background: rgba(139,92,246,.15); color: var(--violet); border: 1px solid rgba(139,92,246,.3); }
-    .badge-cfd    { background: var(--cyan-dim); color: var(--cyan); border: 1px solid var(--border2); }
-    .badge-ai     { background: rgba(16,185,129,.15); color: #10b981; border: 1px solid rgba(16,185,129,.3); }
+    .badge-nature { background: rgba(255,224,130,.1); color: var(--track-b); border: 1px solid rgba(255,224,130,.3); }
+    .badge-atlas  { background: rgba(255,61,139,.1); color: var(--track-a); border: 1px solid rgba(255,61,139,.25); }
+    .badge-cfd    { background: var(--fluid-dim); color: var(--fluid); border: 1px solid rgba(0,200,232,.25); }
+    .badge-ai     { background: rgba(160,210,150,.08); color: #a0d296; border: 1px solid rgba(160,210,150,.25); }
+    .badge-grain  { background: var(--grain-dim); color: var(--grain); border: 1px solid var(--border2); }
 
-    .pub-more {
-      text-align: center;
-      padding: 1.5rem;
-    }
+    .pub-more { text-align: center; padding: 1.5rem; }
 
-    /* ── Positions / Timeline ───────────────────────────────── */
+    /* ── Timeline ── */
     #positions { background: var(--bg); }
 
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-    }
-
+    .timeline { position: relative; padding-left: 1.8rem; }
     .timeline::before {
       content: '';
-      position: absolute; left: 0; top: .5rem; bottom: .5rem;
+      position: absolute; left: 0; top: .6rem; bottom: 0;
       width: 1px;
-      background: linear-gradient(var(--cyan), transparent);
+      background: linear-gradient(var(--grain), transparent);
     }
 
-    .timeline-item {
+    .tl-item {
       position: relative;
-      padding: 0 0 2.5rem 2rem;
+      padding: 0 0 2.8rem 2rem;
     }
 
-    .timeline-item::before {
+    .tl-item::before {
       content: '';
-      position: absolute; left: -2rem;
-      top: .4rem;
-      width: 7px; height: 7px;
+      position: absolute; left: -1.8rem; top: .55rem;
+      width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan);
+      background: var(--grain);
+      box-shadow: 0 0 8px var(--grain);
     }
 
-    .timeline-period {
+    .tl-period {
       font-family: var(--font-mono);
-      font-size: .68rem;
-      letter-spacing: .12em;
-      color: var(--cyan);
-      margin-bottom: .4rem;
+      font-size: .66rem;
+      letter-spacing: .14em;
+      color: var(--grain);
+      margin-bottom: .35rem;
     }
 
-    .timeline-role {
-      font-family: var(--font-serif);
-      font-size: 1.2rem;
-      font-weight: 400;
+    .tl-role {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 600;
       color: var(--text);
       margin-bottom: .2rem;
     }
 
-    .timeline-org {
-      font-size: .88rem;
+    .tl-org {
+      font-size: .87rem;
+      font-style: italic;
       color: var(--text-muted);
-      margin-bottom: .5rem;
+      margin-bottom: .45rem;
     }
 
-    .timeline-desc {
-      font-size: .85rem;
+    .tl-desc {
+      font-size: .84rem;
       color: var(--text-dim);
-      line-height: 1.65;
-      max-width: 560px;
+      line-height: 1.7;
+      max-width: 540px;
     }
 
-    /* ── Contact ────────────────────────────────────────────── */
-    #contact {
-      background: var(--bg2);
-      text-align: center;
-    }
-
+    /* ── Contact ── */
+    #contact { background: var(--bg2); text-align: center; }
     #contact .section-label { justify-content: center; }
-    #contact .section-label::after { display: none; }
+    #contact .section-label::before { display: none; }
 
-    .contact-grid {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;
+    .contact-row {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: .85rem;
       margin-top: 2.5rem;
     }
 
     .contact-card {
-      display: flex; flex-direction: column; align-items: center; gap: .5rem;
-      padding: 1.4rem 2rem;
+      display: flex; flex-direction: column; align-items: center; gap: .45rem;
+      padding: 1.3rem 1.8rem;
       border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: 2px;
+      background: var(--bg3);
       font-family: var(--font-mono);
-      font-size: .72rem;
+      font-size: .7rem;
       letter-spacing: .08em;
       color: var(--text-muted);
-      min-width: 160px;
-      transition: all .2s;
+      min-width: 150px;
+      transition: all .22s;
     }
+    .contact-card:hover { border-color: var(--grain); color: var(--grain); background: var(--grain-dim); opacity: 1; }
+    .contact-card-icon { font-size: 1.3rem; }
 
-    .contact-card:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: var(--cyan-dim);
-      opacity: 1;
-    }
-
-    .contact-card-icon { font-size: 1.4rem; }
-
-    /* ── Footer ─────────────────────────────────────────────── */
+    /* ── Footer ── */
     footer {
-      padding: 2rem var(--pad);
+      padding: 1.8rem var(--pad);
       border-top: 1px solid var(--border);
       display: flex; justify-content: space-between; align-items: center;
       flex-wrap: wrap; gap: 1rem;
-      background: var(--bg);
     }
 
-    .footer-left {
+    .footer-copy, .footer-right {
       font-family: var(--font-mono);
-      font-size: .68rem;
-      letter-spacing: .1em;
+      font-size: .65rem;
+      letter-spacing: .09em;
       color: var(--text-dim);
     }
+    .footer-right a { color: var(--grain); }
 
-    .footer-right {
-      font-family: var(--font-mono);
-      font-size: .68rem;
-      letter-spacing: .08em;
-      color: var(--text-dim);
-    }
-
-    .footer-right a { color: var(--cyan); }
-
-    /* ── Animations ─────────────────────────────────────────── */
+    /* ── Animations ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
+    @keyframes fadeIn { to { opacity: 1; } }
     @keyframes scrollPulse {
-      0%, 100% { opacity: .3; }
+      0%, 100% { opacity: .25; }
       50% { opacity: 1; }
     }
 
-    /* Intersection observer reveal */
     .reveal {
-      opacity: 0;
-      transform: translateY(24px);
+      opacity: 0; transform: translateY(22px);
       transition: opacity .7s ease, transform .7s ease;
     }
+    .reveal.visible { opacity: 1; transform: none; }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── Responsive ─────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .research-grid { grid-template-columns: 1fr 1fr; }
+      .research-card:first-child { grid-row: span 1; }
       .about-grid { grid-template-columns: 1fr; }
-      .hero-metrics { gap: 2rem; }
-      .pub-item { grid-template-columns: 1fr; gap: .5rem; }
-      .pub-year { font-size: .65rem; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .research-grid { grid-template-columns: 1fr; }
+      .pub-item { grid-template-columns: 1fr; gap: .4rem; }
+      .hero-metrics { gap: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── Nav ──────────────────────────────────────────────── -->
   <nav>
     <span class="nav-logo">M. <em>Bhamjee</em></span>
     <ul class="nav-links">
@@ -724,26 +664,26 @@
     </ul>
   </nav>
 
-  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <!-- ── Hero ── -->
   <section id="hero">
-    <canvas id="particle-canvas"></canvas>
+    <canvas id="physics-canvas"></canvas>
+
     <div class="hero-content">
       <p class="hero-eyebrow">Associate Professor · University of Pretoria</p>
       <h1 class="hero-name">Muaaz<br><em>Bhamjee</em></h1>
-      <p class="hero-title">
-        Mechanical &amp; Aeronautical Engineering &nbsp;·&nbsp;
-        Computational Mechanics, AI &amp; Quantum Sciences
-      </p>
-      <div class="hero-tags">
-        <span class="tag">Computational Fluid Dynamics</span>
-        <span class="tag">Lattice Boltzmann Method</span>
-        <span class="tag">ATLAS / CERN</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Climate Intelligence</span>
-        <span class="tag">Quantum Computing</span>
-        <span class="tag">Quantum Sensing</span>
-        <span class="tag">High Performance Computing</span>
+      <p class="hero-dept">Mechanical &amp; Aeronautical Engineering</p>
+
+      <div class="hero-disciplines">
+        <span class="disc disc-fluid">Computational Fluid Dynamics</span>
+        <span class="disc disc-grain">Granular Dynamics</span>
+        <span class="disc disc-grain">Lattice Boltzmann Method</span>
+        <span class="disc disc-phys">High-Energy Physics</span>
+        <span class="disc disc-phys">ATLAS / CERN</span>
+        <span class="disc disc-ai">AI &amp; Climate Intelligence</span>
+        <span class="disc disc-q">Quantum Computing</span>
+        <span class="disc disc-q">Quantum Sensing</span>
       </div>
+
       <div class="hero-metrics">
         <div class="metric">
           <span class="metric-value">53</span>
@@ -762,53 +702,57 @@
           <span class="metric-label">Masters Supervised</span>
         </div>
       </div>
+
       <div class="hero-cta">
         <a class="btn btn-primary" href="cv_bhamjee.pdf" target="_blank">Download CV</a>
-        <a class="btn btn-outline" href="#research">Research Areas ↓</a>
+        <a class="btn btn-outline" href="#research">Research ↓</a>
         <a class="btn btn-outline" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">Google Scholar ↗</a>
       </div>
     </div>
+
     <div class="scroll-hint">
       <span>Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ── About ─────────────────────────────────────────────── -->
+  <!-- ── About ── -->
   <section id="about">
     <div class="section-inner">
       <p class="section-label reveal">About</p>
-      <h2 class="section-title reveal">Bridging <em>scales</em> —<br>from turbulent flows to colliding protons</h2>
+      <h2 class="section-title reveal">From turbulent <em>flows</em><br>to colliding protons</h2>
       <div class="about-grid">
         <div class="about-text reveal">
-          <p>I am an Associate Professor in the Department of Mechanical &amp; Aeronautical Engineering at the <strong>University of Pretoria</strong>, where I lead research programmes spanning computational mechanics, artificial intelligence, climate science, high-energy physics, and quantum technologies.</p>
-          <p>My work is characterised by a commitment to <strong>high-performance computing as an enabler</strong> — whether resolving multiphase flow in a hydrocyclone, reconstructing particle collision events at the ATLAS detector at CERN, forecasting urban heat islands with foundation AI models, or developing quantum sensing and computing programmes with real-world impact.</p>
-          <p>Previously I was a Staff Research Scientist at <strong>IBM Research Africa</strong>, where I co-developed the open-source <em>Granite Geospatial Land Surface Temperature</em> model, a fine-tuned Earth Observation Foundation Model now publicly available on HuggingFace. I hold a BEng (Mechanical Engineering), BSc Honours (Applied Mathematics), MEng, and DIng (Computational Fluid &amp; Granular Dynamics), all from the University of Johannesburg.</p>
-          <p>I am Vice-President of the Executive Committee of the <strong>South African Association for Theoretical and Applied Mechanics (SAAM)</strong> and Vice-President of the South African National IUTAM (International Union of Theoretical and Applied Mechanics) Committee. I am an author on more than 200 publications as a member of the <strong>ATLAS Collaboration at CERN</strong>.</p>
+          <p>I am an Associate Professor in the Department of Mechanical &amp; Aeronautical Engineering at the <strong>University of Pretoria</strong>, leading research that spans the full spectrum of computational and theoretical physics — from the macroscale dynamics of granular and multiphase flows to the subatomic world of high-energy particle collisions at CERN.</p>
+          <p>My group develops and applies the <strong>Lattice Boltzmann Method (LBM)</strong> and Euler–Euler CFD frameworks on HPC infrastructure, resolving multiphase flow in industrial process equipment including hydrocyclones, fluidised beds, and biomedical devices. This computational mechanics foundation connects naturally to my work on <strong>data-driven and AI-based approaches</strong> to climate intelligence, where I co-developed the open-source <em>Granite Geospatial Land Surface Temperature</em> Earth Observation Foundation Model at IBM Research Africa.</p>
+          <p>At the frontier of fundamental physics, I am a contributing author on the <strong>ATLAS Collaboration</strong> at CERN, with publications spanning Higgs boson characterisation, top quark physics, and the landmark 2024 <em>Nature</em> observation of quantum entanglement with top quarks. New programmes in <strong>quantum computing and quantum sensing</strong> at UP extend this quantum thread into engineering applications.</p>
+          <p>I am <strong>Vice-President</strong> of the Executive Committee of the South African Association for Theoretical and Applied Mechanics (SAAM) and Vice-President of the South African National IUTAM Committee.</p>
         </div>
         <div class="about-aside reveal">
-          <div class="aside-card">
-            <div class="aside-card-label">Current Position</div>
-            <div class="aside-card-value">Associate Professor<br>Dept. of Mechanical &amp; Aeronautical Engineering<br>University of Pretoria</div>
-          </div>
-          <div class="aside-card">
-            <div class="aside-card-label">Research Profiles</div>
-            <div class="profile-links">
-              <a class="profile-link" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">
-                Google Scholar <span class="profile-link-badge">h = 53</span>
-              </a>
-              <a class="profile-link" href="https://www.scopus.com/authid/detail.uri?authorId=55247084100" target="_blank">
-                Scopus <span class="profile-link-badge">h = 25</span>
-              </a>
-              <a class="profile-link" href="https://orcid.org/0000-0002-2697-4589" target="_blank">
-                ORCID <span class="profile-link-badge">0000-0002-2697-4589</span>
-              </a>
-              <a class="profile-link" href="https://www.webofscience.com/wos/author/record/ABE-4708-2020" target="_blank">
-                Web of Science <span class="profile-link-badge">h = 10</span>
-              </a>
-              <a class="profile-link" href="https://research.ibm.com/people/muaaz-bhamjee" target="_blank">
-                IBM Research <span class="profile-link-badge">Profile</span>
-              </a>
+          <div class="aside-stack">
+            <div class="aside-card">
+              <div class="aside-label">Current Position</div>
+              <div class="aside-value">Associate Professor<br>Mechanical &amp; Aeronautical Engineering<br>University of Pretoria</div>
+            </div>
+            <div class="aside-card">
+              <div class="aside-label">Research Profiles</div>
+              <div class="profile-links">
+                <a class="profile-link" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">
+                  Google Scholar <span class="profile-badge">h = 53</span>
+                </a>
+                <a class="profile-link" href="https://www.scopus.com/authid/detail.uri?authorId=55247084100" target="_blank">
+                  Scopus <span class="profile-badge">h = 25</span>
+                </a>
+                <a class="profile-link" href="https://orcid.org/0000-0002-2697-4589" target="_blank">
+                  ORCID <span class="profile-badge">0000-0002-2697-4589</span>
+                </a>
+                <a class="profile-link" href="https://www.webofscience.com/wos/author/record/ABE-4708-2020" target="_blank">
+                  Web of Science <span class="profile-badge">h = 10</span>
+                </a>
+                <a class="profile-link" href="https://research.ibm.com/people/muaaz-bhamjee" target="_blank">
+                  IBM Research <span class="profile-badge">Profile</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -816,82 +760,85 @@
     </div>
   </section>
 
-  <!-- ── Research ──────────────────────────────────────────── -->
+  <!-- ── Research ── -->
   <section id="research">
     <div class="section-inner">
       <p class="section-label reveal">Research</p>
       <h2 class="section-title reveal">Areas of <em>investigation</em></h2>
-      <p class="section-sub reveal">A portfolio spanning four decades of scale — from quantum phenomena to planetary climate systems.</p>
+      <p class="section-sub reveal">Six interlocking research programmes spanning four orders of magnitude in physical scale.</p>
       <div class="research-grid reveal">
 
-        <div class="research-card">
-          <span class="research-icon">🌀</span>
-          <h3 class="research-card-title">Computational Fluid Dynamics</h3>
-          <p class="research-card-body">Multiphase and granular flow modelling in process equipment including hydrocyclones, fluidised beds, and biomedical devices. Development of Lattice Boltzmann Method (LBM) and Euler–Euler frameworks on HPC infrastructure.</p>
-          <div class="research-card-tags">
-            <span class="research-tag">LBM</span>
-            <span class="research-tag">Multiphase Flow</span>
-            <span class="research-tag">HPC</span>
-            <span class="research-tag">OpenFOAM</span>
+        <div class="research-card" data-n="01">
+          <span class="rc-icon">🌀</span>
+          <h3 class="rc-title">Computational Fluid Dynamics &amp; Granular Flow</h3>
+          <p class="rc-body">Multiphase and granular flow modelling in process equipment — hydrocyclones, fluidised beds, pneumatic conveyors — using Lattice Boltzmann Method (LBM) and Euler–Euler frameworks. Flow regimes span laminar, turbulent, and dense granular packing. Industrial partner: Multotec Pty. Ltd.</p>
+          <div class="rc-tags">
+            <span class="rc-tag">LBM</span>
+            <span class="rc-tag">Multiphase Flow</span>
+            <span class="rc-tag">Granular Dynamics</span>
+            <span class="rc-tag">Hydrocyclones</span>
+            <span class="rc-tag">HPC</span>
+            <span class="rc-tag">OpenFOAM</span>
           </div>
         </div>
 
-        <div class="research-card">
-          <span class="research-icon">🌍</span>
-          <h3 class="research-card-title">AI &amp; Climate Intelligence</h3>
-          <p class="research-card-body">Foundation model development for geospatial Earth observation, including the open-source Granite Geospatial Land Surface Temperature model. Urban heat island detection and characterisation using vision transformers and auxiliary feature injection.</p>
-          <div class="research-card-tags">
-            <span class="research-tag">Foundation Models</span>
-            <span class="research-tag">Prithvi / ViT</span>
-            <span class="research-tag">Urban Heat Islands</span>
-            <span class="research-tag">EOFM</span>
+        <div class="research-card" data-n="02">
+          <span class="rc-icon">⚛️</span>
+          <h3 class="rc-title">High-Energy Physics — ATLAS at CERN</h3>
+          <p class="rc-body">Contributing author on the ATLAS Collaboration at CERN. Research includes detector environmental monitoring for the ITk upgrade, Higgs boson characterisation, top quark physics, and the landmark <em>Nature</em> 2024 observation of quantum entanglement with top quarks.</p>
+          <div class="rc-tags">
+            <span class="rc-tag">ATLAS</span>
+            <span class="rc-tag">Higgs Boson</span>
+            <span class="rc-tag">Top Quarks</span>
+            <span class="rc-tag">HL-LHC</span>
+            <span class="rc-tag">ITk Upgrade</span>
           </div>
         </div>
 
-        <div class="research-card">
-          <span class="research-icon">⚛️</span>
-          <h3 class="research-card-title">High-Energy Physics</h3>
-          <p class="research-card-body">Contributing member of the ATLAS Collaboration at CERN. Research spans detector environmental monitoring for the ITk upgrade, Higgs boson characterisation, top quark physics, and the landmark observation of quantum entanglement with top quarks (<em>Nature</em>, 2024).</p>
-          <div class="research-card-tags">
-            <span class="research-tag">ATLAS / CERN</span>
-            <span class="research-tag">Higgs Boson</span>
-            <span class="research-tag">Top Quarks</span>
-            <span class="research-tag">HL-LHC</span>
+        <div class="research-card" data-n="03">
+          <span class="rc-icon">🌍</span>
+          <h3 class="rc-title">AI &amp; Climate Intelligence</h3>
+          <p class="rc-body">Foundation model development for geospatial Earth observation, including the open-source Granite Geospatial Land Surface Temperature model. Urban heat island detection and characterisation using vision transformers and auxiliary feature injection for African cities.</p>
+          <div class="rc-tags">
+            <span class="rc-tag">Foundation Models</span>
+            <span class="rc-tag">Prithvi / ViT</span>
+            <span class="rc-tag">Urban Heat Islands</span>
+            <span class="rc-tag">Geospatial AI</span>
           </div>
         </div>
 
-        <div class="research-card">
-          <span class="research-icon">🔬</span>
-          <h3 class="research-card-title">Quantum Computing &amp; Sensing</h3>
-          <p class="research-card-body">New research programmes at the University of Pretoria in quantum computing and quantum sensing, with applications in engineering and the physical sciences. Building on connections between ML pipelines developed for particle physics and emerging quantum architectures.</p>
-          <div class="research-card-tags">
-            <span class="research-tag">Quantum Computing</span>
-            <span class="research-tag">Quantum Sensing</span>
-            <span class="research-tag">Quantum Information</span>
+        <div class="research-card" data-n="04">
+          <span class="rc-icon">🔬</span>
+          <h3 class="rc-title">Quantum Computing &amp; Sensing</h3>
+          <p class="rc-body">New research programmes at the University of Pretoria in quantum computing and quantum sensing with engineering applications. Building on connections between ML pipelines from particle physics and emerging quantum architectures, with dedicated funding and industry partnerships.</p>
+          <div class="rc-tags">
+            <span class="rc-tag">Quantum Computing</span>
+            <span class="rc-tag">Quantum Sensing</span>
+            <span class="rc-tag">Quantum Information</span>
           </div>
         </div>
 
-        <div class="research-card">
-          <span class="research-icon">🏥</span>
-          <h3 class="research-card-title">Biomedical &amp; Health CFD</h3>
-          <p class="research-card-body">CFD modelling of respiratory droplet transmission and UV germicidal irradiation for infection control, ventriculoperitoneal shunt fluid dynamics, and lung acoustics diagnosis. Collaboration with the Perinatal HIV Research Unit (PHRU), Wits.</p>
-          <div class="research-card-tags">
-            <span class="research-tag">Droplet Dynamics</span>
-            <span class="research-tag">UVGI</span>
-            <span class="research-tag">COVID-19</span>
-            <span class="research-tag">Biomedical Flow</span>
+        <div class="research-card" data-n="05">
+          <span class="rc-icon">🏥</span>
+          <h3 class="rc-title">Biomedical &amp; Health CFD</h3>
+          <p class="rc-body">CFD modelling of respiratory droplet transmission and UV germicidal irradiation for infection control, ventriculoperitoneal shunt dynamics, and lung acoustics. Collaboration with the Perinatal HIV Research Unit (PHRU) at Wits.</p>
+          <div class="rc-tags">
+            <span class="rc-tag">Droplet Dynamics</span>
+            <span class="rc-tag">UVGI</span>
+            <span class="rc-tag">VP Shunts</span>
+            <span class="rc-tag">Biomedical Flow</span>
           </div>
         </div>
 
-        <div class="research-card">
-          <span class="research-icon">📐</span>
-          <h3 class="research-card-title">Engineering Education</h3>
-          <p class="research-card-body">Scholarship of teaching and learning with a focus on design literacy, academic voice, online and blended learning, and decolonisation of engineering curricula in post-Apartheid South Africa.</p>
-          <div class="research-card-tags">
-            <span class="research-tag">Design Literacy</span>
-            <span class="research-tag">Blended Learning</span>
-            <span class="research-tag">Decolonisation</span>
-            <span class="research-tag">SASEE</span>
+        <div class="research-card" data-n="06">
+          <span class="rc-icon">📐</span>
+          <h3 class="rc-title">Engineering Education</h3>
+          <p class="rc-body">Scholarship of teaching and learning with a focus on design literacy, academic voice, blended and online learning, and decolonisation of engineering curricula in post-Apartheid South Africa.</p>
+          <div class="rc-tags">
+            <span class="rc-tag">Design Literacy</span>
+            <span class="rc-tag">Blended Learning</span>
+            <span class="rc-tag">Decolonisation</span>
+            <span class="rc-tag">SASEE</span>
           </div>
         </div>
 
@@ -899,7 +846,7 @@
     </div>
   </section>
 
-  <!-- ── Publications ──────────────────────────────────────── -->
+  <!-- ── Publications ── -->
   <section id="publications">
     <div class="section-inner">
       <p class="section-label reveal">Publications</p>
@@ -907,61 +854,54 @@
       <p class="section-sub reveal">A selection of recent and high-impact publications. Full list on Google Scholar and Scopus.</p>
 
       <div class="pub-list reveal">
-
         <div class="pub-item">
           <span class="pub-year">2024</span>
-          <div class="pub-content">
+          <div>
             <div class="pub-title">Observation of quantum entanglement with top quarks at the ATLAS detector</div>
             <div class="pub-venue">Nature, vol. 633, pp. 542–547</div>
           </div>
           <span class="pub-badge badge-nature">Nature</span>
         </div>
-
         <div class="pub-item">
           <span class="pub-year">2025</span>
-          <div class="pub-content">
+          <div>
             <div class="pub-title">Characterising the Higgs boson with ATLAS data from the LHC Run-2</div>
             <div class="pub-venue">Physics Reports, vol. 1116, pp. 4–56</div>
           </div>
           <span class="pub-badge badge-atlas">ATLAS</span>
         </div>
-
         <div class="pub-item">
           <span class="pub-year">2025</span>
-          <div class="pub-content">
-            <div class="pub-title">Auxiliary Feature Injection for Prithvi-ViT Fine-Tuning</div>
+          <div>
+            <div class="pub-title">Auxiliary Feature Injection for Prithvi-ViT Fine-Tuning on Geospatial Data</div>
             <div class="pub-venue">IEEE IGARSS 2025, Brisbane, pp. 1075–1078</div>
           </div>
           <span class="pub-badge badge-ai">AI / Geo</span>
         </div>
-
         <div class="pub-item">
           <span class="pub-year">2024</span>
-          <div class="pub-content">
+          <div>
             <div class="pub-title">Infectiousness model of expelled droplets exposed to ultraviolet germicidal irradiation</div>
             <div class="pub-venue">Computers &amp; Fluids, vol. 275, p. 106242</div>
           </div>
           <span class="pub-badge badge-cfd">CFD</span>
         </div>
-
         <div class="pub-item">
           <span class="pub-year">2022</span>
-          <div class="pub-content">
+          <div>
             <div class="pub-title">The Modification of the Dynamic Behaviour of Cyclonic Flow in a Hydrocyclone under Surging Conditions</div>
             <div class="pub-venue">Mathematical and Computational Applications, vol. 27(6), p. 88</div>
           </div>
-          <span class="pub-badge badge-cfd">CFD</span>
+          <span class="pub-badge badge-grain">CFD / Granular</span>
         </div>
-
         <div class="pub-item">
           <span class="pub-year">2020</span>
-          <div class="pub-content">
+          <div>
             <div class="pub-title">Experimental and CFD Investigation of a Hybrid Solar Air Heater</div>
             <div class="pub-venue">Solar Energy, vol. 195, pp. 413–428</div>
           </div>
           <span class="pub-badge badge-cfd">CFD</span>
         </div>
-
       </div>
 
       <div class="pub-more reveal">
@@ -972,277 +912,516 @@
     </div>
   </section>
 
-  <!-- ── Positions ─────────────────────────────────────────── -->
+  <!-- ── Positions ── -->
   <section id="positions">
     <div class="section-inner">
       <p class="section-label reveal">Experience</p>
       <h2 class="section-title reveal">Academic &amp; <em>industry</em> positions</h2>
       <div class="timeline reveal">
-
-        <div class="timeline-item">
-          <div class="timeline-period">2025 — Present</div>
-          <div class="timeline-role">Associate Professor</div>
-          <div class="timeline-org">Department of Mechanical &amp; Aeronautical Engineering, University of Pretoria</div>
-          <div class="timeline-desc">Leading research programmes in computational mechanics, quantum computing &amp; sensing, and AI. Supervision of postgraduate students and development of new quantum science curricula.</div>
+        <div class="tl-item">
+          <div class="tl-period">2025 — Present</div>
+          <div class="tl-role">Associate Professor</div>
+          <div class="tl-org">Department of Mechanical &amp; Aeronautical Engineering, University of Pretoria</div>
+          <div class="tl-desc">Leading research programmes in computational mechanics, quantum computing &amp; sensing, and AI. Supervision of postgraduate students and development of new quantum science curricula.</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-period">2021 — 2025</div>
-          <div class="timeline-role">Staff Research Scientist</div>
-          <div class="timeline-org">IBM Research Africa, Johannesburg</div>
-          <div class="timeline-desc">Led the Urban Heat Island AI programme. Co-developed the open-source Granite Geospatial Land Surface Temperature foundation model. Patent holder for dynamically forecasting high-resolution air temperature (ZA2023/09448).</div>
+        <div class="tl-item">
+          <div class="tl-period">2021 — 2025</div>
+          <div class="tl-role">Staff Research Scientist</div>
+          <div class="tl-org">IBM Research Africa, Johannesburg</div>
+          <div class="tl-desc">Led the Urban Heat Island AI programme. Co-developed the open-source Granite Geospatial Land Surface Temperature foundation model. Patent holder for dynamically forecasting high-resolution air temperature (ZA2023/09448).</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-period">2021 — 2025</div>
-          <div class="timeline-role">Visiting Senior Research Associate</div>
-          <div class="timeline-org">University of Johannesburg</div>
-          <div class="timeline-desc">Continued postgraduate supervision and ATLAS/SA-CERN activities alongside IBM Research role.</div>
+        <div class="tl-item">
+          <div class="tl-period">2021 — 2025</div>
+          <div class="tl-role">Visiting Senior Research Associate</div>
+          <div class="tl-org">University of Johannesburg</div>
+          <div class="tl-desc">Continued postgraduate supervision and ATLAS / SA-CERN activities alongside IBM Research role.</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-period">2017 — 2021</div>
-          <div class="timeline-role">Senior Lecturer</div>
-          <div class="timeline-org">Department of Mechanical Engineering Science, University of Johannesburg</div>
-          <div class="timeline-desc">Course coordinator for Introduction to Engineering Design 1A &amp; 1B. Principal Investigator on two funded research projects. Completed DIng (Computational Fluid &amp; Granular Dynamics).</div>
+        <div class="tl-item">
+          <div class="tl-period">2017 — 2021</div>
+          <div class="tl-role">Senior Lecturer</div>
+          <div class="tl-org">Department of Mechanical Engineering Science, University of Johannesburg</div>
+          <div class="tl-desc">Course coordinator for Introduction to Engineering Design 1A &amp; 1B. Principal Investigator on two funded research projects. Completed DIng (Computational Fluid &amp; Granular Dynamics).</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-period">2008 — 2009</div>
-          <div class="timeline-role">Junior CFD Analyst</div>
-          <div class="timeline-org">Hatch Africa — Specialised Engineering Analysis &amp; Design (SEAD) Group</div>
-          <div class="timeline-desc">Industry foundation in computational mechanics applied to large-scale engineering consulting projects.</div>
+        <div class="tl-item">
+          <div class="tl-period">2008 — 2009</div>
+          <div class="tl-role">Junior CFD Analyst</div>
+          <div class="tl-org">Hatch Africa — Specialised Engineering Analysis &amp; Design (SEAD) Group</div>
+          <div class="tl-desc">Industry foundation in computational mechanics applied to large-scale engineering consulting projects.</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── Contact ───────────────────────────────────────────── -->
+  <!-- ── Contact ── -->
   <section id="contact">
     <div class="section-inner">
       <p class="section-label">Contact</p>
       <h2 class="section-title">Get in <em>touch</em></h2>
-      <p style="color:var(--text-muted); max-width:500px; margin:0 auto;">
+      <p style="color:var(--text-muted); max-width:480px; margin:0 auto; font-size:.95rem;">
         Open to research collaborations, postgraduate enquiries, and speaking invitations.
       </p>
-      <div class="contact-grid">
+      <div class="contact-row">
         <a class="contact-card" href="mailto:muaazb@gmail.com">
-          <span class="contact-card-icon">✉</span>
-          muaazb@gmail.com
+          <span class="contact-card-icon">✉</span>muaazb@gmail.com
         </a>
         <a class="contact-card" href="https://www.linkedin.com/in/muaaz-bhamjee-000b7212/" target="_blank">
-          <span class="contact-card-icon">💼</span>
-          LinkedIn
+          <span class="contact-card-icon">💼</span>LinkedIn
         </a>
         <a class="contact-card" href="https://research.ibm.com/people/muaaz-bhamjee" target="_blank">
-          <span class="contact-card-icon">🔬</span>
-          IBM Research
+          <span class="contact-card-icon">🔬</span>IBM Research
         </a>
         <a class="contact-card" href="https://saam.africa/exco/" target="_blank">
-          <span class="contact-card-icon">⚙</span>
-          SAAM ExCo
+          <span class="contact-card-icon">⚙</span>SAAM ExCo
         </a>
         <a class="contact-card" href="cv_bhamjee.pdf" target="_blank">
-          <span class="contact-card-icon">📄</span>
-          Download CV
+          <span class="contact-card-icon">📄</span>Download CV
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ── Footer ────────────────────────────────────────────── -->
   <footer>
-    <span class="footer-left">© 2025 Muaaz Bhamjee · CC BY 4.0 (content) · MIT (code)</span>
+    <span class="footer-copy">© 2025 Muaaz Bhamjee · CC BY 4.0 (content) · MIT (code)</span>
     <span class="footer-right">
       Built with LaTeX + Python ·
-      <a href="https://github.com/muaazbhamjee/cv-bhamjee" target="_blank">Source ↗</a>
+      <a href="https://github.com/muaazbhamjee/cv-mbhamjee" target="_blank">Source ↗</a>
     </span>
   </footer>
 
-  <!-- ── Particle / Streamline Canvas ─────────────────────── -->
+  <!-- ════════════════════════════════════════════════════════
+       THREE-LAYER PHYSICS CANVAS
+       Layer 1: Granular grains — settle, pack, avalanche
+       Layer 2: CFD streamlines — Bézier curl-noise flow field
+       Layer 3: Particle physics — periodic ATLAS-style collision
+               events with curved magnetic tracks
+  ════════════════════════════════════════════════════════ -->
   <script>
   (function () {
-    const canvas = document.getElementById('particle-canvas');
+    const canvas = document.getElementById('physics-canvas');
     const ctx    = canvas.getContext('2d');
-    let W, H, particles, lines;
+    let W, H;
 
-    // Colours
-    const CYAN   = 'rgba(0,212,255,';
-    const GOLD   = 'rgba(232,160,32,';
-    const VIOLET = 'rgba(139,92,246,';
+    /* ── Palette ── */
+    const C = {
+      fluid:   [  0, 212, 255],
+      grain:   [122, 158, 176],
+      trackA:  [255,  61, 139],
+      trackB:  [255, 224, 130],
+      neutron: [180, 220, 255],
+    };
 
-    function resize() {
-      W = canvas.width  = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-      init();
-    }
+    function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
 
-    // ── Particle class — simulates a flow streamline ──────────
-    class Particle {
-      constructor(isPrimary) {
-        this.isPrimary = isPrimary;
-        this.reset(true);
+    /* ═══════════════════════════════════════════════
+       LAYER 1 — GRANULAR DYNAMICS
+       Grains fall under gravity, bounce off floor/walls,
+       and collide with each other (simplified).
+    ═══════════════════════════════════════════════ */
+
+    const GRAIN_COUNT = 55;
+    let grains = [];
+
+    class Grain {
+      constructor(init) {
+        this.r = 3 + Math.random() * 4;
+        this.x = this.r + Math.random() * (W - 2 * this.r);
+        this.y = init ? Math.random() * H * 0.6 : -this.r * 2;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = Math.random() * 0.5;
+        // Colour variation: warm gold → sandy ochre
+        const t = Math.random();
+        this.color = [
+          Math.round(C.grain[0] * (1-t) + 180 * t),
+          Math.round(C.grain[1] * (1-t) + 150 * t),
+          Math.round(C.grain[2] * (1-t) + 60  * t),
+        ];
+        this.alpha  = 0.55 + Math.random() * 0.35;
+        this.active = true;
       }
 
-      reset(init) {
-        // Start from random edge or centre burst
-        if (Math.random() < 0.3) {
-          // Origin burst — like a collision event
-          this.x = W * (0.4 + Math.random() * 0.2);
-          this.y = H * (0.3 + Math.random() * 0.2);
-          const angle = Math.random() * Math.PI * 2;
-          const speed = 0.4 + Math.random() * 1.2;
-          this.vx = Math.cos(angle) * speed;
-          this.vy = Math.sin(angle) * speed;
-        } else {
-          // Flow from left or top
-          if (Math.random() < 0.6) {
-            this.x = init ? Math.random() * W : -10;
-            this.y = Math.random() * H;
-            this.vx = 0.3 + Math.random() * 0.8;
-            this.vy = (Math.random() - 0.5) * 0.4;
-          } else {
-            this.x = Math.random() * W;
-            this.y = init ? Math.random() * H : -10;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = 0.3 + Math.random() * 0.8;
+      update(others) {
+        const grav = 0.06;
+        const damp = 0.55;
+        const floor = H * 0.92;
+
+        this.vy += grav;
+        this.x  += this.vx;
+        this.y  += this.vy;
+
+        // Floor
+        if (this.y + this.r >= floor) {
+          this.y  = floor - this.r;
+          this.vy *= -damp;
+          this.vx *= 0.85;
+          if (Math.abs(this.vy) < 0.3) this.vy = 0;
+        }
+        // Walls
+        if (this.x - this.r < 0)       { this.x = this.r;       this.vx *= -damp; }
+        if (this.x + this.r > W)       { this.x = W - this.r;   this.vx *= -damp; }
+        // Ceiling — recycle
+        if (this.y - this.r > H * 0.93) this.active = false;
+
+        // Grain–grain collision (simplified push-apart)
+        for (const o of others) {
+          if (o === this) continue;
+          const dx = o.x - this.x;
+          const dy = o.y - this.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const minD = this.r + o.r;
+          if (dist < minD && dist > 0) {
+            const nx = dx / dist;
+            const ny = dy / dist;
+            const overlap = minD - dist;
+            this.x -= nx * overlap * 0.5;
+            this.y -= ny * overlap * 0.5;
+            o.x    += nx * overlap * 0.5;
+            o.y    += ny * overlap * 0.5;
+            // Exchange a fraction of normal velocity
+            const dvx = this.vx - o.vx;
+            const dvy = this.vy - o.vy;
+            const dot = dvx * nx + dvy * ny;
+            if (dot > 0) {
+              const imp = dot * 0.4;
+              this.vx -= imp * nx; this.vy -= imp * ny;
+              o.vx    += imp * nx; o.vy    += imp * ny;
+            }
           }
         }
+      }
 
+      draw() {
+        const shadow = Math.max(0, (H * 0.92 - this.y - this.r) * 0.002);
+        // subtle shadow ellipse
+        ctx.beginPath();
+        ctx.ellipse(this.x, H * 0.92 - 1, this.r * 0.9, this.r * 0.25, 0, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,0,0,${0.15 - shadow})`;
+        ctx.fill();
+
+        // grain body
+        const grad = ctx.createRadialGradient(
+          this.x - this.r * 0.3, this.y - this.r * 0.3, this.r * 0.1,
+          this.x, this.y, this.r
+        );
+        grad.addColorStop(0, rgba(this.color, this.alpha));
+        grad.addColorStop(1, rgba([this.color[0]*0.5|0, this.color[1]*0.4|0, this.color[2]*0.2|0], this.alpha * 0.6));
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+    }
+
+    function initGrains() {
+      grains = Array.from({ length: GRAIN_COUNT }, () => new Grain(true));
+    }
+
+    function updateGrains() {
+      for (const g of grains) g.update(grains);
+      // Recycle
+      for (let i = 0; i < grains.length; i++) {
+        if (!grains[i].active) grains[i] = new Grain(false);
+      }
+      // Occasionally trigger a slow avalanche by nudging a settled grain
+      if (Math.random() < 0.003) {
+        const settled = grains.filter(g => Math.abs(g.vy) < 0.1);
+        if (settled.length > 5) {
+          const g = settled[Math.floor(Math.random() * settled.length)];
+          g.vx += (Math.random() - 0.5) * 3;
+          g.vy -= Math.random() * 1.5;
+        }
+      }
+    }
+
+    /* ═══════════════════════════════════════════════
+       LAYER 2 — CFD STREAMLINES
+       Bézier-based streamlines following a synthetic
+       velocity field with vortices and shear layers.
+    ═══════════════════════════════════════════════ */
+
+    const STREAM_COUNT = 28;
+    let streams = [];
+
+    // Synthetic velocity field: superposition of 3 vortices + background flow
+    const vortices = [];
+    function initVortices() {
+      vortices.length = 0;
+      for (let i = 0; i < 3; i++) {
+        vortices.push({
+          cx: W * (0.2 + Math.random() * 0.6),
+          cy: H * (0.15 + Math.random() * 0.55),
+          strength: (Math.random() < 0.5 ? 1 : -1) * (800 + Math.random() * 1200),
+        });
+      }
+    }
+
+    function velocity(x, y) {
+      let u = 0.4, v = 0;
+      for (const vc of vortices) {
+        const dx = x - vc.cx;
+        const dy = y - vc.cy;
+        const r2 = dx*dx + dy*dy + 400;
+        u += -vc.strength * dy / r2;
+        v +=  vc.strength * dx / r2;
+      }
+      return { u, v };
+    }
+
+    class Stream {
+      constructor(init) { this.reset(init); }
+
+      reset(init) {
+        // Start from left edge or top edge
+        if (Math.random() < 0.6) {
+          this.x = init ? Math.random() * W * 0.3 : -5;
+          this.y = H * (0.05 + Math.random() * 0.75);
+        } else {
+          this.x = Math.random() * W;
+          this.y = init ? Math.random() * H * 0.5 : -5;
+        }
         this.life    = 0;
-        this.maxLife = 120 + Math.random() * 200;
+        this.maxLife = 160 + Math.random() * 180;
         this.alpha   = 0;
-        this.size    = 0.5 + Math.random() * 1.5;
-
-        // Track history for trail
+        this.width   = 1.2 + Math.random() * 1.8;
+        this.speed   = 0.8 + Math.random() * 1.4;
         this.trail   = [];
-        this.maxTrail = 18 + Math.floor(Math.random() * 20);
-
-        // Colour
-        const r = Math.random();
-        if (r < 0.65)      this.color = CYAN;
-        else if (r < 0.85) this.color = GOLD;
-        else               this.color = VIOLET;
+        this.maxTrail = 22 + Math.floor(Math.random() * 18);
+        // Color: cyan base with slight variation
+        const t = Math.random();
+        this.color = [
+          Math.round(C.fluid[0] * (1-t) + 20  * t),
+          Math.round(C.fluid[1] * (1-t) + 180 * t),
+          Math.round(C.fluid[2] * (1-t) + 200 * t),
+        ];
       }
 
       update() {
-        // Gentle curl noise-like perturbation
-        const t  = Date.now() * 0.0003;
-        const nx = this.x / W;
-        const ny = this.y / H;
-        this.vx += (Math.sin(ny * 3 + t) * 0.012 - this.vx * 0.002);
-        this.vy += (Math.cos(nx * 3 + t) * 0.012 - this.vy * 0.002);
+        const { u, v } = velocity(this.x, this.y);
+        const mag = Math.sqrt(u*u + v*v) + 0.001;
+        this.x += (u / mag) * this.speed;
+        this.y += (v / mag) * this.speed * 0.6;
 
         this.trail.push({ x: this.x, y: this.y });
         if (this.trail.length > this.maxTrail) this.trail.shift();
 
-        this.x += this.vx;
-        this.y += this.vy;
         this.life++;
-
-        // Fade in / fade out
-        const progress = this.life / this.maxLife;
-        if (progress < 0.1)      this.alpha = progress / 0.1;
-        else if (progress > 0.8) this.alpha = (1 - progress) / 0.2;
-        else                     this.alpha = 1;
+        const p = this.life / this.maxLife;
+        this.alpha = p < 0.12 ? p / 0.12 : p > 0.78 ? (1 - p) / 0.22 : 1;
 
         if (this.life > this.maxLife ||
-            this.x < -50 || this.x > W + 50 ||
-            this.y < -50 || this.y > H + 50) {
+            this.x < -30 || this.x > W + 30 ||
+            this.y < -30 || this.y > H + 30) {
           this.reset(false);
         }
       }
 
       draw() {
-        if (this.trail.length < 2) return;
+        if (this.trail.length < 3) return;
         ctx.beginPath();
         ctx.moveTo(this.trail[0].x, this.trail[0].y);
-        for (let i = 1; i < this.trail.length; i++) {
-          ctx.lineTo(this.trail[i].x, this.trail[i].y);
+        for (let i = 1; i < this.trail.length - 1; i++) {
+          const mx = (this.trail[i].x + this.trail[i+1].x) / 2;
+          const my = (this.trail[i].y + this.trail[i+1].y) / 2;
+          ctx.quadraticCurveTo(this.trail[i].x, this.trail[i].y, mx, my);
         }
-        ctx.strokeStyle = this.color + (this.alpha * 0.55) + ')';
-        ctx.lineWidth   = this.size * 0.7;
+        ctx.strokeStyle = rgba(this.color, this.alpha * 0.45);
+        ctx.lineWidth   = this.width;
         ctx.lineCap     = 'round';
         ctx.stroke();
 
-        // Head dot
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color + (this.alpha * 0.9) + ')';
-        ctx.fill();
-      }
-    }
-
-    // ── Sparse connecting lines ───────────────────────────────
-    class Node {
-      constructor() { this.reset(); }
-      reset() {
-        this.x  = Math.random() * W;
-        this.y  = Math.random() * H;
-        this.vx = (Math.random() - 0.5) * 0.2;
-        this.vy = (Math.random() - 0.5) * 0.2;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > W) this.vx *= -1;
-        if (this.y < 0 || this.y > H) this.vy *= -1;
-      }
-    }
-
-    function init() {
-      const count = Math.min(60, Math.floor(W * H / 14000));
-      particles = Array.from({ length: count }, () => new Particle());
-      lines     = Array.from({ length: 18  }, () => new Node());
-    }
-
-    function drawConnections() {
-      const maxDist = 160;
-      for (let i = 0; i < lines.length; i++) {
-        for (let j = i + 1; j < lines.length; j++) {
-          const dx   = lines[i].x - lines[j].x;
-          const dy   = lines[i].y - lines[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < maxDist) {
-            const a = (1 - dist / maxDist) * 0.12;
-            ctx.beginPath();
-            ctx.moveTo(lines[i].x, lines[i].y);
-            ctx.lineTo(lines[j].x, lines[j].y);
-            ctx.strokeStyle = `rgba(0,212,255,${a})`;
-            ctx.lineWidth   = 0.5;
-            ctx.stroke();
-          }
+        // Velocity arrow at head
+        if (this.trail.length > 2) {
+          const t1 = this.trail[this.trail.length - 2];
+          const t2 = this.trail[this.trail.length - 1];
+          const angle = Math.atan2(t2.y - t1.y, t2.x - t1.x);
+          const len = 4;
+          ctx.beginPath();
+          ctx.moveTo(t2.x, t2.y);
+          ctx.lineTo(t2.x - len * Math.cos(angle - 0.4), t2.y - len * Math.sin(angle - 0.4));
+          ctx.moveTo(t2.x, t2.y);
+          ctx.lineTo(t2.x - len * Math.cos(angle + 0.4), t2.y - len * Math.sin(angle + 0.4));
+          ctx.strokeStyle = rgba(this.color, this.alpha * 0.7);
+          ctx.lineWidth   = this.width * 0.8;
+          ctx.stroke();
         }
       }
     }
 
-    function frame() {
+    function initStreams() {
+      streams = Array.from({ length: STREAM_COUNT }, () => new Stream(true));
+    }
+
+    /* ═══════════════════════════════════════════════
+       LAYER 3 — PARTICLE PHYSICS COLLISION EVENTS
+       Periodic ATLAS-style events: flash at collision
+       point, then tracks radiate outward with curvature
+       simulating a magnetic field (B along z-axis).
+    ═══════════════════════════════════════════════ */
+
+    let events = [];
+    let nextEvent = 120;
+
+    class CollisionEvent {
+      constructor() {
+        this.cx     = W * (0.25 + Math.random() * 0.5);
+        this.cy     = H * (0.15 + Math.random() * 0.55);
+        this.age    = 0;
+        this.tracks = this.genTracks();
+        this.flash  = 1.0;
+      }
+
+      genTracks() {
+        const n = 8 + Math.floor(Math.random() * 10);
+        const tracks = [];
+        for (let i = 0; i < n; i++) {
+          const angle   = (Math.PI * 2 * i / n) + (Math.random() - 0.5) * 0.4;
+          const speed   = 1.5 + Math.random() * 2.5;
+          const charge  = Math.random() < 0.3 ? 0 : (Math.random() < 0.5 ? 1 : -1);
+          const curve   = charge * (0.008 + Math.random() * 0.015);
+          // Track color by type
+          let color;
+          if (charge === 0)       color = C.neutron;
+          else if (charge > 0)    color = C.trackA;
+          else                    color = C.trackB;
+
+          tracks.push({
+            x: this.cx, y: this.cy,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            curve, color,
+            trail: [{ x: this.cx, y: this.cy }],
+            alive: true,
+            alpha: 0.7 + Math.random() * 0.3,
+            width: 0.6 + Math.random() * 0.8,
+          });
+        }
+        return tracks;
+      }
+
+      update() {
+        this.age++;
+        this.flash = Math.max(0, this.flash - 0.06);
+
+        for (const t of this.tracks) {
+          if (!t.alive) continue;
+          // Magnetic curvature: rotate velocity by curve angle
+          const cos = Math.cos(t.curve);
+          const sin = Math.sin(t.curve);
+          const nvx = t.vx * cos - t.vy * sin;
+          const nvy = t.vx * sin + t.vy * cos;
+          t.vx = nvx; t.vy = nvy;
+          t.x += t.vx;
+          t.y += t.vy;
+          t.trail.push({ x: t.x, y: t.y });
+          if (t.x < -40 || t.x > W + 40 ||
+              t.y < -40 || t.y > H + 40 ||
+              t.trail.length > 90) {
+            t.alive = false;
+          }
+        }
+      }
+
+      draw() {
+        // Flash at collision vertex
+        if (this.flash > 0) {
+          const r = 30 * this.flash;
+          const grad = ctx.createRadialGradient(this.cx, this.cy, 0, this.cx, this.cy, r);
+          grad.addColorStop(0, `rgba(255,255,255,${this.flash * 0.7})`);
+          grad.addColorStop(0.3, `rgba(255,220,100,${this.flash * 0.4})`);
+          grad.addColorStop(1, 'rgba(255,220,100,0)');
+          ctx.beginPath();
+          ctx.arc(this.cx, this.cy, r, 0, Math.PI * 2);
+          ctx.fillStyle = grad;
+          ctx.fill();
+
+          // Vertex dot
+          ctx.beginPath();
+          ctx.arc(this.cx, this.cy, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${this.flash})`;
+          ctx.fill();
+        }
+
+        // Tracks
+        for (const t of this.tracks) {
+          if (t.trail.length < 2) continue;
+          const fade = Math.min(1, (90 - t.trail.length) / 30);
+          ctx.beginPath();
+          ctx.moveTo(t.trail[0].x, t.trail[0].y);
+          for (let i = 1; i < t.trail.length; i++) {
+            ctx.lineTo(t.trail[i].x, t.trail[i].y);
+          }
+          ctx.strokeStyle = rgba(t.color, t.alpha * 0.6 * Math.max(0, fade));
+          ctx.lineWidth   = t.width;
+          ctx.lineCap     = 'round';
+          ctx.stroke();
+        }
+      }
+
+      isDone() {
+        return this.age > 180 && this.tracks.every(t => !t.alive);
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       MAIN LOOP
+    ═══════════════════════════════════════════ */
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      initVortices();
+      initGrains();
+      initStreams();
+      events = [];
+    }
+
+    let frame = 0;
+
+    function tick() {
+      frame++;
       ctx.clearRect(0, 0, W, H);
-      lines.forEach(n => { n.update(); });
-      drawConnections();
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(frame);
+
+      // ── Layer 2: Streamlines (behind grains) ──
+      for (const s of streams) { s.update(); s.draw(); }
+
+      // ── Layer 3: Collision events ──
+      nextEvent--;
+      if (nextEvent <= 0) {
+        events.push(new CollisionEvent());
+        nextEvent = 220 + Math.floor(Math.random() * 180);
+      }
+      events = events.filter(e => !e.isDone());
+      for (const e of events) { e.update(); e.draw(); }
+
+      // ── Layer 1: Grains (on top) ──
+      updateGrains();
+      for (const g of grains) g.draw();
+
+      // ── Floor line ──
+      ctx.beginPath();
+      ctx.moveTo(0, H * 0.92);
+      ctx.lineTo(W, H * 0.92);
+      ctx.strokeStyle = rgba(C.grain, 0.08);
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      requestAnimationFrame(tick);
     }
 
     window.addEventListener('resize', resize);
     resize();
-    frame();
+    tick();
   })();
   </script>
 
-  <!-- ── Scroll reveal ─────────────────────────────────────── -->
+  <!-- Scroll reveal -->
   <script>
   (function () {
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          obs.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
       });
-    }, { threshold: 0.12 });
-
+    }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   })();
   </script>
