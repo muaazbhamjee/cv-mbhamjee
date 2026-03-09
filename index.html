@@ -17,7 +17,7 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    
     :root {
       --bg:          #07080a;
       --bg2:         #0c0e12;
@@ -662,6 +662,58 @@
       .hero-metrics { gap: 1.5rem; }
     }
   </style>
+
+  <!-- JSON-LD Structured Data — Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Muaaz Bhamjee",
+    "honorificPrefix": "Prof.",
+    "jobTitle": "Associate Professor",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "University of Pretoria",
+      "department": "Mechanical and Aeronautical Engineering",
+      "url": "https://www.up.ac.za/mechanical-and-aeronautical-engineering"
+    },
+    "url": "https://muaazbhamjee.github.io",
+    "email": "muaaz.bhamjee@up.ac.za",
+    "sameAs": [
+      "https://scholar.google.co.za/citations?user=jlOJkoAAAAJ",
+      "https://orcid.org/0000-0002-2697-4589",
+      "https://www.linkedin.com/in/muaaz-bhamjee-ding-mechanical-preng-000b7212/",
+      "https://www.scopus.com/authid/detail.uri?authorId=55247084100",
+      "https://www.webofscience.com/wos/author/record/ABE-4708-2020",
+      "https://research.ibm.com/people/muaaz-bhamjee",
+      "https://www.up.ac.za/mechanical-and-aeronautical-engineering/staff-profiles/muaaz-bhamjee"
+    ],
+    "knowsAbout": [
+      "Computational Fluid Dynamics",
+      "Lattice Boltzmann Method",
+      "Granular Dynamics",
+      "Multiphase Flow",
+      "High-Energy Physics",
+      "ATLAS Collaboration",
+      "CERN",
+      "Higgs Boson",
+      "Top Quark Physics",
+      "Quantum Entanglement",
+      "Machine Learning",
+      "Earth Observation Foundation Models",
+      "Urban Heat Islands",
+      "Climate Science",
+      "Quantum Computing",
+      "Quantum Sensing",
+      "High Performance Computing",
+      "Engineering Education"
+    ],
+    "alumniOf": {
+      "@type": "Organization",
+      "name": "University of Johannesburg"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -974,8 +1026,8 @@
         Open to research collaborations, postgraduate enquiries, and speaking invitations.
       </p>
       <div class="contact-row">
-        <a class="contact-card" href="mailto:muaaz.bhamjee@up.ac.za">
-          <span class="contact-card-icon">✉</span>muaaz.bhamjee@up.ac.za
+        <a class="contact-card" href="/cdn-cgi/l/email-protection#c6abb3a7a7bce8a4aea7abaca3a386b3b6e8a7a5e8bca7">
+          <span class="contact-card-icon">✉</span><span class="__cf_email__" data-cfemail="2a475f4b4b500448424b47404f4f6a5f5a044b4904504b">[email&#160;protected]</span>
         </a>
         <a class="contact-card" href="https://www.linkedin.com/in/muaaz-bhamjee-ding-mechanical-preng-000b7212/" target="_blank">
           <span class="contact-card-icon">💼</span>LinkedIn
@@ -1008,7 +1060,7 @@
        Layer 3: Particle physics — periodic ATLAS-style collision
                events with curved magnetic tracks
   ════════════════════════════════════════════════════════ -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   (function () {
     const canvas = document.getElementById('physics-canvas');
     const ctx    = canvas.getContext('2d');
@@ -1431,13 +1483,4 @@
   <script>
   (function () {
     const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  })();
-  </script>
-
-</body>
-</html>
+      entries.forEach(
