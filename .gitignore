@@ -22,6 +22,10 @@ cv_bhamjee.tex
 # Push docs/ to github.io with: git add docs/ && git commit && git push
 !docs/*.pdf
 
+# Only the CV committed to the sit _____________________________________
+docs/nithecs_statement.pdf
+site/nithecs_statement.pdf
+
 # ── OS clutter ─────────────────────────────────────────────
 .DS_Store
 Thumbs.db

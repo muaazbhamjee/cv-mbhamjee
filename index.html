@@ -15,655 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    :root {
-      --bg:          #07080a;
-      --bg2:         #0c0e12;
-      --bg3:         #111418;
-      --surface:     #161b22;
-      --fluid:       #00c8e8;
-      --fluid-dim:   rgba(0,200,232,0.10);
-      --fluid-mid:   rgba(0,200,232,0.30);
-      --grain:       #7a9eb0;
-      --grain-dim:   rgba(122,158,176,0.12);
-      --grain-mid:   rgba(122,158,176,0.30);
-      --track-a:     #ff3d8b;
-      --track-b:     #ffe082;
-      --text:        #e8e4d8;
-      --text-muted:  #e4f2ff;
-      --text-dim:    #b8d4e8;
-      --border:      rgba(122,158,176,0.10);
-      --border2:     rgba(122,158,176,0.22);
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-mono:    'IBM Plex Mono', monospace;
-      --font-body:    'Source Serif 4', Georgia, serif;
-      --max:          1160px;
-      --pad:          clamp(1.5rem, 5vw, 4rem);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 1.75;
-      overflow-x: hidden;
-    }
-
-    ::selection { background: var(--grain-mid); color: #fff; }
-    a { color: var(--fluid); text-decoration: none; transition: opacity .2s; }
-    a:hover { opacity: .7; }
-
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: rgba(0,212,255,.35); border-radius: 2px; }
-
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem var(--pad);
-      background: rgba(7,8,10,0.88);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: .02em;
-      color: var(--text);
-    }
-    .nav-logo em { font-style: italic; color: var(--fluid); }
-
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-family: var(--font-mono);
-      font-size: .72rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--fluid);
-      transition: color .2s, text-shadow .2s;
-    }
-    .nav-links a:hover { color: var(--fluid-bright); text-shadow: 0 0 10px rgba(65,200,255,0.6); opacity: 1; }
-
-    /* ── Hero ── */
-    #hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 0 var(--pad);
-      overflow: hidden;
-    }
-
-    #physics-canvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-    }
-
-    /* Fine measurement grid */
-    #hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(65,200,255,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(65,200,255,.045) 1px, transparent 1px),
-        linear-gradient(rgba(65,200,255,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(65,200,255,.018) 1px, transparent 1px);
-      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-      pointer-events: none;
-    }
-
-    /* Vignette */
-    #hero::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 30% 40%, transparent 40%, rgba(4,8,15,.7) 100%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative; z-index: 2;
-      max-width: var(--max); margin: 0 auto; width: 100%;
-      padding-top: 6rem;
-    }
-
-    .hero-eyebrow {
-      font-family: var(--font-mono);
-      font-size: .72rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--fluid);
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: fadeUp .9s .15s forwards;
-      display: flex; align-items: center; gap: .8rem;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 28px; height: 1px;
-      background: var(--fluid);
-    }
-
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(3.2rem, 9vw, 7rem);
-      font-weight: 400;
-      line-height: 1.0;
-      letter-spacing: -.02em;
-      color: var(--text);
-      margin-bottom: .4rem;
-      opacity: 0;
-      animation: fadeUp .9s .3s forwards;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      font-weight: 600;
-      color: var(--fluid);
-    }
-
-    .hero-dept {
-      font-family: var(--font-display);
-      font-size: clamp(.95rem, 2vw, 1.25rem);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp .9s .45s forwards;
-    }
-
-    /* Discipline tags — styled as detector readout labels */
-    .hero-disciplines {
-      display: flex; flex-wrap: wrap; gap: .5rem;
-      margin-bottom: 2.8rem;
-      opacity: 0;
-      animation: fadeUp .9s .6s forwards;
-    }
-
-    .disc {
-      font-family: var(--font-mono);
-      font-size: .68rem;
-      letter-spacing: .1em;
-      padding: .3rem .75rem;
-      border-radius: 1px;
-      text-transform: uppercase;
-    }
-
-    .disc-fluid  { border: 1px solid rgba(0,212,255,.35); color: var(--fluid); background: var(--fluid-dim); }
-    .disc-grain  { border: 1px solid rgba(65,200,255,.28); color: var(--fluid); background: var(--fluid-dim); }
-    .disc-phys   { border: 1px solid rgba(255,61,139,.3); color: var(--track-a); background: rgba(255,61,139,.08); }
-    .disc-ai     { border: 1px solid rgba(255,224,130,.3); color: var(--track-b); background: rgba(255,224,130,.07); }
-    .disc-q      { border: 1px solid rgba(160,210,150,.3); color: #a0d296; background: rgba(160,210,150,.07); }
-
-    /* Metrics row */
-    .hero-metrics {
-      display: flex; gap: clamp(1.5rem, 4vw, 3.5rem); flex-wrap: wrap;
-      margin-bottom: 3rem;
-      opacity: 0;
-      animation: fadeUp .9s .75s forwards;
-    }
-
-    .metric { display: flex; flex-direction: column; }
-
-    .metric-value {
-      font-family: var(--font-display);
-      font-size: 2.6rem;
-      font-weight: 700;
-      color: var(--fluid);
-      line-height: 1;
-      letter-spacing: -.03em;
-    }
-
-    .metric-label {
-      font-family: var(--font-mono);
-      font-size: .62rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-top: .3rem;
-    }
-
-    .hero-cta {
-      display: flex; gap: .85rem; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp .9s .9s forwards;
-    }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: .45rem;
-      font-family: var(--font-mono);
-      font-size: .72rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: .7rem 1.5rem;
-      border-radius: 1px;
-      transition: all .22s;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--fluid);
-      color: var(--bg);
-      border: 1px solid var(--fluid);
-      font-weight: 500;
-      box-shadow: 0 0 18px rgba(65,200,255,0.35);
-    }
-    .btn-primary:hover {
-      background: var(--fluid-bright);
-      border-color: var(--fluid-bright);
-      box-shadow: 0 0 28px rgba(65,200,255,0.55);
-      opacity: 1;
-    }
-
-    .btn-outline {
-      background: rgba(65,200,255,0.07);
-      color: var(--fluid);
-      border: 1px solid rgba(65,200,255,0.45);
-      text-shadow: 0 0 8px rgba(65,200,255,0.4);
-    }
-    .btn-outline:hover {
-      background: rgba(65,200,255,0.15);
-      border-color: var(--fluid);
-      color: var(--fluid-bright);
-      box-shadow: 0 0 16px rgba(65,200,255,0.25);
-      opacity: 1;
-    }
-
-    .scroll-hint {
-      position: absolute; bottom: 2rem; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .4rem;
-      font-family: var(--font-mono);
-      font-size: .6rem;
-      letter-spacing: .18em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeIn 1s 1.8s forwards;
-    }
-    .scroll-line {
-      width: 1px; height: 36px;
-      background: linear-gradient(var(--fluid), transparent);
-      animation: scrollPulse 2s 1.8s infinite;
-    }
-
-    /* ── Sections ── */
-    section { padding: clamp(4rem, 10vw, 8rem) var(--pad); }
-    .section-inner { max-width: var(--max); margin: 0 auto; }
-
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: .68rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--fluid);
-      margin-bottom: .9rem;
-      display: flex; align-items: center; gap: .8rem;
-    }
-    .section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--fluid); }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.9rem, 4.5vw, 3rem);
-      font-weight: 400;
-      line-height: 1.2;
-      margin-bottom: .9rem;
-      letter-spacing: -.01em;
-    }
-    .section-title em { font-style: italic; color: var(--fluid); }
-
-    .section-sub {
-      font-size: .95rem;
-      color: var(--text-muted);
-      max-width: 580px;
-      margin-bottom: 3.5rem;
-      line-height: 1.8;
-    }
-
-    /* ── About ── */
-    #about { background: var(--bg2); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .about-text p {
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-      font-size: .96rem;
-      line-height: 1.9;
-    }
-    .about-text p strong { color: var(--text); font-weight: 400; }
-
-    .aside-stack { display: flex; flex-direction: column; gap: 1.2rem; }
-
-    .aside-card {
-      padding: 1.3rem 1.5rem;
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--fluid);
-      background: var(--bg3);
-    }
-
-    .aside-label {
-      font-family: var(--font-mono);
-      font-size: .62rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--fluid);
-      margin-bottom: .55rem;
-    }
-
-    .aside-value {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.55;
-    }
-
-    .profile-links { display: flex; flex-direction: column; gap: .4rem; }
-
-    .profile-link {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: .55rem .9rem;
-      border: 1px solid rgba(65,200,255,0.25);
-      background: rgba(65,200,255,0.04);
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      letter-spacing: .07em;
-      color: var(--fluid);
-      transition: all .2s;
-    }
-    .profile-link:hover { border-color: var(--fluid); color: var(--fluid-bright); background: var(--fluid-dim); box-shadow: 0 0 12px rgba(65,200,255,0.2); opacity: 1; }
-
-    .profile-badge {
-      font-size: .62rem;
-      padding: .12rem .5rem;
-      border: 1px solid rgba(65,200,255,0.35);
-      color: var(--fluid);
-      background: var(--fluid-dim);
-    }
-
-    /* ── Research ── */
-    #research { background: var(--bg); }
-
-    /* Grid with a deliberate asymmetric layout */
-    .research-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto auto;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    /* Make first card span 2 rows */
-    .research-card:first-child { grid-row: span 2; }
-
-    .research-card {
-      background: var(--bg);
-      padding: 2rem 1.8rem;
-      position: relative;
-      overflow: hidden;
-      transition: background .25s;
-    }
-    .research-card:hover { background: var(--surface); }
-
-    .research-card::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
-      background: transparent;
-      transition: background .25s;
-    }
-    .research-card:hover::after { background: var(--fluid); box-shadow: 0 0 8px rgba(65,200,255,0.5); }
-
-    /* Faint watermark number */
-    .research-card::before {
-      content: attr(data-n);
-      position: absolute; bottom: .8rem; right: 1.2rem;
-      font-family: var(--font-display);
-      font-size: 4rem;
-      font-weight: 700;
-      color: rgba(122,158,176,.05);
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    .rc-icon { font-size: 1.6rem; margin-bottom: .9rem; display: block; }
-
-    .rc-title {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: .5rem;
-      line-height: 1.3;
-    }
-
-    .rc-body {
-      font-size: .87rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-    }
-
-    .rc-tags {
-      display: flex; flex-wrap: wrap; gap: .35rem;
-      margin-top: 1.1rem;
-    }
-
-    .rc-tag {
-      font-family: var(--font-mono);
-      font-size: .6rem;
-      letter-spacing: .07em;
-      padding: .18rem .5rem;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-    }
-
-    /* ── Publications ── */
-    #publications { background: var(--bg2); }
-
-    .pub-list {
-      display: flex; flex-direction: column;
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-      margin-bottom: 2rem;
-    }
-
-    .pub-item {
-      background: var(--bg2);
-      padding: 1.5rem 1.8rem;
-      display: grid;
-      grid-template-columns: 2.8rem 1fr auto;
-      gap: 1.4rem;
-      align-items: start;
-      transition: background .2s;
-    }
-    .pub-item:hover { background: var(--surface); }
-
-    .pub-year {
-      font-family: var(--font-mono);
-      font-size: .68rem;
-      letter-spacing: .1em;
-      color: var(--fluid);
-      padding-top: .18rem;
-    }
-
-    .pub-title {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: .3rem;
-      line-height: 1.45;
-    }
-
-    .pub-venue {
-      font-size: .8rem;
-      font-style: italic;
-      color: var(--text-muted);
-    }
-
-    .pub-badge {
-      font-family: var(--font-mono);
-      font-size: .6rem;
-      letter-spacing: .08em;
-      padding: .22rem .65rem;
-      white-space: nowrap;
-      margin-top: .12rem;
-      align-self: start;
-    }
-
-    .badge-nature { background: rgba(255,224,130,.1); color: var(--track-b); border: 1px solid rgba(255,224,130,.3); }
-    .badge-atlas  { background: rgba(255,61,139,.1); color: var(--track-a); border: 1px solid rgba(255,61,139,.25); }
-    .badge-cfd    { background: var(--fluid-dim); color: var(--fluid); border: 1px solid rgba(0,200,232,.25); }
-    .badge-ai     { background: rgba(160,210,150,.08); color: #a0d296; border: 1px solid rgba(160,210,150,.25); }
-    .badge-grain  { background: var(--fluid-dim); color: var(--fluid); border: 1px solid var(--border2); }
-
-    .pub-more { text-align: center; padding: 1.5rem; }
-
-    /* ── Timeline ── */
-    #positions { background: var(--bg); }
-
-    .timeline { position: relative; padding-left: 1.8rem; }
-    .timeline::before {
-      content: '';
-      position: absolute; left: 0; top: .6rem; bottom: 0;
-      width: 1px;
-      background: linear-gradient(var(--fluid), transparent);
-    }
-
-    .tl-item {
-      position: relative;
-      padding: 0 0 2.8rem 2rem;
-    }
-
-    .tl-item::before {
-      content: '';
-      position: absolute; left: -1.8rem; top: .55rem;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--fluid);
-      box-shadow: 0 0 10px rgba(65,200,255,0.7);
-    }
-
-    .tl-period {
-      font-family: var(--font-mono);
-      font-size: .66rem;
-      letter-spacing: .14em;
-      color: var(--fluid);
-      margin-bottom: .35rem;
-    }
-
-    .tl-role {
-      font-family: var(--font-display);
-      font-size: 1.18rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: .2rem;
-    }
-
-    .tl-org {
-      font-size: .87rem;
-      font-style: italic;
-      color: var(--text-muted);
-      margin-bottom: .45rem;
-    }
-
-    .tl-desc {
-      font-size: .84rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-      max-width: 540px;
-    }
-
-    /* ── Contact ── */
-    #contact { background: var(--bg2); text-align: center; }
-    #contact .section-label { justify-content: center; }
-    #contact .section-label::before { display: none; }
-
-    .contact-row {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: .85rem;
-      margin-top: 2.5rem;
-    }
-
-    .contact-card {
-      display: flex; flex-direction: column; align-items: center; gap: .45rem;
-      padding: 1.3rem 1.8rem;
-      border: 1px solid rgba(65,200,255,0.25);
-      background: rgba(65,200,255,0.04);
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      letter-spacing: .08em;
-      color: var(--fluid);
-      min-width: 150px;
-      transition: all .22s;
-    }
-    .contact-card:hover { border-color: var(--fluid); color: var(--fluid-bright); background: var(--fluid-dim); box-shadow: 0 0 16px rgba(65,200,255,0.2); opacity: 1; }
-    .contact-card-icon { font-size: 1.3rem; }
-
-    /* ── Footer ── */
-    footer {
-      padding: 1.8rem var(--pad);
-      border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem;
-    }
-
-    .footer-copy, .footer-right {
-      font-family: var(--font-mono);
-      font-size: .65rem;
-      letter-spacing: .09em;
-      color: var(--text-dim);
-    }
-    .footer-right a { color: var(--fluid); }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: .25; }
-      50% { opacity: 1; }
-    }
-
-    .reveal {
-      opacity: 0; transform: translateY(22px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .research-grid { grid-template-columns: 1fr 1fr; }
-      .research-card:first-child { grid-row: span 1; }
-      .about-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      .nav-links { display: none; }
-      .research-grid { grid-template-columns: 1fr; }
-      .pub-item { grid-template-columns: 1fr; gap: .4rem; }
-      .hero-metrics { gap: 1.5rem; }
-    }
-  </style>
-
-  <!-- JSON-LD Structured Data — Person -->
+  <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -689,31 +41,280 @@
       "https://www.up.ac.za/mechanical-and-aeronautical-engineering/staff-profiles/muaaz-bhamjee"
     ],
     "knowsAbout": [
-      "Computational Fluid Dynamics",
-      "Lattice Boltzmann Method",
-      "Granular Dynamics",
-      "Multiphase Flow",
-      "High-Energy Physics",
-      "ATLAS Collaboration",
-      "CERN",
-      "Higgs Boson",
-      "Top Quark Physics",
-      "Quantum Entanglement",
-      "Machine Learning",
-      "Earth Observation Foundation Models",
-      "Urban Heat Islands",
-      "Climate Science",
-      "Quantum Computing",
-      "Quantum Sensing",
-      "High Performance Computing",
-      "Engineering Education"
+      "Computational Fluid Dynamics","Lattice Boltzmann Method","Granular Dynamics",
+      "Multiphase Flow","High-Energy Physics","ATLAS Collaboration","CERN",
+      "Higgs Boson","Top Quark Physics","Quantum Entanglement","Machine Learning",
+      "Earth Observation Foundation Models","Urban Heat Islands","Climate Science",
+      "Quantum Computing","Quantum Sensing","High Performance Computing","Engineering Education"
     ],
-    "alumniOf": {
-      "@type": "Organization",
-      "name": "University of Johannesburg"
-    }
+    "alumniOf": {"@type": "Organization","name": "University of Johannesburg"}
   }
   </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #020810;
+      --bg2:          #05101e;
+      --bg3:          #081528;
+      --surface:      #0c1f38;
+      --fluid:        #41c8ff;
+      --fluid-bright: #7adfff;
+      --fluid-dim:    rgba(65,200,255,0.10);
+      --fluid-mid:    rgba(65,200,255,0.28);
+      --grain:        #5ab8d4;
+      --grain-dim:    rgba(90,184,212,0.12);
+      --grain-mid:    rgba(90,184,212,0.28);
+      --track-a:      #ff3d8b;
+      --track-b:      #ffe082;
+      --text:         #e4f2ff;
+      --text-muted:   #8ab8d8;
+      --text-dim:     #4a7a9a;
+      --border:       rgba(65,200,255,0.14);
+      --border2:      rgba(65,200,255,0.28);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+      --font-body:    'Source Serif 4', Georgia, serif;
+      --max:          1160px;
+      --pad:          clamp(1.5rem, 5vw, 4rem);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 16px; line-height: 1.75; overflow-x: hidden;
+    }
+    ::selection { background: var(--fluid-mid); color: #fff; }
+    a { color: var(--fluid); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .7; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(65,200,255,.35); border-radius: 2px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem var(--pad);
+      background: rgba(2,8,16,0.90); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; letter-spacing: .02em; color: var(--text); }
+    .nav-logo em { font-style: italic; color: var(--fluid); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--fluid); transition: color .2s, text-shadow .2s;
+    }
+    .nav-links a:hover { color: var(--fluid-bright); text-shadow: 0 0 10px rgba(65,200,255,0.6); opacity: 1; }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 0 var(--pad); overflow: hidden;
+    }
+    #physics-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(65,200,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(65,200,255,.045) 1px, transparent 1px),
+        linear-gradient(rgba(65,200,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(65,200,255,.018) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+      pointer-events: none;
+    }
+    #hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, transparent 40%, rgba(2,8,16,.7) 100%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: var(--max); margin: 0 auto; width: 100%; padding-top: 6rem;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono); font-size: .72rem; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--fluid); margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp .9s .15s forwards;
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .hero-eyebrow::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--fluid); }
+    .hero-name {
+      font-family: var(--font-display); font-size: clamp(3.2rem, 9vw, 7rem);
+      font-weight: 400; line-height: 1.0; letter-spacing: -.02em; color: var(--text);
+      margin-bottom: .4rem; opacity: 0; animation: fadeUp .9s .3s forwards;
+    }
+    .hero-name em { font-style: italic; font-weight: 600; color: var(--fluid); }
+    .hero-dept {
+      font-family: var(--font-display); font-size: clamp(.95rem, 2vw, 1.25rem);
+      font-style: italic; font-weight: 300; color: var(--text-muted);
+      margin-bottom: 2.5rem; opacity: 0; animation: fadeUp .9s .45s forwards;
+    }
+    .hero-disciplines {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      margin-bottom: 2.8rem; opacity: 0; animation: fadeUp .9s .6s forwards;
+    }
+    .disc {
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em;
+      padding: .3rem .75rem; border-radius: 1px; text-transform: uppercase;
+    }
+    .disc-fluid { border: 1px solid rgba(65,200,255,.35); color: var(--fluid); background: var(--fluid-dim); }
+    .disc-grain { border: 1px solid rgba(65,200,255,.28); color: var(--fluid); background: var(--fluid-dim); }
+    .disc-phys  { border: 1px solid rgba(255,61,139,.3); color: var(--track-a); background: rgba(255,61,139,.08); }
+    .disc-ai    { border: 1px solid rgba(255,224,130,.3); color: var(--track-b); background: rgba(255,224,130,.07); }
+    .disc-q     { border: 1px solid rgba(160,210,150,.3); color: #a0d296; background: rgba(160,210,150,.07); }
+    .hero-metrics {
+      display: flex; gap: clamp(1.5rem, 4vw, 3.5rem); flex-wrap: wrap;
+      margin-bottom: 3rem; opacity: 0; animation: fadeUp .9s .75s forwards;
+    }
+    .metric { display: flex; flex-direction: column; }
+    .metric-value {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 700;
+      color: var(--fluid); line-height: 1; letter-spacing: -.03em;
+    }
+    .metric-label {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--text-dim); margin-top: .3rem;
+    }
+    .hero-cta { display: flex; gap: .85rem; flex-wrap: wrap; opacity: 0; animation: fadeUp .9s .9s forwards; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em;
+      text-transform: uppercase; padding: .7rem 1.5rem; border-radius: 1px;
+      transition: all .22s; cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--fluid); color: var(--bg); border: 1px solid var(--fluid);
+      font-weight: 500; box-shadow: 0 0 18px rgba(65,200,255,0.35);
+    }
+    .btn-primary:hover { background: var(--fluid-bright); border-color: var(--fluid-bright); box-shadow: 0 0 28px rgba(65,200,255,0.55); opacity: 1; }
+    .btn-outline {
+      background: rgba(65,200,255,0.07); color: var(--fluid);
+      border: 1px solid rgba(65,200,255,0.45); text-shadow: 0 0 8px rgba(65,200,255,0.4);
+    }
+    .btn-outline:hover { background: rgba(65,200,255,0.15); border-color: var(--fluid); color: var(--fluid-bright); box-shadow: 0 0 16px rgba(65,200,255,0.25); opacity: 1; }
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .18em;
+      color: var(--text-dim); text-transform: uppercase;
+      opacity: 0; animation: fadeIn 1s 1.8s forwards;
+    }
+    .scroll-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(var(--fluid), transparent);
+      animation: scrollPulse 2s 1.8s infinite;
+    }
+
+    /* ── Sections ── */
+    section { padding: clamp(4rem, 10vw, 8rem) var(--pad); }
+    .section-inner { max-width: var(--max); margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--fluid); margin-bottom: .9rem;
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--fluid); }
+    .section-title { font-family: var(--font-display); font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 400; line-height: 1.2; margin-bottom: .9rem; letter-spacing: -.01em; }
+    .section-title em { font-style: italic; color: var(--fluid); }
+    .section-sub { font-size: .95rem; color: var(--text-muted); max-width: 580px; margin-bottom: 3.5rem; line-height: 1.8; }
+
+    /* ── About ── */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 4rem; align-items: start; }
+    .about-text p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: .96rem; line-height: 1.9; }
+    .about-text p strong { color: var(--text); font-weight: 400; }
+    .aside-stack { display: flex; flex-direction: column; gap: 1.2rem; }
+    .aside-card { padding: 1.3rem 1.5rem; border: 1px solid var(--border); border-left: 2px solid var(--fluid); background: var(--bg3); }
+    .aside-label { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--fluid); margin-bottom: .55rem; }
+    .aside-value { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--text); line-height: 1.55; }
+    .profile-links { display: flex; flex-direction: column; gap: .4rem; }
+    .profile-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .55rem .9rem; border: 1px solid rgba(65,200,255,0.25);
+      background: rgba(65,200,255,0.04); font-family: var(--font-mono);
+      font-size: .7rem; letter-spacing: .07em; color: var(--fluid); transition: all .2s;
+    }
+    .profile-link:hover { border-color: var(--fluid); color: var(--fluid-bright); background: var(--fluid-dim); box-shadow: 0 0 12px rgba(65,200,255,0.2); opacity: 1; }
+    .profile-badge { font-size: .62rem; padding: .12rem .5rem; border: 1px solid rgba(65,200,255,0.35); color: var(--fluid); background: var(--fluid-dim); }
+
+    /* ── Research ── */
+    #research { background: var(--bg); }
+    .research-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .research-card:first-child { grid-row: span 2; }
+    .research-card { background: var(--bg); padding: 2rem 1.8rem; position: relative; overflow: hidden; transition: background .25s; }
+    .research-card:hover { background: var(--surface); }
+    .research-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background .25s; }
+    .research-card:hover::after { background: var(--fluid); box-shadow: 0 0 8px rgba(65,200,255,0.5); }
+    .research-card::before { content: attr(data-n); position: absolute; bottom: .8rem; right: 1.2rem; font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: rgba(65,200,255,.05); line-height: 1; pointer-events: none; }
+    .rc-icon { font-size: 1.6rem; margin-bottom: .9rem; display: block; }
+    .rc-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; line-height: 1.3; }
+    .rc-body { font-size: .87rem; color: var(--text-muted); line-height: 1.75; }
+    .rc-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.1rem; }
+    .rc-tag { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .07em; padding: .18rem .5rem; border: 1px solid var(--border); color: var(--text-dim); }
+
+    /* ── Publications ── */
+    #publications { background: var(--bg2); }
+    .pub-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 2rem; }
+    .pub-item { background: var(--bg2); padding: 1.5rem 1.8rem; display: grid; grid-template-columns: 2.8rem 1fr auto; gap: 1.4rem; align-items: start; transition: background .2s; }
+    .pub-item:hover { background: var(--surface); }
+    .pub-year { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; color: var(--fluid); padding-top: .18rem; }
+    .pub-title { font-family: var(--font-display); font-size: 1rem; font-weight: 400; color: var(--text); margin-bottom: .3rem; line-height: 1.45; }
+    .pub-venue { font-size: .8rem; font-style: italic; color: var(--text-muted); }
+    .pub-badge { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .08em; padding: .22rem .65rem; white-space: nowrap; margin-top: .12rem; align-self: start; }
+    .badge-nature { background: rgba(255,224,130,.1); color: var(--track-b); border: 1px solid rgba(255,224,130,.3); }
+    .badge-atlas  { background: rgba(255,61,139,.1);  color: var(--track-a); border: 1px solid rgba(255,61,139,.25); }
+    .badge-cfd    { background: var(--fluid-dim);     color: var(--fluid);   border: 1px solid rgba(65,200,255,.25); }
+    .badge-ai     { background: rgba(160,210,150,.08); color: #a0d296;       border: 1px solid rgba(160,210,150,.25); }
+    .badge-grain  { background: var(--fluid-dim);     color: var(--fluid);   border: 1px solid var(--border2); }
+    .pub-more { text-align: center; padding: 1.5rem; }
+
+    /* ── Timeline ── */
+    #positions { background: var(--bg); }
+    .timeline { position: relative; padding-left: 1.8rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: .6rem; bottom: 0; width: 1px; background: linear-gradient(var(--fluid), transparent); }
+    .tl-item { position: relative; padding: 0 0 2.8rem 2rem; }
+    .tl-item::before { content: ''; position: absolute; left: -1.8rem; top: .55rem; width: 6px; height: 6px; border-radius: 50%; background: var(--fluid); box-shadow: 0 0 10px rgba(65,200,255,0.7); }
+    .tl-period { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; color: var(--fluid); margin-bottom: .35rem; }
+    .tl-role { font-family: var(--font-display); font-size: 1.18rem; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+    .tl-org { font-size: .87rem; font-style: italic; color: var(--text-muted); margin-bottom: .45rem; }
+    .tl-desc { font-size: .84rem; color: var(--text-dim); line-height: 1.7; max-width: 540px; }
+
+    /* ── Contact ── */
+    #contact { background: var(--bg2); text-align: center; }
+    #contact .section-label { justify-content: center; }
+    #contact .section-label::before { display: none; }
+    .contact-row { display: flex; justify-content: center; flex-wrap: wrap; gap: .85rem; margin-top: 2.5rem; }
+    .contact-card {
+      display: flex; flex-direction: column; align-items: center; gap: .45rem;
+      padding: 1.3rem 1.8rem; border: 1px solid rgba(65,200,255,0.25);
+      background: rgba(65,200,255,0.04); font-family: var(--font-mono);
+      font-size: .7rem; letter-spacing: .08em; color: var(--fluid);
+      min-width: 150px; transition: all .22s;
+    }
+    .contact-card:hover { border-color: var(--fluid); color: var(--fluid-bright); background: var(--fluid-dim); box-shadow: 0 0 16px rgba(65,200,255,0.2); opacity: 1; }
+    .contact-card-icon { font-size: 1.3rem; }
+
+    /* ── Footer ── */
+    footer { padding: 1.8rem var(--pad); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy, .footer-right { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .09em; color: var(--text-dim); }
+    .footer-right a { color: var(--fluid); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes scrollPulse { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) { .research-grid { grid-template-columns: 1fr 1fr; } .research-card:first-child { grid-row: span 1; } .about-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .nav-links { display: none; } .research-grid { grid-template-columns: 1fr; } .pub-item { grid-template-columns: 1fr; gap: .4rem; } .hero-metrics { gap: 1.5rem; } }
+  </style>
 </head>
 <body>
 
@@ -729,15 +330,12 @@
     </ul>
   </nav>
 
-  <!-- ── Hero ── -->
   <section id="hero">
     <canvas id="physics-canvas"></canvas>
-
     <div class="hero-content">
       <p class="hero-eyebrow">Associate Professor · University of Pretoria</p>
       <h1 class="hero-name">Muaaz<br><em>Bhamjee</em></h1>
       <p class="hero-dept">Mechanical &amp; Aeronautical Engineering</p>
-
       <div class="hero-disciplines">
         <span class="disc disc-fluid">Computational Fluid Dynamics</span>
         <span class="disc disc-grain">Granular Dynamics</span>
@@ -748,40 +346,21 @@
         <span class="disc disc-q">Quantum Computing</span>
         <span class="disc disc-q">Quantum Sensing</span>
       </div>
-
       <div class="hero-metrics">
-        <div class="metric">
-          <span class="metric-value">53</span>
-          <span class="metric-label">h-index (Scholar)</span>
-        </div>
-        <div class="metric">
-          <span class="metric-value">25</span>
-          <span class="metric-label">h-index (Scopus)</span>
-        </div>
-        <div class="metric">
-          <span class="metric-value">200+</span>
-          <span class="metric-label">Publications</span>
-        </div>
-        <div class="metric">
-          <span class="metric-value">7</span>
-          <span class="metric-label">Masters Supervised</span>
-        </div>
+        <div class="metric"><span class="metric-value">53</span><span class="metric-label">h-index (Scholar)</span></div>
+        <div class="metric"><span class="metric-value">25</span><span class="metric-label">h-index (Scopus)</span></div>
+        <div class="metric"><span class="metric-value">200+</span><span class="metric-label">Publications</span></div>
+        <div class="metric"><span class="metric-value">7</span><span class="metric-label">Masters Supervised</span></div>
       </div>
-
       <div class="hero-cta">
         <a class="btn btn-primary" href="cv_bhamjee.pdf" target="_blank">Download CV</a>
         <a class="btn btn-outline" href="#research">Research ↓</a>
         <a class="btn btn-outline" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">Google Scholar ↗</a>
       </div>
     </div>
-
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+    <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
   </section>
 
-  <!-- ── About ── -->
   <section id="about">
     <div class="section-inner">
       <p class="section-label reveal">About</p>
@@ -802,21 +381,11 @@
             <div class="aside-card">
               <div class="aside-label">Research Profiles</div>
               <div class="profile-links">
-                <a class="profile-link" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">
-                  Google Scholar <span class="profile-badge">h = 53</span>
-                </a>
-                <a class="profile-link" href="https://www.scopus.com/authid/detail.uri?authorId=55247084100" target="_blank">
-                  Scopus <span class="profile-badge">h = 25</span>
-                </a>
-                <a class="profile-link" href="https://orcid.org/0000-0002-2697-4589" target="_blank">
-                  ORCID <span class="profile-badge">0000-0002-2697-4589</span>
-                </a>
-                <a class="profile-link" href="https://www.webofscience.com/wos/author/record/ABE-4708-2020" target="_blank">
-                  Web of Science <span class="profile-badge">h = 10</span>
-                </a>
-                <a class="profile-link" href="https://www.up.ac.za/mechanical-and-aeronautical-engineering/staff-profiles/muaaz-bhamjee" target="_blank">
-                  University of Pretoria <span class="profile-badge">Profile</span>
-                </a>
+                <a class="profile-link" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">Google Scholar <span class="profile-badge">h = 53</span></a>
+                <a class="profile-link" href="https://www.scopus.com/authid/detail.uri?authorId=55247084100" target="_blank">Scopus <span class="profile-badge">h = 25</span></a>
+                <a class="profile-link" href="https://orcid.org/0000-0002-2697-4589" target="_blank">ORCID <span class="profile-badge">0000-0002-2697-4589</span></a>
+                <a class="profile-link" href="https://www.webofscience.com/wos/author/record/ABE-4708-2020" target="_blank">Web of Science <span class="profile-badge">h = 10</span></a>
+                <a class="profile-link" href="https://www.up.ac.za/mechanical-and-aeronautical-engineering/staff-profiles/muaaz-bhamjee" target="_blank">University of Pretoria Profile <span class="profile-badge">Profile</span></a>
               </div>
             </div>
           </div>
@@ -825,251 +394,112 @@
     </div>
   </section>
 
-  <!-- ── Research ── -->
   <section id="research">
     <div class="section-inner">
       <p class="section-label reveal">Research</p>
       <h2 class="section-title reveal">Areas of <em>investigation</em></h2>
       <p class="section-sub reveal">Six interlocking research programmes spanning four orders of magnitude in physical scale.</p>
       <div class="research-grid reveal">
-
         <div class="research-card" data-n="01">
           <span class="rc-icon">🌀</span>
           <h3 class="rc-title">Computational Fluid Dynamics &amp; Granular Flow</h3>
           <p class="rc-body">Multiphase and granular flow modelling in process equipment — hydrocyclones, fluidised beds, pneumatic conveyors — using Lattice Boltzmann Method (LBM) and Euler–Euler frameworks. Flow regimes span laminar, turbulent, and dense granular packing. Industrial partner: Multotec Pty. Ltd.</p>
-          <div class="rc-tags">
-            <span class="rc-tag">LBM</span>
-            <span class="rc-tag">Multiphase Flow</span>
-            <span class="rc-tag">Granular Dynamics</span>
-            <span class="rc-tag">Hydrocyclones</span>
-            <span class="rc-tag">HPC</span>
-            <span class="rc-tag">OpenFOAM</span>
-          </div>
+          <div class="rc-tags"><span class="rc-tag">LBM</span><span class="rc-tag">Multiphase Flow</span><span class="rc-tag">Granular Dynamics</span><span class="rc-tag">Hydrocyclones</span><span class="rc-tag">HPC</span><span class="rc-tag">OpenFOAM</span></div>
         </div>
-
         <div class="research-card" data-n="02">
           <span class="rc-icon">⚛️</span>
           <h3 class="rc-title">High-Energy Physics — ATLAS at CERN</h3>
           <p class="rc-body">Contributing author on the ATLAS Collaboration at CERN. Research includes detector environmental monitoring for the ITk upgrade, Higgs boson characterisation, top quark physics, and the landmark <em>Nature</em> 2024 observation of quantum entanglement with top quarks.</p>
-          <div class="rc-tags">
-            <span class="rc-tag">ATLAS</span>
-            <span class="rc-tag">Higgs Boson</span>
-            <span class="rc-tag">Top Quarks</span>
-            <span class="rc-tag">HL-LHC</span>
-            <span class="rc-tag">ITk Upgrade</span>
-          </div>
+          <div class="rc-tags"><span class="rc-tag">ATLAS</span><span class="rc-tag">Higgs Boson</span><span class="rc-tag">Top Quarks</span><span class="rc-tag">HL-LHC</span><span class="rc-tag">ITk Upgrade</span></div>
         </div>
-
         <div class="research-card" data-n="03">
           <span class="rc-icon">🌍</span>
           <h3 class="rc-title">AI &amp; Climate Intelligence</h3>
           <p class="rc-body">Foundation model development for geospatial Earth observation, including the open-source Granite Geospatial Land Surface Temperature model. Urban heat island detection and characterisation using vision transformers and auxiliary feature injection for African cities.</p>
-          <div class="rc-tags">
-            <span class="rc-tag">Foundation Models</span>
-            <span class="rc-tag">Prithvi / ViT</span>
-            <span class="rc-tag">Urban Heat Islands</span>
-            <span class="rc-tag">Geospatial AI</span>
-          </div>
+          <div class="rc-tags"><span class="rc-tag">Foundation Models</span><span class="rc-tag">Prithvi / ViT</span><span class="rc-tag">Urban Heat Islands</span><span class="rc-tag">Geospatial AI</span></div>
         </div>
-
         <div class="research-card" data-n="04">
           <span class="rc-icon">🔬</span>
           <h3 class="rc-title">Quantum Computing &amp; Sensing</h3>
           <p class="rc-body">New research programmes at the University of Pretoria in quantum computing and quantum sensing with engineering applications. Building on connections between ML pipelines from particle physics and emerging quantum architectures, with dedicated funding and industry partnerships.</p>
-          <div class="rc-tags">
-            <span class="rc-tag">Quantum Computing</span>
-            <span class="rc-tag">Quantum Sensing</span>
-            <span class="rc-tag">Quantum Information</span>
-          </div>
+          <div class="rc-tags"><span class="rc-tag">Quantum Computing</span><span class="rc-tag">Quantum Sensing</span><span class="rc-tag">Quantum Information</span></div>
         </div>
-
         <div class="research-card" data-n="05">
           <span class="rc-icon">🏥</span>
           <h3 class="rc-title">Biomedical &amp; Health CFD</h3>
           <p class="rc-body">CFD modelling of respiratory droplet transmission and UV germicidal irradiation for infection control, ventriculoperitoneal shunt dynamics, and lung acoustics. Collaboration with the Perinatal HIV Research Unit (PHRU) at Wits.</p>
-          <div class="rc-tags">
-            <span class="rc-tag">Droplet Dynamics</span>
-            <span class="rc-tag">UVGI</span>
-            <span class="rc-tag">VP Shunts</span>
-            <span class="rc-tag">Biomedical Flow</span>
-          </div>
+          <div class="rc-tags"><span class="rc-tag">Droplet Dynamics</span><span class="rc-tag">UVGI</span><span class="rc-tag">VP Shunts</span><span class="rc-tag">Biomedical Flow</span></div>
         </div>
-
         <div class="research-card" data-n="06">
           <span class="rc-icon">📐</span>
           <h3 class="rc-title">Engineering Education</h3>
           <p class="rc-body">Scholarship of teaching and learning with a focus on design literacy, academic voice, blended and online learning, and decolonisation of engineering curricula in post-Apartheid South Africa.</p>
-          <div class="rc-tags">
-            <span class="rc-tag">Design Literacy</span>
-            <span class="rc-tag">Blended Learning</span>
-            <span class="rc-tag">Decolonisation</span>
-            <span class="rc-tag">SASEE</span>
-          </div>
+          <div class="rc-tags"><span class="rc-tag">Design Literacy</span><span class="rc-tag">Blended Learning</span><span class="rc-tag">Decolonisation</span><span class="rc-tag">SASEE</span></div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── Publications ── -->
   <section id="publications">
     <div class="section-inner">
       <p class="section-label reveal">Publications</p>
       <h2 class="section-title reveal">Selected <em>outputs</em></h2>
       <p class="section-sub reveal">A selection of recent and high-impact publications. Full list on Google Scholar and Scopus.</p>
-
       <div class="pub-list reveal">
-        <div class="pub-item">
-          <span class="pub-year">2024</span>
-          <div>
-            <div class="pub-title">Observation of quantum entanglement with top quarks at the ATLAS detector</div>
-            <div class="pub-venue">Nature, vol. 633, pp. 542–547</div>
-          </div>
-          <span class="pub-badge badge-nature">Nature</span>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2025</span>
-          <div>
-            <div class="pub-title">Characterising the Higgs boson with ATLAS data from the LHC Run-2</div>
-            <div class="pub-venue">Physics Reports, vol. 1116, pp. 4–56</div>
-          </div>
-          <span class="pub-badge badge-atlas">ATLAS</span>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2025</span>
-          <div>
-            <div class="pub-title">Auxiliary Feature Injection for Prithvi-ViT Fine-Tuning on Geospatial Data</div>
-            <div class="pub-venue">IEEE IGARSS 2025, Brisbane, pp. 1075–1078</div>
-          </div>
-          <span class="pub-badge badge-ai">AI / Geo</span>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2024</span>
-          <div>
-            <div class="pub-title">Infectiousness model of expelled droplets exposed to ultraviolet germicidal irradiation</div>
-            <div class="pub-venue">Computers &amp; Fluids, vol. 275, p. 106242</div>
-          </div>
-          <span class="pub-badge badge-cfd">CFD</span>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2022</span>
-          <div>
-            <div class="pub-title">The Modification of the Dynamic Behaviour of Cyclonic Flow in a Hydrocyclone under Surging Conditions</div>
-            <div class="pub-venue">Mathematical and Computational Applications, vol. 27(6), p. 88</div>
-          </div>
-          <span class="pub-badge badge-grain">CFD / Granular</span>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2020</span>
-          <div>
-            <div class="pub-title">Experimental and CFD Investigation of a Hybrid Solar Air Heater</div>
-            <div class="pub-venue">Solar Energy, vol. 195, pp. 413–428</div>
-          </div>
-          <span class="pub-badge badge-cfd">CFD</span>
-        </div>
+        <div class="pub-item"><span class="pub-year">2024</span><div><div class="pub-title">Observation of quantum entanglement with top quarks at the ATLAS detector</div><div class="pub-venue">Nature, vol. 633, pp. 542–547</div></div><span class="pub-badge badge-nature">Nature</span></div>
+        <div class="pub-item"><span class="pub-year">2025</span><div><div class="pub-title">Characterising the Higgs boson with ATLAS data from the LHC Run-2</div><div class="pub-venue">Physics Reports, vol. 1116, pp. 4–56</div></div><span class="pub-badge badge-atlas">ATLAS</span></div>
+        <div class="pub-item"><span class="pub-year">2025</span><div><div class="pub-title">Auxiliary Feature Injection for Prithvi-ViT Fine-Tuning on Geospatial Data</div><div class="pub-venue">IEEE IGARSS 2025, Brisbane, pp. 1075–1078</div></div><span class="pub-badge badge-ai">AI / Geo</span></div>
+        <div class="pub-item"><span class="pub-year">2024</span><div><div class="pub-title">Infectiousness model of expelled droplets exposed to ultraviolet germicidal irradiation</div><div class="pub-venue">Computers &amp; Fluids, vol. 275, p. 106242</div></div><span class="pub-badge badge-cfd">CFD</span></div>
+        <div class="pub-item"><span class="pub-year">2022</span><div><div class="pub-title">The Modification of the Dynamic Behaviour of Cyclonic Flow in a Hydrocyclone under Surging Conditions</div><div class="pub-venue">Mathematical and Computational Applications, vol. 27(6), p. 88</div></div><span class="pub-badge badge-grain">CFD / Granular</span></div>
+        <div class="pub-item"><span class="pub-year">2020</span><div><div class="pub-title">Experimental and CFD Investigation of a Hybrid Solar Air Heater</div><div class="pub-venue">Solar Energy, vol. 195, pp. 413–428</div></div><span class="pub-badge badge-cfd">CFD</span></div>
       </div>
-
-      <div class="pub-more reveal">
-        <a class="btn btn-outline" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">
-          View all 200+ publications on Google Scholar ↗
-        </a>
-      </div>
+      <div class="pub-more reveal"><a class="btn btn-outline" href="https://scholar.google.co.za/citations?user=jlOJkoAAAAJ" target="_blank">View all 200+ publications on Google Scholar ↗</a></div>
     </div>
   </section>
 
-  <!-- ── Positions ── -->
   <section id="positions">
     <div class="section-inner">
       <p class="section-label reveal">Experience</p>
       <h2 class="section-title reveal">Academic &amp; <em>industry</em> positions</h2>
       <div class="timeline reveal">
-        <div class="tl-item">
-          <div class="tl-period">2025 — Present</div>
-          <div class="tl-role">Associate Professor</div>
-          <div class="tl-org">Department of Mechanical &amp; Aeronautical Engineering, University of Pretoria</div>
-          <div class="tl-desc">Leading research programmes in computational mechanics, quantum computing &amp; sensing, and AI. Supervision of postgraduate students and development of new quantum science curricula.</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-period">2021 — 2025</div>
-          <div class="tl-role">Staff Research Scientist</div>
-          <div class="tl-org">IBM Research Africa, Johannesburg</div>
-          <div class="tl-desc">Led the Urban Heat Island AI programme. Co-developed the open-source Granite Geospatial Land Surface Temperature foundation model. Patent holder for dynamically forecasting high-resolution air temperature (ZA2023/09448).</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-period">2021 — 2025</div>
-          <div class="tl-role">Visiting Senior Research Associate</div>
-          <div class="tl-org">University of Johannesburg</div>
-          <div class="tl-desc">Continued postgraduate supervision and ATLAS / SA-CERN activities alongside IBM Research role.</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-period">2017 — 2021</div>
-          <div class="tl-role">Senior Lecturer</div>
-          <div class="tl-org">Department of Mechanical Engineering Science, University of Johannesburg</div>
-          <div class="tl-desc">Course coordinator for Introduction to Engineering Design 1A &amp; 1B. Principal Investigator on two funded research projects. Completed DIng (Computational Fluid &amp; Granular Dynamics).</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-period">2008 — 2009</div>
-          <div class="tl-role">Junior CFD Analyst</div>
-          <div class="tl-org">Hatch Africa — Specialised Engineering Analysis &amp; Design (SEAD) Group</div>
-          <div class="tl-desc">Industry foundation in computational mechanics applied to large-scale engineering consulting projects.</div>
-        </div>
+        <div class="tl-item"><div class="tl-period">2025 — Present</div><div class="tl-role">Associate Professor</div><div class="tl-org">Department of Mechanical &amp; Aeronautical Engineering, University of Pretoria</div><div class="tl-desc">Leading research programmes in computational mechanics, quantum computing &amp; sensing, and AI. Supervision of postgraduate students and development of new quantum science curricula.</div></div>
+        <div class="tl-item"><div class="tl-period">2021 — 2025</div><div class="tl-role">Staff Research Scientist</div><div class="tl-org">IBM Research Africa, Johannesburg</div><div class="tl-desc">Led the Urban Heat Island AI programme. Co-developed the open-source Granite Geospatial Land Surface Temperature foundation model. Patent holder for dynamically forecasting high-resolution air temperature (ZA2023/09448).</div></div>
+        <div class="tl-item"><div class="tl-period">2021 — 2025</div><div class="tl-role">Visiting Senior Research Associate</div><div class="tl-org">University of Johannesburg</div><div class="tl-desc">Continued postgraduate supervision and ATLAS / SA-CERN activities alongside IBM Research role.</div></div>
+        <div class="tl-item"><div class="tl-period">2017 — 2021</div><div class="tl-role">Senior Lecturer</div><div class="tl-org">Department of Mechanical Engineering Science, University of Johannesburg</div><div class="tl-desc">Course coordinator for Introduction to Engineering Design 1A &amp; 1B. Principal Investigator on two funded research projects. Completed DIng (Computational Fluid &amp; Granular Dynamics).</div></div>
+        <div class="tl-item"><div class="tl-period">2008 — 2009</div><div class="tl-role">Junior CFD Analyst</div><div class="tl-org">Hatch Africa — Specialised Engineering Analysis &amp; Design (SEAD) Group</div><div class="tl-desc">Industry foundation in computational mechanics applied to large-scale engineering consulting projects.</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ── Contact ── -->
   <section id="contact">
     <div class="section-inner">
       <p class="section-label">Contact</p>
       <h2 class="section-title">Get in <em>touch</em></h2>
-      <p style="color:var(--text-muted); max-width:480px; margin:0 auto; font-size:.95rem;">
-        Open to research collaborations, postgraduate enquiries, and speaking invitations.
-      </p>
+      <p style="color:var(--text-muted); max-width:480px; margin:0 auto; font-size:.95rem;">Open to research collaborations, postgraduate enquiries, and speaking invitations.</p>
       <div class="contact-row">
-        <a class="contact-card" href="/cdn-cgi/l/email-protection#c6abb3a7a7bce8a4aea7abaca3a386b3b6e8a7a5e8bca7">
-          <span class="contact-card-icon">✉</span><span class="__cf_email__" data-cfemail="2a475f4b4b500448424b47404f4f6a5f5a044b4904504b">[email&#160;protected]</span>
-        </a>
-        <a class="contact-card" href="https://www.linkedin.com/in/muaaz-bhamjee-ding-mechanical-preng-000b7212/" target="_blank">
-          <span class="contact-card-icon">💼</span>LinkedIn
-        </a>
-        <a class="contact-card" href="https://www.up.ac.za/mechanical-and-aeronautical-engineering/staff-profiles/muaaz-bhamjee" target="_blank">
-          <span class="contact-card-icon">🔬</span>University of Pretoria Profile
-        </a>
-        <a class="contact-card" href="https://saam.africa/exco/" target="_blank">
-          <span class="contact-card-icon">⚙</span>SAAM ExCo
-        </a>
-        <a class="contact-card" href="cv_bhamjee.pdf" target="_blank">
-          <span class="contact-card-icon">📄</span>Download CV
-        </a>
+        <a class="contact-card" href="mailto:muaaz.bhamjee@up.ac.za"><span class="contact-card-icon">✉</span>muaaz.bhamjee@up.ac.za</a>
+        <a class="contact-card" href="https://www.linkedin.com/in/muaaz-bhamjee-ding-mechanical-preng-000b7212/" target="_blank"><span class="contact-card-icon">💼</span>LinkedIn</a>
+        <a class="contact-card" href="https://www.up.ac.za/mechanical-and-aeronautical-engineering/staff-profiles/muaaz-bhamjee" target="_blank"><span class="contact-card-icon">🔬</span>University of Pretoria Profile</a>
+        <a class="contact-card" href="https://saam.africa/exco/" target="_blank"><span class="contact-card-icon">⚙</span>SAAM ExCo</a>
+        <a class="contact-card" href="cv_bhamjee.pdf" target="_blank"><span class="contact-card-icon">📄</span>Download CV</a>
       </div>
     </div>
   </section>
 
   <footer>
     <span class="footer-copy">© 2025 Muaaz Bhamjee · CC BY 4.0 (content) · MIT (code)</span>
-    <span class="footer-right">
-      Built with LaTeX + Python ·
-      <a href="https://github.com/muaazbhamjee/cv-mbhamjee" target="_blank">Source ↗</a>
-    </span>
+    <span class="footer-right">Built with LaTeX + Python · <a href="https://github.com/muaazbhamjee/cv-mbhamjee" target="_blank">Source ↗</a></span>
   </footer>
 
-  <!-- ════════════════════════════════════════════════════════
-       THREE-LAYER PHYSICS CANVAS
-       Layer 1: Granular grains — settle, pack, avalanche
-       Layer 2: CFD streamlines — Bézier curl-noise flow field
-       Layer 3: Particle physics — periodic ATLAS-style collision
-               events with curved magnetic tracks
-  ════════════════════════════════════════════════════════ -->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
   (function () {
     const canvas = document.getElementById('physics-canvas');
     const ctx    = canvas.getContext('2d');
     let W, H;
 
-    /* ── Palette ── */
     const C = {
       fluid:   [ 65, 200, 255],
-      grain:   [122, 158, 176],
+      grain:   [ 90, 184, 212],
       trackA:  [255,  61, 139],
       trackB:  [255, 224, 130],
       neutron: [180, 220, 255],
@@ -1077,12 +507,7 @@
 
     function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
 
-    /* ═══════════════════════════════════════════════
-       LAYER 1 — GRANULAR DYNAMICS
-       Grains fall under gravity, bounce off floor/walls,
-       and collide with each other (simplified).
-    ═══════════════════════════════════════════════ */
-
+    /* ── LAYER 1: GRANULAR ── */
     const GRAIN_COUNT = 55;
     let grains = [];
 
@@ -1093,383 +518,190 @@
         this.y = init ? Math.random() * H * 0.6 : -this.r * 2;
         this.vx = (Math.random() - 0.5) * 0.8;
         this.vy = Math.random() * 0.5;
-        // Colour variation: warm gold → sandy ochre
         const t = Math.random();
         this.color = [
-          Math.round(C.grain[0] * (1-t) + 180 * t),
-          Math.round(C.grain[1] * (1-t) + 150 * t),
-          Math.round(C.grain[2] * (1-t) + 60  * t),
+          Math.round(C.grain[0] * (1-t) + 140 * t),
+          Math.round(C.grain[1] * (1-t) + 180 * t),
+          Math.round(C.grain[2] * (1-t) + 200 * t),
         ];
-        this.alpha  = 0.55 + Math.random() * 0.35;
+        this.alpha = 0.55 + Math.random() * 0.35;
         this.active = true;
       }
-
       update(others) {
-        const grav = 0.06;
-        const damp = 0.55;
-        const floor = H * 0.92;
-
-        this.vy += grav;
-        this.x  += this.vx;
-        this.y  += this.vy;
-
-        // Floor
-        if (this.y + this.r >= floor) {
-          this.y  = floor - this.r;
-          this.vy *= -damp;
-          this.vx *= 0.85;
-          if (Math.abs(this.vy) < 0.3) this.vy = 0;
-        }
-        // Walls
-        if (this.x - this.r < 0)       { this.x = this.r;       this.vx *= -damp; }
-        if (this.x + this.r > W)       { this.x = W - this.r;   this.vx *= -damp; }
-        // Ceiling — recycle
+        const grav = 0.06, damp = 0.55, floor = H * 0.92;
+        this.vy += grav; this.x += this.vx; this.y += this.vy;
+        if (this.y + this.r >= floor) { this.y = floor - this.r; this.vy *= -damp; this.vx *= 0.85; if (Math.abs(this.vy) < 0.3) this.vy = 0; }
+        if (this.x - this.r < 0)  { this.x = this.r;     this.vx *= -damp; }
+        if (this.x + this.r > W)  { this.x = W - this.r; this.vx *= -damp; }
         if (this.y - this.r > H * 0.93) this.active = false;
-
-        // Grain–grain collision (simplified push-apart)
         for (const o of others) {
           if (o === this) continue;
-          const dx = o.x - this.x;
-          const dy = o.y - this.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          const minD = this.r + o.r;
+          const dx = o.x - this.x, dy = o.y - this.y;
+          const dist = Math.sqrt(dx*dx + dy*dy), minD = this.r + o.r;
           if (dist < minD && dist > 0) {
-            const nx = dx / dist;
-            const ny = dy / dist;
-            const overlap = minD - dist;
-            this.x -= nx * overlap * 0.5;
-            this.y -= ny * overlap * 0.5;
-            o.x    += nx * overlap * 0.5;
-            o.y    += ny * overlap * 0.5;
-            // Exchange a fraction of normal velocity
-            const dvx = this.vx - o.vx;
-            const dvy = this.vy - o.vy;
-            const dot = dvx * nx + dvy * ny;
-            if (dot > 0) {
-              const imp = dot * 0.4;
-              this.vx -= imp * nx; this.vy -= imp * ny;
-              o.vx    += imp * nx; o.vy    += imp * ny;
-            }
+            const nx = dx/dist, ny = dy/dist, overlap = minD - dist;
+            this.x -= nx*overlap*0.5; this.y -= ny*overlap*0.5;
+            o.x += nx*overlap*0.5; o.y += ny*overlap*0.5;
+            const dvx = this.vx - o.vx, dvy = this.vy - o.vy, dot = dvx*nx + dvy*ny;
+            if (dot > 0) { const imp = dot*0.4; this.vx -= imp*nx; this.vy -= imp*ny; o.vx += imp*nx; o.vy += imp*ny; }
           }
         }
       }
-
       draw() {
-        const shadow = Math.max(0, (H * 0.92 - this.y - this.r) * 0.002);
-        // subtle shadow ellipse
         ctx.beginPath();
-        ctx.ellipse(this.x, H * 0.92 - 1, this.r * 0.9, this.r * 0.25, 0, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,0,0,${0.15 - shadow})`;
-        ctx.fill();
-
-        // grain body
-        const grad = ctx.createRadialGradient(
-          this.x - this.r * 0.3, this.y - this.r * 0.3, this.r * 0.1,
-          this.x, this.y, this.r
-        );
+        ctx.ellipse(this.x, H*0.92-1, this.r*0.9, this.r*0.25, 0, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fill();
+        const grad = ctx.createRadialGradient(this.x-this.r*0.3, this.y-this.r*0.3, this.r*0.1, this.x, this.y, this.r);
         grad.addColorStop(0, rgba(this.color, this.alpha));
-        grad.addColorStop(1, rgba([this.color[0]*0.5|0, this.color[1]*0.4|0, this.color[2]*0.2|0], this.alpha * 0.6));
-
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
+        grad.addColorStop(1, rgba([this.color[0]*0.5|0, this.color[1]*0.5|0, this.color[2]*0.4|0], this.alpha*0.6));
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+        ctx.fillStyle = grad; ctx.fill();
       }
     }
 
-    function initGrains() {
-      grains = Array.from({ length: GRAIN_COUNT }, () => new Grain(true));
-    }
-
+    function initGrains() { grains = Array.from({length: GRAIN_COUNT}, () => new Grain(true)); }
     function updateGrains() {
       for (const g of grains) g.update(grains);
-      // Recycle
-      for (let i = 0; i < grains.length; i++) {
-        if (!grains[i].active) grains[i] = new Grain(false);
-      }
-      // Occasionally trigger a slow avalanche by nudging a settled grain
+      for (let i = 0; i < grains.length; i++) { if (!grains[i].active) grains[i] = new Grain(false); }
       if (Math.random() < 0.003) {
         const settled = grains.filter(g => Math.abs(g.vy) < 0.1);
-        if (settled.length > 5) {
-          const g = settled[Math.floor(Math.random() * settled.length)];
-          g.vx += (Math.random() - 0.5) * 3;
-          g.vy -= Math.random() * 1.5;
-        }
+        if (settled.length > 5) { const g = settled[Math.floor(Math.random()*settled.length)]; g.vx += (Math.random()-0.5)*3; g.vy -= Math.random()*1.5; }
       }
     }
 
-    /* ═══════════════════════════════════════════════
-       LAYER 2 — CFD STREAMLINES
-       Bézier-based streamlines following a synthetic
-       velocity field with vortices and shear layers.
-    ═══════════════════════════════════════════════ */
-
+    /* ── LAYER 2: CFD STREAMLINES ── */
     const STREAM_COUNT = 28;
     let streams = [];
-
-    // Synthetic velocity field: superposition of 3 vortices + background flow
     const vortices = [];
+
     function initVortices() {
       vortices.length = 0;
       for (let i = 0; i < 3; i++) {
-        vortices.push({
-          cx: W * (0.2 + Math.random() * 0.6),
-          cy: H * (0.15 + Math.random() * 0.55),
-          strength: (Math.random() < 0.5 ? 1 : -1) * (800 + Math.random() * 1200),
-        });
+        vortices.push({ cx: W*(0.2+Math.random()*0.6), cy: H*(0.15+Math.random()*0.55), strength: (Math.random()<0.5?1:-1)*(800+Math.random()*1200) });
       }
     }
 
     function velocity(x, y) {
       let u = 0.4, v = 0;
       for (const vc of vortices) {
-        const dx = x - vc.cx;
-        const dy = y - vc.cy;
-        const r2 = dx*dx + dy*dy + 400;
-        u += -vc.strength * dy / r2;
-        v +=  vc.strength * dx / r2;
+        const dx = x-vc.cx, dy = y-vc.cy, r2 = dx*dx+dy*dy+400;
+        u += -vc.strength*dy/r2; v += vc.strength*dx/r2;
       }
-      return { u, v };
+      return {u, v};
     }
 
     class Stream {
       constructor(init) { this.reset(init); }
-
       reset(init) {
-        // Start from left edge or top edge
-        if (Math.random() < 0.6) {
-          this.x = init ? Math.random() * W * 0.3 : -5;
-          this.y = H * (0.05 + Math.random() * 0.75);
-        } else {
-          this.x = Math.random() * W;
-          this.y = init ? Math.random() * H * 0.5 : -5;
-        }
-        this.life    = 0;
-        this.maxLife = 160 + Math.random() * 180;
-        this.alpha   = 0;
-        this.width   = 1.2 + Math.random() * 1.8;
-        this.speed   = 0.8 + Math.random() * 1.4;
-        this.trail   = [];
-        this.maxTrail = 22 + Math.floor(Math.random() * 18);
-        // Color: cyan base with slight variation
+        if (Math.random() < 0.6) { this.x = init ? Math.random()*W*0.3 : -5; this.y = H*(0.05+Math.random()*0.75); }
+        else { this.x = Math.random()*W; this.y = init ? Math.random()*H*0.5 : -5; }
+        this.life = 0; this.maxLife = 160+Math.random()*180; this.alpha = 0;
+        this.width = 1.2+Math.random()*1.8; this.speed = 0.8+Math.random()*1.4;
+        this.trail = []; this.maxTrail = 22+Math.floor(Math.random()*18);
         const t = Math.random();
-        this.color = [
-          Math.round(C.fluid[0] * (1-t) + 20  * t),
-          Math.round(C.fluid[1] * (1-t) + 180 * t),
-          Math.round(C.fluid[2] * (1-t) + 200 * t),
-        ];
+        this.color = [Math.round(C.fluid[0]*(1-t)+20*t), Math.round(C.fluid[1]*(1-t)+180*t), Math.round(C.fluid[2]*(1-t)+200*t)];
       }
-
       update() {
-        const { u, v } = velocity(this.x, this.y);
-        const mag = Math.sqrt(u*u + v*v) + 0.001;
-        this.x += (u / mag) * this.speed;
-        this.y += (v / mag) * this.speed * 0.6;
-
-        this.trail.push({ x: this.x, y: this.y });
+        const {u, v} = velocity(this.x, this.y);
+        const mag = Math.sqrt(u*u+v*v)+0.001;
+        this.x += (u/mag)*this.speed; this.y += (v/mag)*this.speed*0.6;
+        this.trail.push({x: this.x, y: this.y});
         if (this.trail.length > this.maxTrail) this.trail.shift();
-
         this.life++;
-        const p = this.life / this.maxLife;
-        this.alpha = p < 0.12 ? p / 0.12 : p > 0.78 ? (1 - p) / 0.22 : 1;
-
-        if (this.life > this.maxLife ||
-            this.x < -30 || this.x > W + 30 ||
-            this.y < -30 || this.y > H + 30) {
-          this.reset(false);
-        }
+        const p = this.life/this.maxLife;
+        this.alpha = p < 0.12 ? p/0.12 : p > 0.78 ? (1-p)/0.22 : 1;
+        if (this.life > this.maxLife || this.x < -30 || this.x > W+30 || this.y < -30 || this.y > H+30) this.reset(false);
       }
-
       draw() {
         if (this.trail.length < 3) return;
-        ctx.beginPath();
-        ctx.moveTo(this.trail[0].x, this.trail[0].y);
-        for (let i = 1; i < this.trail.length - 1; i++) {
-          const mx = (this.trail[i].x + this.trail[i+1].x) / 2;
-          const my = (this.trail[i].y + this.trail[i+1].y) / 2;
+        ctx.beginPath(); ctx.moveTo(this.trail[0].x, this.trail[0].y);
+        for (let i = 1; i < this.trail.length-1; i++) {
+          const mx = (this.trail[i].x+this.trail[i+1].x)/2, my = (this.trail[i].y+this.trail[i+1].y)/2;
           ctx.quadraticCurveTo(this.trail[i].x, this.trail[i].y, mx, my);
         }
-        ctx.strokeStyle = rgba(this.color, this.alpha * 0.45);
-        ctx.lineWidth   = this.width;
-        ctx.lineCap     = 'round';
-        ctx.stroke();
-
-        // Velocity arrow at head
+        ctx.strokeStyle = rgba(this.color, this.alpha*0.45); ctx.lineWidth = this.width; ctx.lineCap = 'round'; ctx.stroke();
         if (this.trail.length > 2) {
-          const t1 = this.trail[this.trail.length - 2];
-          const t2 = this.trail[this.trail.length - 1];
-          const angle = Math.atan2(t2.y - t1.y, t2.x - t1.x);
-          const len = 4;
+          const t1 = this.trail[this.trail.length-2], t2 = this.trail[this.trail.length-1];
+          const angle = Math.atan2(t2.y-t1.y, t2.x-t1.x), len = 4;
           ctx.beginPath();
-          ctx.moveTo(t2.x, t2.y);
-          ctx.lineTo(t2.x - len * Math.cos(angle - 0.4), t2.y - len * Math.sin(angle - 0.4));
-          ctx.moveTo(t2.x, t2.y);
-          ctx.lineTo(t2.x - len * Math.cos(angle + 0.4), t2.y - len * Math.sin(angle + 0.4));
-          ctx.strokeStyle = rgba(this.color, this.alpha * 0.7);
-          ctx.lineWidth   = this.width * 0.8;
-          ctx.stroke();
+          ctx.moveTo(t2.x, t2.y); ctx.lineTo(t2.x-len*Math.cos(angle-0.4), t2.y-len*Math.sin(angle-0.4));
+          ctx.moveTo(t2.x, t2.y); ctx.lineTo(t2.x-len*Math.cos(angle+0.4), t2.y-len*Math.sin(angle+0.4));
+          ctx.strokeStyle = rgba(this.color, this.alpha*0.7); ctx.lineWidth = this.width*0.8; ctx.stroke();
         }
       }
     }
 
-    function initStreams() {
-      streams = Array.from({ length: STREAM_COUNT }, () => new Stream(true));
-    }
+    function initStreams() { streams = Array.from({length: STREAM_COUNT}, () => new Stream(true)); }
 
-    /* ═══════════════════════════════════════════════
-       LAYER 3 — PARTICLE PHYSICS COLLISION EVENTS
-       Periodic ATLAS-style events: flash at collision
-       point, then tracks radiate outward with curvature
-       simulating a magnetic field (B along z-axis).
-    ═══════════════════════════════════════════════ */
-
-    let events = [];
-    let nextEvent = 120;
+    /* ── LAYER 3: PARTICLE COLLISION EVENTS ── */
+    let events = [], nextEvent = 120;
 
     class CollisionEvent {
       constructor() {
-        this.cx     = W * (0.25 + Math.random() * 0.5);
-        this.cy     = H * (0.15 + Math.random() * 0.55);
-        this.age    = 0;
-        this.tracks = this.genTracks();
-        this.flash  = 1.0;
+        this.cx = W*(0.25+Math.random()*0.5); this.cy = H*(0.15+Math.random()*0.55);
+        this.age = 0; this.tracks = this.genTracks(); this.flash = 1.0;
       }
-
       genTracks() {
-        const n = 8 + Math.floor(Math.random() * 10);
-        const tracks = [];
+        const n = 8+Math.floor(Math.random()*10), tracks = [];
         for (let i = 0; i < n; i++) {
-          const angle   = (Math.PI * 2 * i / n) + (Math.random() - 0.5) * 0.4;
-          const speed   = 1.5 + Math.random() * 2.5;
-          const charge  = Math.random() < 0.3 ? 0 : (Math.random() < 0.5 ? 1 : -1);
-          const curve   = charge * (0.008 + Math.random() * 0.015);
-          // Track color by type
-          let color;
-          if (charge === 0)       color = C.neutron;
-          else if (charge > 0)    color = C.trackA;
-          else                    color = C.trackB;
-
-          tracks.push({
-            x: this.cx, y: this.cy,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            curve, color,
-            trail: [{ x: this.cx, y: this.cy }],
-            alive: true,
-            alpha: 0.7 + Math.random() * 0.3,
-            width: 0.6 + Math.random() * 0.8,
-          });
+          const angle = (Math.PI*2*i/n)+(Math.random()-0.5)*0.4;
+          const speed = 1.5+Math.random()*2.5;
+          const charge = Math.random()<0.3 ? 0 : (Math.random()<0.5 ? 1 : -1);
+          const curve = charge*(0.008+Math.random()*0.015);
+          const color = charge===0 ? C.neutron : charge>0 ? C.trackA : C.trackB;
+          tracks.push({ x:this.cx, y:this.cy, vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed, curve, color, trail:[{x:this.cx,y:this.cy}], alive:true, alpha:0.7+Math.random()*0.3, width:0.6+Math.random()*0.8 });
         }
         return tracks;
       }
-
       update() {
-        this.age++;
-        this.flash = Math.max(0, this.flash - 0.06);
-
+        this.age++; this.flash = Math.max(0, this.flash-0.06);
         for (const t of this.tracks) {
           if (!t.alive) continue;
-          // Magnetic curvature: rotate velocity by curve angle
-          const cos = Math.cos(t.curve);
-          const sin = Math.sin(t.curve);
-          const nvx = t.vx * cos - t.vy * sin;
-          const nvy = t.vx * sin + t.vy * cos;
-          t.vx = nvx; t.vy = nvy;
-          t.x += t.vx;
-          t.y += t.vy;
-          t.trail.push({ x: t.x, y: t.y });
-          if (t.x < -40 || t.x > W + 40 ||
-              t.y < -40 || t.y > H + 40 ||
-              t.trail.length > 90) {
-            t.alive = false;
-          }
+          const cos = Math.cos(t.curve), sin = Math.sin(t.curve);
+          const nvx = t.vx*cos-t.vy*sin, nvy = t.vx*sin+t.vy*cos;
+          t.vx = nvx; t.vy = nvy; t.x += t.vx; t.y += t.vy;
+          t.trail.push({x:t.x, y:t.y});
+          if (t.x<-40||t.x>W+40||t.y<-40||t.y>H+40||t.trail.length>90) t.alive = false;
         }
       }
-
       draw() {
-        // Flash at collision vertex
         if (this.flash > 0) {
-          const r = 30 * this.flash;
-          const grad = ctx.createRadialGradient(this.cx, this.cy, 0, this.cx, this.cy, r);
-          grad.addColorStop(0, `rgba(255,255,255,${this.flash * 0.7})`);
-          grad.addColorStop(0.3, `rgba(255,220,100,${this.flash * 0.4})`);
-          grad.addColorStop(1, 'rgba(255,220,100,0)');
-          ctx.beginPath();
-          ctx.arc(this.cx, this.cy, r, 0, Math.PI * 2);
-          ctx.fillStyle = grad;
-          ctx.fill();
-
-          // Vertex dot
-          ctx.beginPath();
-          ctx.arc(this.cx, this.cy, 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255,255,255,${this.flash})`;
-          ctx.fill();
+          const r = 30*this.flash;
+          const grad = ctx.createRadialGradient(this.cx,this.cy,0,this.cx,this.cy,r);
+          grad.addColorStop(0, `rgba(255,255,255,${this.flash*0.7})`);
+          grad.addColorStop(0.3, `rgba(100,220,255,${this.flash*0.4})`);
+          grad.addColorStop(1, 'rgba(65,200,255,0)');
+          ctx.beginPath(); ctx.arc(this.cx,this.cy,r,0,Math.PI*2); ctx.fillStyle = grad; ctx.fill();
+          ctx.beginPath(); ctx.arc(this.cx,this.cy,2.5,0,Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${this.flash})`; ctx.fill();
         }
-
-        // Tracks
         for (const t of this.tracks) {
           if (t.trail.length < 2) continue;
-          const fade = Math.min(1, (90 - t.trail.length) / 30);
-          ctx.beginPath();
-          ctx.moveTo(t.trail[0].x, t.trail[0].y);
-          for (let i = 1; i < t.trail.length; i++) {
-            ctx.lineTo(t.trail[i].x, t.trail[i].y);
-          }
-          ctx.strokeStyle = rgba(t.color, t.alpha * 0.6 * Math.max(0, fade));
-          ctx.lineWidth   = t.width;
-          ctx.lineCap     = 'round';
-          ctx.stroke();
+          const fade = Math.min(1, (90-t.trail.length)/30);
+          ctx.beginPath(); ctx.moveTo(t.trail[0].x, t.trail[0].y);
+          for (let i = 1; i < t.trail.length; i++) ctx.lineTo(t.trail[i].x, t.trail[i].y);
+          ctx.strokeStyle = rgba(t.color, t.alpha*0.6*Math.max(0,fade)); ctx.lineWidth = t.width; ctx.lineCap = 'round'; ctx.stroke();
         }
       }
-
-      isDone() {
-        return this.age > 180 && this.tracks.every(t => !t.alive);
-      }
+      isDone() { return this.age > 180 && this.tracks.every(t => !t.alive); }
     }
 
-    /* ═══════════════════════════════════════════
-       MAIN LOOP
-    ═══════════════════════════════════════════ */
-
+    /* ── MAIN LOOP ── */
     function resize() {
-      W = canvas.width  = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-      initVortices();
-      initGrains();
-      initStreams();
-      events = [];
+      W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight;
+      initVortices(); initGrains(); initStreams(); events = [];
     }
-
-    let frame = 0;
 
     function tick() {
-      frame++;
       ctx.clearRect(0, 0, W, H);
-
-      // ── Layer 2: Streamlines (behind grains) ──
       for (const s of streams) { s.update(); s.draw(); }
-
-      // ── Layer 3: Collision events ──
       nextEvent--;
-      if (nextEvent <= 0) {
-        events.push(new CollisionEvent());
-        nextEvent = 220 + Math.floor(Math.random() * 180);
-      }
+      if (nextEvent <= 0) { events.push(new CollisionEvent()); nextEvent = 220+Math.floor(Math.random()*180); }
       events = events.filter(e => !e.isDone());
       for (const e of events) { e.update(); e.draw(); }
-
-      // ── Layer 1: Grains (on top) ──
       updateGrains();
       for (const g of grains) g.draw();
-
-      // ── Floor line ──
-      ctx.beginPath();
-      ctx.moveTo(0, H * 0.92);
-      ctx.lineTo(W, H * 0.92);
-      ctx.strokeStyle = rgba(C.grain, 0.08);
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
+      ctx.beginPath(); ctx.moveTo(0, H*0.92); ctx.lineTo(W, H*0.92);
+      ctx.strokeStyle = rgba(C.grain, 0.08); ctx.lineWidth = 1; ctx.stroke();
       requestAnimationFrame(tick);
     }
 
@@ -1479,8 +711,14 @@
   })();
   </script>
 
-  <!-- Scroll reveal -->
   <script>
   (function () {
     const obs = new IntersectionObserver((entries) => {
-      entries.forEach(
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  })();
+  </script>
+
+</body>
+</html>
