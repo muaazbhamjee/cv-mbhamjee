@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
-# NRF Rating Application 2027 — Issue Creation Script
+# NRF Rating Application 2027 — Issue Creation Script v2
+# Fixed for older gh CLI versions that don't support --json on gh issue create
+#
 # Run from inside the cv-mbhamjee repo directory:
-#   bash create_issues.sh
+#   bash nrf-2027/create_issues_v2.sh
 #
 # Prerequisites: gh auth status should show 'project' in scopes.
-# Labels and milestones must already exist (you've done this).
+# Labels and milestones must already exist.
 
+set -e   # exit on any real error
 REPO="muaazbhamjee/cv-mbhamjee"
 
+echo "==> gh version check"
+gh --version
+echo ""
 echo "==> Creating issues for $REPO"
 echo ""
 
@@ -16,15 +22,14 @@ create_issue() {
   local body="$2"
   local labels="$3"
   local milestone="$4"
-  local num
-  num=$(gh issue create \
+  gh issue create \
     --title "$title" \
     --body "$body" \
     --label "$labels" \
     --milestone "$milestone" \
-    --repo "$REPO" \
-    --json number --jq '.number')
-  echo "  #$num — $title"
+    --repo "$REPO"
+  echo "    ↑ created: $title"
+  echo ""
 }
 
 # ── M0: Planning & kickoff ────────────────────────────────────────────────────
@@ -55,20 +60,17 @@ Confirm the equivalent date for the 2027 call.
 - Mr. Abe Mathopa: abe.mathopa@up.ac.za / 012 420 2158
 
 ## Done when
-- [ ] Deadline confirmed in writing
+- [ ] Deadline confirmed in writing (email)
 - [ ] Date added as note to M6 milestone" \
   "area:admin,priority:critical" \
   "M0: Planning & kickoff"
 
 create_issue \
   "[ADMIN] Commit annotated application draft and setup scripts to repo" \
-  "## Goal
-All NRF working files live in nrf-2027/ for version control.
-
-## Done when
+  "## Done when
 - [ ] nrf-2027/NRF_Application_2027_Annotated.docx committed
 - [ ] nrf-2027/create_issues.md committed
-- [ ] nrf-2027/create_issues.sh committed
+- [ ] nrf-2027/create_issues_v2.sh committed
 - [ ] git push confirmed" \
   "area:admin,priority:normal" \
   "M0: Planning & kickoff"
@@ -114,7 +116,8 @@ Lathola Mchunu: lathola.mchunu@up.ac.za
 create_issue \
   "[EXTERNAL] Request formal ATLAS contribution letter from Prof. S.H. Connell" \
   "## Goal
-Letter confirming: UP Institutional Representative and Team Leader title, ITk monitoring contributions, AQT supervision.
+Letter confirming: UP Institutional Representative and Team Leader title,
+ITk monitoring contributions, AQT supervision of SA students.
 
 ## Contact
 Prof. Simon H. Connell: shconnell@uj.ac.za | +27 82 945 7508
@@ -166,7 +169,7 @@ create_issue \
 8. (Optional) Computational biomechanics — check Ngoepe (UCT) for conflict
 
 ## For each candidate
-- [ ] Name, email, current institution confirmed
+- [ ] Name, email, institution confirmed
 - [ ] NOT a co-author in last 5 years (ATLAS papers count)
 - [ ] NOT from UP Mechanical & Aeronautical Engineering
 - [ ] Associate Professor level or above
@@ -180,11 +183,11 @@ echo "── M2: NRF Connect CV complete ─────────────
 create_issue \
   "[CV-NRF] Correct career history in NRF Connect (IBM / UJ SRA / UP timeline)" \
   "## Correct timeline
-- Hatch Africa (CFD Analyst): 2008–2009
-- UJ (Lecturer to Senior Lecturer): Jan 2015 – Jan 2023
-- IBM Research Africa (Staff Research Scientist): Feb 2023 – Dec 2024
-- UJ (Visiting SRA, adjunct, concurrent with IBM): Jul 2023 – Dec 2024
-- UP (Associate Professor): Jan 2025 – present
+- Hatch Africa (CFD Analyst): 2008-2009
+- UJ (Lecturer to Senior Lecturer): Jan 2015 - Jan 2023
+- IBM Research Africa (Staff Research Scientist): Feb 2023 - Dec 2024
+- UJ (Visiting SRA, adjunct, concurrent with IBM): Jul 2023 - Dec 2024
+- UP (Associate Professor): Jan 2025 - present
 
 ## Done when
 - [ ] All entries corrected in NRF Connect Career History
@@ -193,7 +196,7 @@ create_issue \
   "M2: NRF Connect CV complete"
 
 create_issue \
-  "[CV-NRF] Enter all review-period journal publications (2019–2026) in NRF Connect" \
+  "[CV-NRF] Enter all review-period journal publications (2019-2026) in NRF Connect" \
   "## Papers to enter
 - Makhanya & Bhamjee et al. (2026) BSPC — DOI 10.1016/j.bspc.2025.110018
 - Ralijaona, Igumbor, Bhamjee et al. (2024) Computers & Fluids — DOI 10.1016/j.compfluid.2024.106242
@@ -261,12 +264,12 @@ create_issue \
 - ZA2023/09448 (granted 30 Jul 2024)
 - US18/200,050 (pending)
 
-## Keynotes (under Keynote and Plenary Addresses — NOT Other conference outputs)
+## Keynotes (under Keynote and Plenary Addresses only)
 - CHPC 2017 — Keynote: Modelling of Multiphase Flow in Process Equipment
 - CHPC 2025 — Invited talk: Entangled Worlds
 
 ## Done when
-- [ ] All grants, patents, and keynotes entered in correct NRF Connect sections" \
+- [ ] All grants, patents, and keynotes entered in correct sections" \
   "area:cv-nrf,priority:high" \
   "M2: NRF Connect CV complete"
 
@@ -296,8 +299,7 @@ create_issue \
 - [ ] ESRF international grant mentioned
 - [ ] IUTAM Vice-Presidency named as peer recognition
 - [ ] CHPC keynote (2017) and invited talk (2025) mentioned
-- [ ] Character count verified <= 5,500
-- [ ] No bullet points — pure narrative prose
+- [ ] Character count verified <= 5,500 (no bullet points — pure narrative prose)
 - [ ] Text copied into NRF Connect" \
   "area:application,priority:high" \
   "M3: Narrative sections drafted"
@@ -329,8 +331,7 @@ Current Output 5 = Solar Energy (2020), where you are 3rd author.
 
 create_issue \
   "[APP-C] Add citation counts to all Best-5 output motivation paragraphs" \
-  "## Format
-'X citations (Scopus, April 2026)' or 'X citations (InspireHEP, April 2026)'
+  "## Format: 'X citations (Scopus, April 2026)' or 'X citations (InspireHEP, April 2026)'
 
 ## Outputs needing counts
 - [ ] Output 1 (Nature 2024): InspireHEP count
@@ -359,11 +360,13 @@ create_issue \
   "## Issue
 Ralijaona M. is first author but you claim lead researcher and corresponding author (~70%).
 
-## Text to add
-'First authorship was assigned to Ralijaona M. as the executing postgraduate candidate; corresponding authorship and intellectual leadership — including conceptualisation of the coupled CFD-UVGI-evaporation framework — remained with the applicant.'
+## Text to add to contribution statement
+'First authorship was assigned to Ralijaona M. as the executing postgraduate candidate;
+corresponding authorship and intellectual leadership — including conceptualisation of the
+coupled CFD-UVGI-evaporation framework — remained with the applicant.'
 
 ## Done when
-- [ ] Clarifying sentence added to Output 3 contribution statement
+- [ ] Clarifying sentence added
 - [ ] Scopus citation count added
 - [ ] Revised text entered in NRF Connect" \
   "area:application,priority:high" \
@@ -391,7 +394,7 @@ create_issue \
 
 create_issue \
   "[APP-E] Populate Section E — pre-2019 outputs (target 8-10 entries)" \
-  "## To add
+  "## To add (currently 1 entry)
 - Physics Letters B (2018) WZ resonance search paper
 - 3-4 representative ATLAS pre-2019 papers (confirm with Prof. Connell)
 - Earlier hydrocyclone papers if in peer-reviewed journals
@@ -410,9 +413,7 @@ create_issue \
 - [ ] Add Reservoir Computing paper (SAIP 2025, Abbajee et al.)
 - [ ] Add CHPC 2025 invited talk reference
 - [ ] Character count check <= 11,000
-
-## Done when
-- [ ] All updates made and entered in NRF Connect Section F" \
+- [ ] Text entered in NRF Connect Section F" \
   "area:application,priority:high" \
   "M3: Narrative sections drafted"
 
@@ -426,9 +427,7 @@ create_issue \
 - [ ] Add IUTAM Vice-Presidency and CHPC keynote as peer recognition evidence
 - [ ] Reference formal ATLAS letter for Outputs 1 and 2
 - [ ] Character count check <= 5,500
-
-## Done when
-- [ ] All updates made and entered in NRF Connect Section G" \
+- [ ] Text entered in NRF Connect Section G" \
   "area:application,priority:critical" \
   "M3: Narrative sections drafted"
 
@@ -443,9 +442,7 @@ create_issue \
 - [ ] ADD: DSI QuTI funding application status
 - [ ] Make Programme 3 (quantum) concrete with specific actions
 - [ ] Character count check <= 5,500
-
-## Done when
-- [ ] All changes made and entered in NRF Connect Section H" \
+- [ ] Text entered in NRF Connect Section H" \
   "area:application,priority:high" \
   "M3: Narrative sections drafted"
 
@@ -457,7 +454,8 @@ create_issue \
 - [ ] Can it be noted as 'under review' if submitted before NRF call closes?
 
 ## Done when
-- [ ] Timeline confirmed and Section H updated with correct status and quarter" \
+- [ ] Timeline confirmed
+- [ ] Section H updated with correct status and quarter" \
   "area:strategy,priority:high" \
   "M3: Narrative sections drafted"
 
@@ -476,7 +474,7 @@ Minimum 6, maximum 10 reviewers. Aim for 8. At least 3 international.
 - [ ] Max one reviewer per institution
 
 ## Done when
-- [ ] 6-8 reviewers entered on NRF Connect with full name, email, institution, specialisation, association, reason
+- [ ] 6-8 reviewers entered with full name, email, institution, specialisation, association, reason
 - [ ] Exclusion list completed if needed (max 3)" \
   "area:application,priority:critical" \
   "M4: Reviewers confirmed"
@@ -508,8 +506,8 @@ create_issue \
 5. Solar Energy (2020) or substitute (pending Output 5 decision)
 
 ## Done when
-- [ ] All 5 PDFs uploaded to NRF Connect Attachments
-- [ ] Upload success verified (file size, no corruption)" \
+- [ ] All 5 PDFs named clearly and uploaded to NRF Connect Attachments
+- [ ] Upload success verified" \
   "area:cv-nrf,priority:critical" \
   "M5: Ready for peer review"
 
@@ -518,7 +516,7 @@ create_issue \
   "## Steps
 - [ ] Receive letter from Prof. Connell (see EXTERNAL issue)
 - [ ] Convert to PDF
-- [ ] Upload as ATLAS_Contribution_Letter_Connell.pdf to NRF Connect Attachments
+- [ ] Upload as ATLAS_Contribution_Letter_Connell.pdf
 - [ ] Add reference sentence to Output 1 contribution statement
 - [ ] Add reference sentence to Output 2 contribution statement" \
   "area:application,priority:critical" \
@@ -558,21 +556,15 @@ create_issue \
   "area:admin,priority:critical" \
   "M6: Final submission"
 
-# ── Add all issues to project board ──────────────────────────────────────────
+# ── Add all issues to project #3 ─────────────────────────────────────────────
 echo ""
 echo "==> All issues created."
 echo ""
 echo "==> Adding issues to project #3..."
 
-PROJECT_ID=$(gh api graphql -f query='
-  query {
-    user(login: "muaazbhamjee") {
-      projectV2(number: 3) { id }
-    }
-  }
-' --jq '.data.user.projectV2.id')
-
-echo "    Project node ID: $PROJECT_ID"
+PROJECT_ID="PVT_kwHOB6Th484BVkTu"
+echo "    Using project node ID: $PROJECT_ID"
+echo ""
 
 gh issue list \
   --repo "$REPO" \
@@ -592,5 +584,5 @@ gh issue list \
   done
 
 echo ""
-echo "==> Done! Visit your board at:"
+echo "==> Done! Visit your board:"
 echo "    https://github.com/users/muaazbhamjee/projects/3"
