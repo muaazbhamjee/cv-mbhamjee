@@ -18,12 +18,11 @@
 # ── One-time submodule setup ─────────────────────────────────
 # Run once after cloning, to link the github.io repo:
 #
-#   git submodule add https://github.com/muaazbhamjee/muaazbhamjee.github.io.git site
-#   git submodule update --init
+#   make submodule-init
 #
 # After cloning on a new machine:
 #   git clone --recurse-submodules <cv-repo-url>
-#   or: git submodule update --init   (if already cloned)
+#   or: make submodule-init   (if already cloned)
 #
 # ── pdflatex override ────────────────────────────────────────
 # build.py auto-detects Windows TeX Live / MiKTeX via WSL.
@@ -36,6 +35,10 @@
 
 PYTHON := python3
 TODAY  := $(shell date +'%Y-%m-%d')
+
+# ── github.io submodule ──────────────────────────────────────
+SITE_URL    := https://github.com/muaazbhamjee/muaazbhamjee.github.io.git
+SITE_BRANCH := main
 
 ifdef PDFLATEX
   BUILD := PDFLATEX=$(PDFLATEX) $(PYTHON) build.py
@@ -121,16 +124,29 @@ publish: all
 	    echo "   Staged. Run:  git commit -m 'your message' && git push"; \
 	fi
 
+# ── Site submodule guard ─────────────────────────────────────
+# Pushing needs site/ cloned *and* on a branch: git submodule
+# update leaves a detached HEAD, which commits fine but cannot
+# be pushed. make submodule-init fixes both cases.
+define check_site
+	@if [ ! -e "site/.git" ]; then \
+	    echo "ERROR: site/ submodule not initialised."; \
+	    echo "       Run: make submodule-init"; \
+	    exit 1; \
+	fi
+	@if [ -z "$$(cd site && git branch --show-current)" ]; then \
+	    echo "ERROR: site/ is on a detached HEAD — nothing to push to."; \
+	    echo "       Run: make submodule-init"; \
+	    exit 1; \
+	fi
+endef
+
 # ── Publish-site: push PDFs to muaazbhamjee.github.io ────────
 # Requires the site/ submodule to be initialised (see setup above).
 # Usage:  make publish-site
 #         make publish-site msg="Update CV and statement $(TODAY)"
 publish-site: all
-	@if [ ! -e "site/.git" ]; then \
-	    echo "ERROR: site/ submodule not initialised."; \
-	    echo "       Run: git submodule add https://github.com/muaazbhamjee/muaazbhamjee.github.io.git site"; \
-	    exit 1; \
-	fi
+	$(check_site)
 	@echo "→ Pushing PDFs to muaazbhamjee.github.io..."
 	@cd site && \
 	    git add *.pdf && \
@@ -149,11 +165,7 @@ publish-site: all
 # Usage:  make publish-html
 #         make publish-html msg="Update homepage"
 publish-html:
-	@if [ ! -e "site/.git" ]; then \
-	    echo "ERROR: site/ submodule not initialised."; \
-	    echo "       Run: make submodule-init"; \
-	    exit 1; \
-	fi
+	$(check_site)
 	@echo "→ Publishing index.html to muaazbhamjee.github.io..."
 	@cp index.html site/index.html
 	@cd site && \
@@ -168,13 +180,35 @@ publish-html:
 	@git push
 
 # ── Submodule init helper ────────────────────────────────────
+# Handles every state site/ can be in:
+#   cloned already      — left alone
+#   in .gitmodules but  — cloned; stray build-copied PDFs are
+#   not cloned            cleared first, since git refuses to
+#                         clone into a non-empty directory
+#   not registered      — added
+# Then puts it on $(SITE_BRANCH), so publish-* can push.
 submodule-init:
-	@if [ -d "site" ]; then \
-	    echo "site/ already exists — skipping."; \
+	@if [ -e "site/.git" ]; then \
+	    echo "   site/ already initialised."; \
+	elif git config --file .gitmodules --get submodule.site.url >/dev/null 2>&1; then \
+	    echo "→ site/ registered but not cloned — initialising..."; \
+	    rm -f site/*.pdf; \
+	    rmdir site 2>/dev/null || true; \
+	    if [ -e "site" ]; then \
+	        echo "ERROR: site/ exists and is not empty — move it aside and retry."; \
+	        exit 1; \
+	    fi; \
+	    git submodule update --init site; \
 	else \
-	    git submodule add https://github.com/muaazbhamjee/muaazbhamjee.github.io.git site && \
-	    echo "   ✓  site/ submodule added."; \
+	    echo "→ Adding site/ submodule..."; \
+	    git submodule add $(SITE_URL) site; \
 	fi
+	@cd site && \
+	    if [ -z "$$(git branch --show-current)" ]; then \
+	        echo "→ site/ on detached HEAD — checking out $(SITE_BRANCH)..."; \
+	        git checkout $(SITE_BRANCH); \
+	    fi
+	@echo "   ✓  site/ ready on branch $$(cd site && git branch --show-current)"
 
 # ── Watch mode ───────────────────────────────────────────────
 # macOS:  brew install fswatch

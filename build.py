@@ -16,7 +16,7 @@ Builds all LaTeX documents in the repository.
   docs/PDFs  — tracked by Git; pushed to muaazbhamjee.github.io
                via the site/ submodule on make publish-site.
   site/PDFs  — copied into the github.io submodule automatically
-               if site/ exists (git submodule add ... site).
+               once it is initialised (make submodule-init).
 
 Usage:
     python3 build.py              # build all documents
@@ -168,8 +168,9 @@ def compile_latex(tex_path, label):
     shutil.move(pdf_path, docs_copy)
     print(f"  ✓  docs/{pdf_name}")
 
-    # Copy into site/ submodule if it exists
-    if os.path.isdir(SITE_DIR):
+    # Copy into site/ only once it is a real submodule — filling a bare
+    # site/ directory would block `git submodule update --init` later
+    if os.path.exists(os.path.join(SITE_DIR, ".git")):
         site_copy = os.path.join(SITE_DIR, pdf_name)
         shutil.copy2(docs_copy, site_copy)
         print(f"  ✓  site/{pdf_name}  (github.io copy)")
