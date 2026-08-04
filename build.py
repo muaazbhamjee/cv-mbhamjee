@@ -17,6 +17,8 @@ Builds all LaTeX documents in the repository.
                via the site/ submodule on make publish-site.
   site/PDFs  — copied into the github.io submodule automatically
                once it is initialised (make submodule-init).
+  site/      — index.html is mirrored from the repo root on every
+    index.html build, so the homepage and the PDFs stay in step.
 
 Usage:
     python3 build.py              # build all documents
@@ -48,6 +50,7 @@ DOCS_DIR   = os.path.join(SCRIPT_DIR, "docs")
 SITE_DIR   = os.path.join(SCRIPT_DIR, "site")   # git submodule: muaazbhamjee.github.io
 MAIN_TEX   = os.path.join(SCRIPT_DIR, "cv_bhamjee_main.tex")
 OUT_TEX    = os.path.join(SCRIPT_DIR, "cv_bhamjee.tex")
+INDEX_HTML = os.path.join(SCRIPT_DIR, "index.html")   # homepage, mirrored into site/
 
 # ── pdflatex location ─────────────────────────────────────────────────────────
 # Override PDFLATEX_CMD here if auto-detection picks the wrong binary,
@@ -470,6 +473,23 @@ def build_latex(doc):
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 
+def copy_index_html():
+    """Mirror the root index.html into the github.io submodule.
+
+    Runs on every build regardless of target: the homepage carries the same
+    metrics as the PDFs, so it must not lag behind them.
+    """
+    if not os.path.exists(INDEX_HTML):
+        return
+    if not os.path.exists(os.path.join(SITE_DIR, ".git")):
+        return
+
+    site_copy = os.path.join(SITE_DIR, "index.html")
+    print("\n=== Syncing: index.html ===")
+    shutil.copy2(INDEX_HTML, site_copy)
+    print("  ✓  site/index.html  (github.io copy)")
+
+
 def build(targets):
     """Build each document whose name is in targets (or all if targets is empty)."""
     registry = {d['name']: d for d in DOCUMENTS}
@@ -491,6 +511,8 @@ def build(targets):
         else:
             print(f"  ERROR: unknown document type '{doc['type']}'")
             results[doc['name']] = False
+
+    copy_index_html()
 
     # Summary
     print("\n" + "=" * 40)

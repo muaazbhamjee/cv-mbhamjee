@@ -11,8 +11,8 @@
 #   make open-cv            — build and open CV only
 #   make open-stmt          — build and open NITheCS statement only
 #   make publish            — push docs/ to cv-bhamjee repo
-#   make publish-site       — build + push PDFs to muaazbhamjee.github.io
-#   make publish-html       — push index.html to muaazbhamjee.github.io
+#   make publish-site       — build + push PDFs and index.html to muaazbhamjee.github.io
+#   make publish-html       — push index.html alone, without rebuilding
 #   make watch              — rebuild on any source change
 #
 # ── One-time submodule setup ─────────────────────────────────
@@ -141,16 +141,19 @@ define check_site
 	fi
 endef
 
-# ── Publish-site: push PDFs to muaazbhamjee.github.io ────────
+# ── Publish-site: push PDFs + index.html to muaazbhamjee.github.io
+# The build mirrors index.html into site/, so this publishes the
+# homepage and the PDFs together — publish-html is for pushing
+# index.html on its own, without rebuilding the documents.
 # Requires the site/ submodule to be initialised (see setup above).
 # Usage:  make publish-site
 #         make publish-site msg="Update CV and statement $(TODAY)"
 publish-site: all
 	$(check_site)
-	@echo "→ Pushing PDFs to muaazbhamjee.github.io..."
+	@echo "→ Pushing PDFs and index.html to muaazbhamjee.github.io..."
 	@cd site && \
-	    git add *.pdf && \
-	    git diff --cached --quiet && echo "   No PDF changes to publish." || \
+	    git add *.pdf index.html && \
+	    git diff --cached --quiet && echo "   Nothing to publish." || \
 	    ( git commit -m "$(if $(msg),$(msg),Update PDFs $(TODAY))" && \
 	      git push && \
 	      echo "   ✓  Live at https://muaazbhamjee.github.io" )
