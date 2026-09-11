@@ -59,7 +59,7 @@ STMT_SOURCES := nithecs_statement.tex
 
 ALL_SOURCES  := $(CV_SOURCES) $(STMT_SOURCES)
 
-.PHONY: all cv statement clean clean-all open open-cv open-stmt \
+.PHONY: all cv statement cv-omt clean clean-all open open-cv open-stmt open-omt \
         publish publish-site publish-html submodule-init watch
 
 # ── Default: build everything ────────────────────────────────
@@ -72,6 +72,10 @@ cv: $(CV_SOURCES)
 
 statement: $(STMT_SOURCES)
 	@$(BUILD) statement
+
+# 3-page short CV (OMT / funding applications with a 3-page limit)
+cv-omt: cv_bhamjee_omt3.tex
+	@$(BUILD) cv-omt
 
 # ── Clean: artefacts only — PDFs preserved ───────────────────
 clean:
@@ -111,6 +115,9 @@ open-cv: cv
 
 open-stmt: statement
 	$(call open_pdf,docs/nithecs_statement.pdf)
+
+open-omt: cv-omt
+	$(call open_pdf,docs/cv_bhamjee_omt3.pdf)
 
 # ── Publish: push docs/ in the CV repo ───────────────────────
 # Usage:  make publish msg="Add JHEP paper March 2026"

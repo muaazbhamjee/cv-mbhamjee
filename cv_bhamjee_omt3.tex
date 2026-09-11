@@ -1,0 +1,177 @@
+%% CV (3-page short version) - Prof. Muaaz Bhamjee
+%% -------------------------------------------------------------------
+%% Condensed CV for funding applications that impose a 3-page limit
+%% (e.g. Oppenheimer Memorial Trust New Frontiers Research Award).
+%% Reuses the styling of cv_bhamjee_main.tex, but with CURATED content
+%% and no auto-injected publication list, so that it fits in 3 pages.
+%% Built as a plain 'latex' document via build.py (see DOCUMENTS registry).
+%% -------------------------------------------------------------------
+
+\documentclass[11pt, a4paper]{article}
+
+% ---- Packages (as per cv_bhamjee_main.tex) ----
+\usepackage[a4paper, top=1.6cm, bottom=1.6cm, left=2.0cm, right=2.0cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black,
+    citecolor=blue!70!black
+}
+
+% ---- Section formatting (slightly tighter spacing to hold 3 pages) ----
+\titleformat{\section}
+  {\large\bfseries\uppercase}
+  {}
+  {0em}
+  {}
+  [\titlerule]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+\setlist[itemize]{noitemsep, topsep=1pt, leftmargin=1.4em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+% ===============================================================
+\begin{document}
+
+% ---- Header ----
+\begin{center}
+  {\LARGE\bfseries Muaaz Bhamjee}\\[3pt]
+  {\large Associate Professor, Department of Mechanical and Aeronautical Engineering, University of Pretoria}\\[4pt]
+  Mobile: +27 76 476 4434 \quad Office: +27 12 420 5366 \quad Email: \href{mailto:muaaz.bhamjee@up.ac.za}{muaaz.bhamjee@up.ac.za}\\[2pt]
+  Language: English \quad Gender: Male \quad Citizenship: South African\\[2pt]
+  Google Scholar h-index: 65 \quad Scopus h-index: 34 \quad Web of Science h-index: 30 \quad ORCID: \href{https://orcid.org/0000-0002-2697-4589}{0000-0002-2697-4589}
+\end{center}
+
+% ===============================================================
+\section{Profile}
+Associate Professor and Founder / Principal Investigator of the CERG-FLUX Lab (Fluids, Learning, and Uncertainty in compleX systems) at the University of Pretoria, with a background in Mechanical Engineering and Applied Mathematics. Research spans computational fluid dynamics and multiphase / granular flow (Navier-Stokes and Lattice Boltzmann methods on high-performance computing), scientific machine learning and AI for climate, experimental high-energy physics with the ATLAS Collaboration at CERN, and hybrid quantum computing and machine learning.
+
+% ===============================================================
+\section{Education}
+\textbf{Doctor of Engineering (DIng, Mechanical Engineering Science)} \hfill 2011--2017\\
+\textit{University of Johannesburg}\\
+Thesis: Modelling of the Multiphase Interactions in a Hydrocyclone using Navier-Stokes and Lattice Boltzmann based Computational Approaches.
+
+\medskip
+\textbf{Master of Engineering (MIng, Mechanical Engineering Science), \textit{Cum Laude}} \hfill 2009--2011\\
+\textit{University of Johannesburg}\\
+Dissertation: A Computational Fluid Dynamics and Experimental Investigation of an Airflow Window.
+
+\medskip
+\textbf{BSc Honours (Applied Mathematics), \textit{Cum Laude}} \hfill 2008--2010\\
+\textit{University of Johannesburg}
+
+\medskip
+\textbf{Bachelor of Engineering (BIng, Mechanical Engineering Science)} \hfill 2004--2008\\
+\textit{University of Johannesburg}
+
+% ===============================================================
+\section{Academic and Professional Positions}
+\textbf{Associate Professor}, \textit{University of Pretoria} \hfill Feb 2023 -- Present\\
+Founder and Principal Investigator, CERG-FLUX Lab. Teaching (MIA 320), postgraduate supervision, and research in computational mechanics, scientific machine learning, and quantum technologies.
+
+\medskip
+\textbf{Staff Research Scientist}, \textit{IBM Research -- Africa} \hfill Feb 2023 -- Dec 2024\\
+Data-driven and machine-learning approaches to climate; challenge / project lead; patent ideation; student and intern mentorship.
+
+\medskip
+\textbf{Senior Research Associate (Visiting)}, \textit{University of Johannesburg} \hfill Jul 2023 -- Dec 2024\\
+Research and postgraduate supervision.
+
+\medskip
+\textbf{Senior Lecturer}, \textit{University of Johannesburg} \hfill May 2017 -- Jan 2023\\
+Course co-ordination and lecturing; postgraduate supervision; CFD and engineering-education research; former co-ordinator of the MEng (Sustainable Energy) programme.
+
+\medskip
+\textbf{Lecturer}, \textit{University of Johannesburg} \hfill Jan 2015 -- Apr 2017\\
+Course co-ordination and lecturing; final-year project supervision; co-supervision of Masters students.
+
+\medskip
+\textbf{Junior Engineer (CFD Analyst)}, \textit{Hatch Africa (Pty) Ltd} \hfill 2008 -- 2009\\
+CFD modelling for the metals and mineral-processing environment; user-defined functions; technical reporting.
+
+% ===============================================================
+\section{Research Leadership and Professional Affiliations}
+\begin{itemize}
+  \item Founder and Principal Investigator, CERG-FLUX Lab, University of Pretoria (2026--present).
+  \item Principal Investigator, SA-CERN ATLAS Project; University of Pretoria ATLAS / CERN Institutional Representative and Team Leader.
+  \item Registered Professional Engineer (PrEng), Engineering Council of South Africa (ECSA).
+  \item Vice-President, SAAM Executive Committee; Vice-President, South African National IUTAM Committee.
+  \item Member, South African Institute of Mechanical Engineering (SAIMechE) and the South African Association for Theoretical and Applied Mechanics (SAAM).
+\end{itemize}
+
+% ===============================================================
+\section{Noteworthy Research Grants and Funding}
+\begin{itemize}
+  \item \textbf{2026 -- UPQuST / SA QuTI-linked grants:} Hybrid Quantum-Classical Accelerated CFD (R180,000); Quantum Machine Learning for Rare Particle Searches in HEP (R180,000); Quantum-Magnetic Sensors for Particle Detection in Mineral Separation (R400,000).
+  \item \textbf{2022 -- UJ URC Research Equipment Grant:} Preventing COVID-19 with Mathematical Modelling, Digital Twins, AI and 4IR Engineered Solutions (R284,517).
+  \item \textbf{2021 -- UJ GES COVID-19 Grant:} same programme (R80,000).
+  \item \textbf{2020--2021 -- European Synchrotron Radiation Facility (ESRF):} Equipment for the BEATS beamline at SESAME and ESRF beamlines (\texteuro8,750).
+  \item \textbf{2017--2019 -- NRF Thuthuka Funding Instrument (Post-PhD Track):} Modelling of Multiphase Flow in Process Equipment (TTK160615171464; R602,000).
+  \item \textbf{Patent:} Dynamically Forecasting High-Resolution Air Temperature in Real-Time Using Multiple Sources -- ZA2023/09448 (granted 30 July 2024); USA pending (US18/200,050).
+  \item \textbf{CHPC high-performance computing allocations:} Multiphase Flow Modelling and Deep Learning (MECH1739, active); Modelling of Multiphase Flow in Process Equipment (MECH0837).
+\end{itemize}
+
+% ===============================================================
+\section{Research Output and Postgraduate Supervision}
+Publication record indexed on Google Scholar (h-index 65), Scopus (h-index 34) and Web of Science (h-index 30), spanning journal articles, ATLAS Collaboration papers, conference papers, a book chapter and a granted patent. Full publication list available separately. Postgraduate supervision: 9 Masters graduated; currently main or co-supervisor of 8 doctoral and 3 Masters candidates.
+
+% ===============================================================
+\section{Current Doctoral Supervision}
+\begin{itemize}
+  \item M. Chambakata, ``Lattice Boltzmann Method for Modelling Two-Phase Flow'' (main supervisor).
+  \item A.Y. Akinbowale, ``Quantum Machine Learning for Rare Particle Signatures in High-Dimensional Physics Data'' (main supervisor).
+  \item M. Ramokali, ``Hybrid Classical-Quantum Computing and Machine Learning Methods for Computational Fluid Dynamics'' (main supervisor).
+  \item M.T. Saphira Agnes, ``Fluid-Structure Interactions in Pathological Arteries: Numerical and Experimental Models'' (main supervisor).
+  \item M.S.W. Potgieter, ``Hybrid Lattice Boltzmann -- Machine Learning Methods for Two-Phase Flow'' (main supervisor).
+  \item A. Essop, ``A Novel Numerical Scheme for High-Speed Flows'' (main supervisor).
+  \item T. Jooma Abbajee, ``Graph Dynamical Reservoir Computing'' (co-supervisor).
+  \item M.P. Connell, ``Search for Higgs Boson Decays via Dark Bosons to a Four-Lepton Final State'' (co-supervisor).
+\end{itemize}
+
+% ===============================================================
+\section{Selected Postgraduate Supervision (Graduated)}
+\begin{itemize}
+  \item T. Jooma Abbajee, ``Reservoir Computing: A Tool for Predicting Chaotic Dynamical Systems,'' University of Johannesburg, 2026 (co-supervisor).
+  \item K.M. Makhanya, ``The Use of CFD for Assessing Flow-Induced Acoustics to Diagnose Lung Conditions,'' University of Johannesburg, 2025 (co-supervisor).
+  \item T.F. Mokoena, ``Experimental Hutch Equipment for the BEATS Beamline at SESAME,'' University of Johannesburg, 2022 (main supervisor).
+  \item T. Ramokoka, ``Fluid and Particulate Flow Through a Ventriculoperitoneal Shunt in a Variable-Temperature Environment,'' University of Johannesburg, 2022 (sole supervisor).
+  \item A. Potgieter, ``Modelling of a Heated Gas-Solid Fluidised Bed using Eulerian Based Models,'' University of Johannesburg, 2020, \textit{Cum Laude} (main supervisor).
+\end{itemize}
+
+% ===============================================================
+\section{Selected Publications}
+\begin{itemize}
+  \item ATLAS Collaboration, ``Observation of quantum entanglement with top quarks at the ATLAS detector,'' \textit{Nature} \textbf{633}, 542--547 (2024).
+  \item ATLAS Collaboration, ``Characterising the Higgs boson with ATLAS data from the LHC Run-2,'' \textit{Physics Reports} \textbf{1116}, 4--56 (2025).
+  \item ``Infectiousness model of expelled droplets exposed to ultraviolet germicidal irradiation,'' \textit{Computers \& Fluids} \textbf{275}, 106242 (2024).
+  \item ``Experimental and CFD Investigation of a Hybrid Solar Air Heater,'' \textit{Solar Energy} \textbf{195}, 413--428 (2020).
+  \item ``An Experimentally Validated Mathematical and CFD Model of a Supply Air Window: Forced and Natural Flow,'' \textit{Energy and Buildings} \textbf{57}, 289--301 (2013).
+  \item ``Detection and Characterization of Urban Heat Islands with Machine Learning,'' \textit{IGARSS 2024 -- IEEE International Geoscience and Remote Sensing Symposium}, Athens, 1693--1699 (2024).
+  \item ``Reservoir Computing for Predicting Chaotic Dynamical Systems,'' \textit{69th Annual Conference of the South African Institute of Physics (SAIP 2025)}, 1026--1031 (2025).
+  \item ``The Modification of the Dynamic Behaviour of Cyclonic Flow in a Hydrocyclone under Surging Conditions,'' \textit{Mathematical and Computational Applications} \textbf{27}(6), 88 (2022).
+\end{itemize}
+
+% ===============================================================
+\section{Selected Professional Service}
+\begin{itemize}
+  \item Journal reviewing: \textit{Physics of Fluids} (AIP), \textit{Applied Energy} (Elsevier), \textit{Energy and Buildings} (Elsevier), \textit{Environmental Science and Pollution Research} (Springer), and the \textit{SAIMechE R\&D Journal}; conference reviewing for SAIP and SACAM, and ICLR 2024 workshop proposals.
+  \item Conference organising committees: 7th Biennial Workshop on Discovery Physics at the LHC (Kruger2026, SA-CERN); 2025 SAIMechE Central Branch Conference (Wits); SMPM 2019; SACAM 2012.
+  \item Postgraduate examination: external examiner for doctoral and Masters candidates at the University of Cape Town, the University of Johannesburg and the University of KwaZulu-Natal; internal examiner at the University of Pretoria.
+\end{itemize}
+
+\end{document}

@@ -129,6 +129,12 @@ DOCUMENTS = [
         'tex':   os.path.join(SCRIPT_DIR, 'nithecs_statement.tex'),
         'label': 'NITheCS Candidate Statement',
     },
+    {
+        'name':  'cv-omt',
+        'type':  'latex',
+        'tex':   os.path.join(SCRIPT_DIR, 'cv_bhamjee_omt3.tex'),
+        'label': '3-Page CV (OMT / short)',
+    },
 ]
 
 
