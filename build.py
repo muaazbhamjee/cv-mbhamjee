@@ -130,10 +130,10 @@ DOCUMENTS = [
         'label': 'NITheCS Candidate Statement',
     },
     {
-        'name':  'cv-omt',
+        'name':  'cv-abridged',
         'type':  'latex',
-        'tex':   os.path.join(SCRIPT_DIR, 'cv_bhamjee_omt3.tex'),
-        'label': '3-Page CV (OMT / short)',
+        'tex':   os.path.join(SCRIPT_DIR, 'cv_bhamjee_abridged.tex'),
+        'label': 'Abridged CV (3-page)',
     },
 ]
 

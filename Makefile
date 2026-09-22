@@ -59,7 +59,7 @@ STMT_SOURCES := nithecs_statement.tex
 
 ALL_SOURCES  := $(CV_SOURCES) $(STMT_SOURCES)
 
-.PHONY: all cv statement cv-omt clean clean-all open open-cv open-stmt open-omt \
+.PHONY: all cv statement cv-abridged clean clean-all open open-cv open-stmt open-abridged \
         publish publish-site publish-html submodule-init watch
 
 # ── Default: build everything ────────────────────────────────
@@ -73,9 +73,9 @@ cv: $(CV_SOURCES)
 statement: $(STMT_SOURCES)
 	@$(BUILD) statement
 
-# 3-page short CV (OMT / funding applications with a 3-page limit)
-cv-omt: cv_bhamjee_omt3.tex
-	@$(BUILD) cv-omt
+# Abridged 3-page CV (funding applications with a 3-page limit, e.g. OMT)
+cv-abridged: cv_bhamjee_abridged.tex
+	@$(BUILD) cv-abridged
 
 # ── Clean: artefacts only — PDFs preserved ───────────────────
 clean:
@@ -116,8 +116,8 @@ open-cv: cv
 open-stmt: statement
 	$(call open_pdf,docs/nithecs_statement.pdf)
 
-open-omt: cv-omt
-	$(call open_pdf,docs/cv_bhamjee_omt3.pdf)
+open-abridged: cv-abridged
+	$(call open_pdf,docs/cv_bhamjee_abridged.pdf)
 
 # ── Publish: push docs/ in the CV repo ───────────────────────
 # Usage:  make publish msg="Add JHEP paper March 2026"
@@ -159,7 +159,7 @@ publish-site: all
 	$(check_site)
 	@echo "→ Pushing PDFs and index.html to muaazbhamjee.github.io..."
 	@cd site && \
-	    git add *.pdf index.html && \
+	    git add *.pdf index.html sitemap.xml && \
 	    git diff --cached --quiet && echo "   Nothing to publish." || \
 	    ( git commit -m "$(if $(msg),$(msg),Update PDFs $(TODAY))" && \
 	      git push && \
