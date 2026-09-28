@@ -1,0 +1,64 @@
+%% Publications list - Prof. Muaaz Bhamjee
+%% Publications section of the full CV only. Build: python3 build.py publications
+
+\documentclass[11pt, a4paper]{article}
+
+% ---- Packages ----
+\usepackage[a4paper, top=2.0cm, bottom=2.0cm, left=2.2cm, right=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+% ---- Hyperlink styling ----
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black,
+    citecolor=blue!70!black
+}
+
+% ---- Section formatting ----
+\titleformat{\section}
+  {\large\bfseries\uppercase}
+  {}
+  {0em}
+  {}
+  [\titlerule]
+
+\titlespacing{\section}{0pt}{12pt}{6pt}
+
+% ---- List settings ----
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=1.5em}
+% Numbered publication lists (numbering restarts in each sublist)
+\newlist{publist}{enumerate}{1}
+\setlist[publist]{label=\arabic*., noitemsep, topsep=2pt, leftmargin=2.6em, labelsep=0.5em}
+
+% ---- No paragraph indent ----
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% ===============================================================
+\begin{document}
+
+% ---- Header ----
+\begin{center}
+  {\LARGE\bfseries Muaaz Bhamjee}\\[4pt]
+  {\large Associate Professor, Department of Mechanical and Aeronautical Engineering}\\[2pt]
+  {\large University of Pretoria}\\[6pt]
+  Email: \href{mailto:muaaz.bhamjee@up.ac.za}{muaaz.bhamjee@up.ac.za}\\[6pt]
+  {\Large\bfseries List of Publications}
+\end{center}
+
+% ===============================================================
+%%AUTO-GENERATED-PUBLICATIONS%%
+
+\end{document}

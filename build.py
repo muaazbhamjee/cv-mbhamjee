@@ -24,6 +24,7 @@ Usage:
     python3 build.py              # build all documents
     python3 build.py cv           # CV only
     python3 build.py statement    # NITheCS statement only
+    python3 build.py publications # publications list only (CV publications section)
 
 Adding a new plain-LaTeX document:
     1. Add a .tex file to this directory.
@@ -113,15 +114,25 @@ PDFLATEX_CMD = os.environ.get('PDFLATEX') or _detect_pdflatex()
 
 # ── Document registry ─────────────────────────────────────────────────────────
 # Add future documents here. Each entry is a dict with:
-#   name    — short CLI name  (python3 build.py <name>)
-#   type    — 'bib_cv' or 'latex'
-#   tex     — path to the .tex source (for 'latex' type)
-#   label   — human-readable description for build output
+#   name     — short CLI name  (python3 build.py <name>)
+#   type     — 'bib_cv' or 'latex'
+#   tex      — path to the .tex source (for 'latex' type)
+#   template — .tex template containing the publications placeholder
+#              (for 'bib_cv' type; defaults to cv_bhamjee_main.tex)
+#   out      — generated .tex path (for 'bib_cv' type; defaults to cv_bhamjee.tex)
+#   label    — human-readable description for build output
 DOCUMENTS = [
     {
         'name':  'cv',
         'type':  'bib_cv',
         'label': 'CV',
+    },
+    {
+        'name':     'publications',
+        'type':     'bib_cv',
+        'template': os.path.join(SCRIPT_DIR, 'cv_bhamjee_publications_main.tex'),
+        'out':      os.path.join(SCRIPT_DIR, 'cv_bhamjee_publications.tex'),
+        'label':    'Publications list (CV publications section only)',
     },
     {
         'name':  'statement',
@@ -190,22 +201,55 @@ def compile_latex(tex_path, label):
 # ── BibTeX parser ─────────────────────────────────────────────────────────────
 
 def parse_bib_file(filepath):
-    """Return list of dicts, one per BibTeX entry."""
+    """Return list of dicts, one per BibTeX entry (brace-depth aware)."""
     with open(filepath, encoding="utf-8") as f:
         content = f.read()
-    content = re.sub(r'%[^\n]*', '', content)   # strip comments
+    content = re.sub(r'(?m)^\s*%.*$', '', content)   # strip comment lines
     entries = []
-    for m in re.finditer(r'@(\w+)\s*\{([^,]+),(.*?)(?=\n@|\Z)', content, re.DOTALL):
-        typ  = m.group(1).lower()
-        key  = m.group(2).strip()
-        body = m.group(3)
+    i = 0
+    while True:
+        m = re.search(r'@(\w+)\s*\{', content[i:])
+        if not m:
+            break
+        typ = m.group(1).lower()
+        start = i + m.end()
+        depth, j = 1, start
+        while j < len(content) and depth > 0:
+            if content[j] == '{':
+                depth += 1
+            elif content[j] == '}':
+                depth -= 1
+            j += 1
+        body = content[start:j - 1]
+        i = j
         if typ in ('comment', 'string', 'preamble'):
             continue
-        entry = {'type': typ, 'key': key}
-        for field_m in re.finditer(
-            r'\b(\w+)\s*=\s*\{((?:[^{}]|\{[^{}]*\})*)\}', body
-        ):
-            entry[field_m.group(1).lower()] = field_m.group(2).strip()
+        key, _, rest = body.partition(',')
+        entry = {'type': typ, 'key': key.strip()}
+        k = 0
+        while True:
+            fm = re.search(r'(\w+)\s*=\s*', rest[k:])
+            if not fm:
+                break
+            name = fm.group(1).lower()
+            pos = k + fm.end()
+            if pos < len(rest) and rest[pos] == '{':
+                d, q = 1, pos + 1
+                while q < len(rest) and d > 0:
+                    if rest[q] == '{':
+                        d += 1
+                    elif rest[q] == '}':
+                        d -= 1
+                    q += 1
+                val, k = rest[pos + 1:q - 1], q
+            elif pos < len(rest) and rest[pos] == '"':
+                q = rest.find('"', pos + 1)
+                val, k = rest[pos + 1:q], q + 1
+            else:
+                q = rest.find(',', pos)
+                q = len(rest) if q < 0 else q
+                val, k = rest[pos:q], q
+            entry[name] = ' '.join(val.split())
         entries.append(entry)
     return entries
 
@@ -365,53 +409,53 @@ def render_other(e):
 
 def build_non_atlas_journals(entries):
     entries = sorted(entries, key=sort_year, reverse=True)
-    lines = ["\\subsection*{Non-ATLAS Journal Papers}\n", "\\begin{itemize}\n"]
+    lines = ["\\subsection*{Non-ATLAS Journal Papers}\n", "\\begin{publist}\n"]
     for e in entries:
         lines.append(render_non_atlas_journal(e))
-    lines.append("\\end{itemize}\n")
+    lines.append("\\end{publist}\n")
     return ''.join(lines)
 
 def build_atlas_journals(entries):
     entries = sorted(entries, key=sort_year, reverse=True)
     lines = [
-        "\\subsection*{Select ATLAS/CERN Collaboration Papers}\n"
-        "\\textit{Note: Only a selection is listed. "
-        "See Google Scholar and Scopus profiles for the complete list.}\n\n",
-        "\\begin{itemize}\n",
+        "\\subsection*{ATLAS/CERN Collaboration Papers}\n"
+        "\\textit{Note: Papers on which Bhamjee is a contributing author, "
+        "as indexed on Google Scholar.}\n\n",
+        "\\begin{publist}\n",
     ]
     for e in entries:
         lines.append(render_atlas_journal(e))
-    lines.append("\\end{itemize}\n")
+    lines.append("\\end{publist}\n")
     return ''.join(lines)
 
 def build_conferences(entries):
     entries = sorted(entries, key=sort_year, reverse=True)
-    lines = ["\\subsection*{Published}\n", "\\begin{itemize}\n"]
+    lines = ["\\subsection*{Published}\n", "\\begin{publist}\n"]
     for e in entries:
         lines.append(render_conference(e))
-    lines.append("\\end{itemize}\n")
+    lines.append("\\end{publist}\n")
     return ''.join(lines)
 
 def build_patents(entries):
-    lines = ["\\begin{itemize}\n"]
+    lines = ["\\begin{publist}\n"]
     for e in sorted(entries, key=sort_year, reverse=True):
         lines.append(render_patent(e))
-    lines.append("\\end{itemize}\n")
+    lines.append("\\end{publist}\n")
     return ''.join(lines)
 
 def build_bookchapters(entries):
-    lines = ["\\begin{itemize}\n"]
+    lines = ["\\begin{publist}\n"]
     for e in sorted(entries, key=sort_year, reverse=True):
         lines.append(render_bookchapter(e))
-    lines.append("\\end{itemize}\n")
+    lines.append("\\end{publist}\n")
     return ''.join(lines)
 
 def build_other_scholarly(entries):
     entries = sorted(entries, key=sort_year, reverse=True)
-    lines = ["\\begin{itemize}\n"]
+    lines = ["\\begin{publist}\n"]
     for e in entries:
         lines.append(render_other(e))
-    lines.append("\\end{itemize}\n")
+    lines.append("\\end{publist}\n")
     return ''.join(lines)
 
 
@@ -430,8 +474,8 @@ def build_bib_cv(doc):
         "% ---- AUTO-GENERATED: do not edit below this line ----",
         "",
         "\\section{Journal Publications}",
-        "\\textit{(Accredited Journals. Select {ATLAS}/CERN papers listed below -- "
-        "see Google Scholar and Scopus profiles for the full list of 200+ publications.)}",
+        "\\textit{(Accredited Journals. {ATLAS}/CERN collaboration papers listed below as "
+        "indexed on Google Scholar.)}",
         "",
         build_non_atlas_journals(data['journals_non_atlas']),
         build_atlas_journals(data['journals_atlas']),
@@ -453,18 +497,21 @@ def build_bib_cv(doc):
         "% ---- END AUTO-GENERATED publications ----",
     ])
 
-    print(f"Reading template: {MAIN_TEX}")
-    with open(MAIN_TEX, encoding="utf-8") as f:
+    main_tex = doc.get('template', MAIN_TEX)
+    out_tex  = doc.get('out', OUT_TEX)
+
+    print(f"Reading template: {main_tex}")
+    with open(main_tex, encoding="utf-8") as f:
         template = f.read()
 
     if PLACEHOLDER not in template:
-        print(f"ERROR: Placeholder '{PLACEHOLDER}' not found in {MAIN_TEX}")
+        print(f"ERROR: Placeholder '{PLACEHOLDER}' not found in {main_tex}")
         return False
 
-    with open(OUT_TEX, 'w', encoding="utf-8") as f:
+    with open(out_tex, 'w', encoding="utf-8") as f:
         f.write(template.replace(PLACEHOLDER, pub_block))
 
-    return compile_latex(OUT_TEX, doc['label'])
+    return compile_latex(out_tex, doc['label'])
 
 
 def build_latex(doc):

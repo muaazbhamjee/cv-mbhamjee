@@ -38,6 +38,9 @@
 
 % ---- List settings ----
 \setlist[itemize]{noitemsep, topsep=2pt, leftmargin=1.5em}
+% Numbered publication lists (numbering restarts in each sublist)
+\newlist{publist}{enumerate}{1}
+\setlist[publist]{label=\arabic*., noitemsep, topsep=2pt, leftmargin=2.6em, labelsep=0.5em}
 
 % ---- No paragraph indent ----
 \setlength{\parindent}{0pt}
