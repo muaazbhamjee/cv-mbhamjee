@@ -328,14 +328,16 @@ def render_atlas_journal(e):
     pages   = get(e, 'pages')
     year    = get(e, 'year')
     doi     = get(e, 'doi')
+    note    = get(e, 'note')
     vol_str = f"vol.~{volume}" if volume else ''
     num_str = f"No.~{number}" if number else ''
     pag_str = f"pp.~{pages}" if pages else ''
     detail  = ', '.join(x for x in [vol_str, num_str, pag_str, year] if x)
     doi_str = f" \\href{{https://doi.org/{doi}}}{{DOI}}" if doi else ''
+    note_str = f" {note}." if note else ''
     return (
         f"  \\item {{ATLAS Collaboration}}, ``{title}'', "
-        f"\\textit{{{journal}}}, {detail}.{doi_str}\n"
+        f"\\textit{{{journal}}}, {detail}.{note_str}{doi_str}\n"
     )
 
 def render_conference(e):
